@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin | Listing Management & History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .step-active::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 140%;
+            height: 140%;
+            border-radius: 50%;
+            border: 2px solid #006d30;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "emerald-wash": "#ecfdf5",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-tertiary-fixed": "#400013",
+                        "on-surface-variant": "#3f493f",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#d5e3fc",
+                        "industry-neutral": "#1e293b",
+                        "surface-container": "#e6eeff",
+                        "secondary-fixed-dim": "#89ceff",
+                        "primary-container": "#15803d",
+                        "on-primary-fixed": "#00210a",
+                        "surface-container-high": "#dce9ff",
+                        "status-available": "#22c55e",
+                        "surface-tint": "#006d30",
+                        "secondary-fixed": "#c9e6ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-primary-container": "#d3ffd5",
+                        "surface": "#f8f9ff",
+                        "status-claimed": "#f59e0b",
+                        "secondary": "#006591",
+                        "on-tertiary-fixed-variant": "#81233b",
+                        "on-secondary-container": "#004666",
+                        "status-negotiation": "#6366f1",
+                        "inverse-surface": "#233144",
+                        "primary": "#00652c",
+                        "on-primary-fixed-variant": "#005323",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed": "#95f8a7",
+                        "on-background": "#0d1c2e",
+                        "on-surface": "#0d1c2e",
+                        "primary-fixed-dim": "#79db8d",
+                        "tertiary": "#97344a",
+                        "surface-variant": "#d5e3fc",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#79db8d",
+                        "outline": "#6f7a6e",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-tertiary-container": "#fff1f1",
+                        "outline-variant": "#becabc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "margin-desktop": "2rem",
+                        "container-max": "1280px",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "data-mono": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary">Daurin</span>
+<nav class="hidden md:flex gap-6 ml-8">
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-emerald-wash px-3 py-1 rounded transition-colors" href="#">Marketplace</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-emerald-wash px-3 py-1 rounded transition-colors" href="#">Impact</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-emerald-wash px-3 py-1 rounded transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary-fixed transition-colors">Switch Role</button>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="h-full w-64 fixed left-0 top-16 hidden md:flex flex-col bg-surface-container-low border-r border-outline-variant p-stack-md gap-stack-sm">
+<div class="mb-6 px-2">
+<h2 class="font-headline-sm text-headline-sm font-black text-primary">Dashboard</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Manage your waste impact</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">recycling</span> Listings
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">chat</span> Negotiations
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span> Orders
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+</nav>
+<div class="pt-6 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span> Help Center
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-64 p-margin-mobile md:p-margin-desktop space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Listing Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Track your active contributions and historical impact.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md text-label-md flex items-center gap-2 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span> Post New Waste
+                </button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Detailed Status Tracking (Current Active Listing) -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="bg-emerald-wash text-primary px-3 py-1 rounded-full font-label-sm text-label-sm border border-primary/20 mb-2 inline-block">Active Listing #L-8821</span>
+<h3 class="font-headline-sm text-headline-sm">12kg Mixed HDPE Plastic Bottles</h3>
+</div>
+<div class="text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Value</p>
+<p class="font-headline-md text-headline-md text-primary">Rp 48.000</p>
+</div>
+</div>
+<!-- Stepper -->
+<div class="relative flex justify-between items-center px-4 md:px-12">
+<!-- Background Line -->
+<div class="absolute left-12 right-12 h-0.5 bg-outline-variant top-1/2 -translate-y-1/2 z-0"></div>
+<div class="absolute left-12 w-2/3 h-0.5 bg-primary top-1/2 -translate-y-1/2 z-0"></div>
+<!-- Step 1: Post Created -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface-container-lowest px-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary">Posted</span>
+</div>
+<!-- Step 2: Collector Claimed -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface-container-lowest px-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary">Claimed</span>
+</div>
+<!-- Step 3: Picked Up (Current) -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface-container-lowest px-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center step-active">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Pick-up</span>
+</div>
+<!-- Step 4: Completed -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface-container-lowest px-2 opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<span class="font-label-sm text-label-sm">Payment</span>
+</div>
+</div>
+<div class="mt-10 p-4 bg-surface-container-low rounded-xl border border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A portrait of a friendly professional waste collector in a green uniform, wearing a hard hat, smiling, with a clean recycling truck in the background. High-quality corporate photography style with bright, natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNWMbhH8rykzwc6v5j9Dn6Q0Ep--UjiNdXdarZUIaZAnlXHUbuZscFA_UrUmL4pT2fqVCIl1hd5JXQMul6E5VkwaYI2Vv-Idklhf9k0Qs9rNCEY150akq3vQ8Jk_vFFTMPW8SAB7i6jzCW7r4fg6zdyjPFuFJOqiTf_MoQTz8sC6OgYFGT9sqbS8frYDuv9fxVAk3dZqUbIO2K5nG5krrzuhlY5vQJZelZQoXz5e4l3oqRMNsFx1KgqrSOYjx1MqtBc6L3ae78LgHK"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Pak Budi (Pengepul)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">verified</span> AI Verified Pro • 4.9 Rating
+                                </p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="bg-white border border-outline px-4 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chat</span> Chat
+                            </button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">map</span> Track
+                            </button>
+</div>
+</div>
+</div>
+<!-- Recent Activity/Notifications -->
+<div class="md:col-span-4 space-y-4">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm h-full">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm">Activity</h3>
+<button class="text-primary font-label-sm text-label-sm">Clear All</button>
+</div>
+<div class="space-y-4">
+<div class="flex gap-3 items-start p-3 hover:bg-emerald-wash rounded-lg transition-colors cursor-pointer border-l-4 border-primary">
+<div class="bg-primary-container/20 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Claimed!</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pak Budi claimed your plastic listing.</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">2 mins ago</p>
+</div>
+</div>
+<div class="flex gap-3 items-start p-3 hover:bg-surface-variant rounded-lg transition-colors cursor-pointer border-l-4 border-status-negotiation">
+<div class="bg-status-negotiation/10 p-2 rounded-full text-status-negotiation">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">New Offer</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Logistics Ltd offered a logistics bid.</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">45 mins ago</p>
+</div>
+</div>
+<div class="flex gap-3 items-start p-3 hover:bg-surface-variant rounded-lg transition-colors cursor-pointer border-l-4 border-secondary">
+<div class="bg-secondary/10 p-2 rounded-full text-secondary">
+<span class="material-symbols-outlined text-[20px]">paid</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Payment Received</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Rp 120.000 added to your wallet.</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Earnings Overview -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-primary text-on-primary rounded-xl p-6 shadow-lg flex flex-col justify-between">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md opacity-80 uppercase">Total Lifetime Earnings</span>
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="mt-4">
+<h2 class="font-headline-lg text-headline-lg">Rp 1.450.000</h2>
+<p class="font-label-sm text-label-sm mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">trending_up</span> +12.5% this month</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Plastic HDPE</span>
+<span class="p-1 rounded bg-emerald-wash text-primary material-symbols-outlined text-[18px]">recycling</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Rp 640k</h4>
+<div class="w-full bg-surface-variant h-2 rounded-full mt-auto">
+<div class="bg-primary h-full rounded-full w-[65%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Paper/Cardboard</span>
+<span class="p-1 rounded bg-surface-container-highest text-secondary material-symbols-outlined text-[18px]">description</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Rp 520k</h4>
+<div class="w-full bg-surface-variant h-2 rounded-full mt-auto">
+<div class="bg-secondary h-full rounded-full w-[45%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Metal/Alum</span>
+<span class="p-1 rounded bg-tertiary-fixed text-tertiary material-symbols-outlined text-[18px]">precision_manufacturing</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Rp 290k</h4>
+<div class="w-full bg-surface-variant h-2 rounded-full mt-auto">
+<div class="bg-tertiary h-full rounded-full w-[25%]"></div>
+</div>
+</div>
+</div>
+<!-- History Table Section -->
+<div class="md:col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<h3 class="font-headline-sm text-headline-sm">Transaction History</h3>
+<div class="flex flex-wrap gap-2">
+<select class="rounded-lg border-outline-variant bg-surface font-label-md text-label-md text-on-surface focus:ring-primary focus:border-primary">
+<option>All Waste Types</option>
+<option>Plastic</option>
+<option>Paper</option>
+<option>Metal</option>
+</select>
+<select class="rounded-lg border-outline-variant bg-surface font-label-md text-label-md text-on-surface focus:ring-primary focus:border-primary">
+<option>Status: All</option>
+<option>Completed</option>
+<option>In Progress</option>
+<option>Cancelled</option>
+</select>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-variant"><span class="material-symbols-outlined">filter_list</span></button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant">
+<tr>
+<th class="px-6 py-4">Transaction ID</th>
+<th class="px-6 py-4">Waste Type</th>
+<th class="px-6 py-4">Weight</th>
+<th class="px-6 py-4">Earnings</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-body-sm text-body-sm">
+<tr class="hover:bg-surface transition-colors">
+<td class="px-6 py-4 font-data-mono">#TX-9902</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Plastic Bottles
+                                        </div>
+</td>
+<td class="px-6 py-4">8.5 kg</td>
+<td class="px-6 py-4 font-bold">Rp 34.000</td>
+<td class="px-6 py-4 text-on-surface-variant">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-status-available/10 text-status-available border border-status-available/20 rounded font-label-sm text-label-sm">Completed</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline font-label-md">Details</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="px-6 py-4 font-data-mono">#TX-9844</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Newspaper Bundles
+                                        </div>
+</td>
+<td class="px-6 py-4">25.0 kg</td>
+<td class="px-6 py-4 font-bold">Rp 62.500</td>
+<td class="px-6 py-4 text-on-surface-variant">Oct 20, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-status-available/10 text-status-available border border-status-available/20 rounded font-label-sm text-label-sm">Completed</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline font-label-md">Details</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="px-6 py-4 font-data-mono">#TX-9721</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Aluminum Cans
+                                        </div>
+</td>
+<td class="px-6 py-4">4.2 kg</td>
+<td class="px-6 py-4 font-bold">Rp 84.000</td>
+<td class="px-6 py-4 text-on-surface-variant">Oct 18, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-status-negotiation/10 text-status-negotiation border border-status-negotiation/20 rounded font-label-sm text-label-sm">In Progress</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline font-label-md">Details</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="px-6 py-4 font-data-mono">#TX-9610</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Mixed Plastics
+                                        </div>
+</td>
+<td class="px-6 py-4">15.0 kg</td>
+<td class="px-6 py-4 font-bold">Rp 45.000</td>
+<td class="px-6 py-4 text-on-surface-variant">Oct 12, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-error-container text-error border border-error/20 rounded font-label-sm text-label-sm">Cancelled</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline font-label-md">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface border-t border-outline-variant flex justify-between items-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Showing 4 of 128 transactions</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 rounded bg-primary text-on-primary">1</button>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-variant">2</button>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-variant">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 px-4" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm-mobile">Account</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Search highlight effect logic would go here
+    </script>
+</body></html>

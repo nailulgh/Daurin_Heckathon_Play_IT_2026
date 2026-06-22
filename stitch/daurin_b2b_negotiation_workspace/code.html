@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin | Negotiation Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #becabc; border-radius: 10px; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface overflow-hidden">
+<!-- TOP APP BAR -->
+<header class="bg-surface dark:bg-on-background shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer md:hidden">menu</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Daurin</h1>
+<nav class="hidden md:flex gap-6 ml-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md transition-colors" href="#">Marketplace</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors" href="#">Impact</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-48" placeholder="Search orders..." type="text"/>
+</div>
+<button class="hidden md:block bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md scale-95 active:scale-90 transition-transform">Switch Role</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate logistics manager in a modern office setting. The lighting is soft and natural, emphasizing a bright, professional SaaS atmosphere. The background is slightly blurred, showing a clean, high-tech workspace with sustainable design elements like indoor plants and wood textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWyvCV1HVeuJ0uZSisKr-i4F8VkPdbTNVIlFRRoJjNB9U7oNlG-48-Z6GJiPS_M-L-4bpxiNuv9Tn3qXOVIAcKSt6uouHjOrTk6QMOVdaMQynYSeEq0HCPSSA40PZhfRWUgsSQhaJa0aLCnNPXaOgZdAU0Fe0b9cTKx3z5Se2KQ7QNVfJKdV0von_wxVYJEV8SeGq6G20T2TiFlDTJLTlU8hNbWrz6BXuLTOMqqjhaGcGGCulGtixfPSbbBqsHgikj6gmXDU5FIPah"/>
+</div>
+</div>
+</header>
+<div class="flex h-[calc(100vh-64px)]">
+<!-- SIDE NAV BAR (Hidden on Mobile) -->
+<aside class="bg-surface-container-low dark:bg-industry-neutral h-full w-64 fixed left-0 top-16 hidden md:flex flex-col border-r border-outline-variant dark:border-outline p-stack-md gap-stack-sm z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-2">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-weight="fill">recycling</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm font-black text-primary leading-tight">Daurin Hub</p>
+<p class="text-[10px] uppercase tracking-wider text-outline font-bold">Circular Economy</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">recycling</span> Listings
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-bold font-label-md text-label-md translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">chat</span> Negotiations
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span> Orders
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+        </a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold mb-4 shadow-sm hover:shadow-md transition-all">Post Waste</button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg font-label-md text-label-md mb-1 transition-all" href="#">
+<span class="material-symbols-outlined">help</span> Help Center
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-error hover:bg-error-container rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+        </a>
+</div>
+</aside>
+<!-- MAIN CONTENT (3-Column Negotiation Workspace) -->
+<main class="flex-1 md:ml-64 flex flex-col md:flex-row h-full overflow-hidden">
+<!-- COLUMN 1: MATERIAL SUMMARY & SUPPLIER -->
+<section class="w-full md:w-80 bg-surface border-r border-outline-variant flex flex-col h-full overflow-y-auto custom-scrollbar">
+<div class="p-6 border-b border-outline-variant">
+<div class="flex items-center justify-between mb-4">
+<span class="px-2 py-1 bg-emerald-wash text-primary font-bold text-[10px] rounded uppercase">Batch #9928</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm">AI Verified</span>
+</div>
+</div>
+<h2 class="font-headline-sm text-headline-sm mb-2">rPET Flakes (Grade A)</h2>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-surface-container px-2 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">opacity</span> Clear
+            </span>
+<span class="bg-surface-container px-2 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span> Bulk Bag
+            </span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="text-on-surface-variant font-label-sm text-label-sm mb-1">Volume</p>
+<p class="font-data-mono text-headline-sm font-bold">45.5<span class="text-body-sm font-normal ml-1">MT</span></p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="text-on-surface-variant font-label-sm text-label-sm mb-1">Purity</p>
+<p class="font-data-mono text-headline-sm font-bold">99.2<span class="text-body-sm font-normal ml-1">%</span></p>
+</div>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-label-md text-label-md mb-4 text-on-surface-variant uppercase tracking-wider">Supplier Information</h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center font-bold text-on-secondary-container text-headline-sm">EG</div>
+<div>
+<p class="font-label-md text-label-md font-bold">EcoGreen Ltd.</p>
+<p class="text-body-sm text-on-surface-variant">Surabaya, Indonesia</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Reliability Score</span>
+<span class="font-bold text-primary">98%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 98%"></div>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Avg. Fulfillment</span>
+<span class="font-bold">4.2 Days</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Past Transactions</span>
+<span class="font-bold">12 Successful</span>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 bg-surface-container-lowest">
+<div class="aspect-video rounded-xl overflow-hidden mb-3 border border-outline-variant relative">
+<img class="w-full h-full object-cover" data-alt="A close-up, high-resolution professional photograph of clean rPET plastic flakes, highlighting their clear and consistent texture. The lighting is bright and industrial, reflecting a professional marketplace standard. The background is a clean white industrial surface, emphasizing the purity of the material for a sustainable B2B application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFQQPQirGvX2AdrEp7A3IyQo4aTgqYSNtCqAwz5uQQ_-8du6jqwYAZabhwmwqJwFvKN4Wx1RnETZOfQIDF5gDWn5-8xZgpCHlgX-b7WvKcgZi-X6Hud393cvmV1tZYqlJftJRum1LWR_fcDF72wb93WQeDkJ6DbCUR73MUrAlVpa9Dw-kQzCULiaqWKdfvj1WdLEd8FlQLpSNNn934E7elyqvIsNFk0uDume9gj-NE6LX6H9iZaRBhG9dp5MKnlaME9sD_6GAz6UIh"/>
+<div class="absolute top-2 right-2 bg-emerald-wash/90 backdrop-blur-sm px-2 py-0.5 rounded-md flex items-center gap-1 border border-primary/20">
+<span class="font-data-mono text-[10px] text-primary font-bold">98.4% AI CONFIDENCE</span>
+</div>
+</div>
+<p class="text-label-sm font-label-sm text-center text-on-surface-variant italic">Listing ID: PET-IND-22481</p>
+</div>
+</section>
+<!-- COLUMN 2: NEGOTIATION THREAD -->
+<section class="flex-1 bg-surface-container-lowest flex flex-col h-full relative overflow-hidden">
+<!-- Chat Header -->
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between z-10 glass-panel">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-status-available rounded-full animate-pulse"></div>
+<p class="font-label-md text-label-md font-bold">EcoGreen Support (Aditya)</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant transition-colors"><span class="material-symbols-outlined">call</span></button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+</div>
+<!-- Messages Area -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar pb-24">
+<!-- System Event -->
+<div class="flex justify-center">
+<div class="bg-surface-container px-4 py-2 rounded-full text-label-sm font-label-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">info</span>
+              Negotiation started on Oct 12, 2023 at 14:30
+            </div>
+</div>
+<!-- Received Message -->
+<div class="flex flex-col items-start gap-1">
+<div class="bg-secondary text-on-secondary px-4 py-3 rounded-2xl rounded-tl-none max-w-[80%] shadow-sm">
+<p class="text-body-md">Greetings from EcoGreen. We've reviewed your volume requirements. Our initial quote for this grade A rPET is IDR 4,800/kg given the immediate availability.</p>
+</div>
+<span class="text-[10px] text-on-surface-variant ml-2">14:32</span>
+</div>
+<!-- System Event -->
+<div class="flex justify-center">
+<div class="bg-secondary-fixed-dim/20 text-on-secondary-fixed-variant px-4 py-2 rounded-full text-label-sm font-label-sm border border-secondary-fixed-dim/30">
+<span class="font-bold">Initial Offer:</span> IDR 4.800/kg
+            </div>
+</div>
+<!-- Sent Message -->
+<div class="flex flex-col items-end gap-1">
+<div class="bg-primary text-on-primary px-4 py-3 rounded-2xl rounded-tr-none max-w-[80%] shadow-sm">
+<p class="text-body-md">Thank you for the quote. We are interested in the full 45.5 MT but the market price for this grade is currently hovering around 4,100. We can offer 4,000 for a bulk purchase.</p>
+</div>
+<span class="text-[10px] text-on-surface-variant mr-2">14:45</span>
+</div>
+<!-- System Event: Counter Offer -->
+<div class="flex justify-center">
+<div class="bg-status-negotiation/10 text-status-negotiation px-6 py-3 rounded-xl border border-status-negotiation/20 text-center">
+<p class="font-label-md text-label-md font-bold">Counter-offer received: IDR 4.500/kg</p>
+<p class="text-[10px] uppercase font-bold mt-1 opacity-70">EXPIRES IN 23:14:02</p>
+</div>
+</div>
+<!-- Received Message -->
+<div class="flex flex-col items-start gap-1">
+<div class="bg-secondary text-on-secondary px-4 py-3 rounded-2xl rounded-tl-none max-w-[80%] shadow-sm">
+<p class="text-body-md">I understand your position. However, these flakes have a certified 99% purity, which is above market average. We can come down to 4,500/kg for this batch.</p>
+</div>
+<span class="text-[10px] text-on-surface-variant ml-2">15:10</span>
+</div>
+<!-- Floating Animation Indicator -->
+<div class="flex justify-center animate-bounce">
+<div class="w-12 h-12 bg-white rounded-full shadow-lg border border-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-weight="fill">keyboard_double_arrow_down</span>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="absolute bottom-0 left-0 w-full p-4 glass-panel">
+<div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant rounded-2xl p-1 shadow-sm focus-within:border-primary transition-all">
+<button class="p-2 hover:bg-surface-container rounded-xl text-on-surface-variant"><span class="material-symbols-outlined">add_circle</span></button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-body-md py-3" placeholder="Type a message or new price offer..." type="text"/>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-xl flex items-center justify-center hover:bg-on-primary-fixed-variant transition-colors">
+<span class="material-symbols-outlined" data-weight="fill">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- COLUMN 3: ACTION PANEL -->
+<section class="w-full md:w-80 bg-surface-container-low p-6 flex flex-col h-full border-l border-outline-variant overflow-y-auto custom-scrollbar">
+<h3 class="font-headline-sm text-headline-sm mb-6">Action Center</h3>
+<!-- Pricing Status -->
+<div class="space-y-4 mb-8">
+<div class="bg-surface-container-highest p-4 rounded-2xl border-l-4 border-status-negotiation">
+<p class="text-on-surface-variant font-label-md text-label-md mb-1">Current Offer</p>
+<div class="flex items-baseline justify-between">
+<p class="font-data-mono text-headline-md font-bold text-on-surface">IDR 4.500</p>
+<span class="text-body-sm">/ kg</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface p-3 rounded-xl border border-outline-variant">
+<p class="text-on-surface-variant font-label-sm text-label-sm mb-1">Last Counter</p>
+<p class="font-data-mono text-body-md font-bold">4.000</p>
+</div>
+<div class="bg-surface p-3 rounded-xl border border-outline-variant">
+<p class="text-on-surface-variant font-label-sm text-label-sm mb-1">Target Price</p>
+<p class="font-data-mono text-body-md font-bold">4.250</p>
+</div>
+</div>
+</div>
+<!-- Savings Meter -->
+<div class="bg-surface p-5 rounded-2xl border border-outline-variant mb-8 shadow-sm">
+<p class="font-label-md text-label-md font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span> Potential Savings
+          </p>
+<div class="relative h-4 w-full bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="absolute top-0 left-0 h-full bg-primary" style="width: 65%"></div>
+<div class="absolute top-0 left-[45%] h-full w-0.5 bg-on-background/20" title="Market Average"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Market: 4.850</span>
+<span class="text-label-sm font-bold text-primary">-7.2% Saving</span>
+</div>
+</div>
+<!-- Timeline -->
+<div class="mb-8">
+<p class="font-label-md text-label-md font-bold mb-4 uppercase tracking-wider text-outline">Negotiation History</p>
+<div class="relative pl-6 space-y-4 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-outline-variant">
+<div class="relative">
+<div class="absolute -left-5 top-1.5 w-2 h-2 rounded-full bg-outline-variant ring-4 ring-surface-container-low"></div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Today, 14:32</p>
+<p class="text-body-sm font-bold">Initial: IDR 4.800</p>
+</div>
+<div class="relative">
+<div class="absolute -left-5 top-1.5 w-2 h-2 rounded-full bg-primary ring-4 ring-surface-container-low"></div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Today, 14:45</p>
+<p class="text-body-sm font-bold">Counter: IDR 4.000</p>
+</div>
+<div class="relative">
+<div class="absolute -left-5 top-1.5 w-2 h-2 rounded-full bg-status-negotiation ring-4 ring-surface-container-low"></div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Today, 15:10</p>
+<p class="text-body-sm font-bold">Current: IDR 4.500</p>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-auto space-y-3">
+<button class="w-full bg-primary text-on-primary py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/10 hover:shadow-xl transition-all active:scale-95">
+<span class="material-symbols-outlined">check_circle</span> Accept Deal
+          </button>
+<button class="w-full bg-secondary text-on-secondary py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-on-secondary-fixed-variant transition-all active:scale-95">
+<span class="material-symbols-outlined">edit_square</span> Counter Offer
+          </button>
+<button class="w-full bg-surface text-error py-3 rounded-2xl font-bold border border-error/20 hover:bg-error-container transition-all active:scale-95">
+            Reject
+          </button>
+</div>
+</section>
+</main>
+<!-- MOBILE BOTTOM NAV -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface shadow-lg md:hidden rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Activity</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm-mobile">Account</span>
+</div>
+</nav>
+</div>
+<script>
+    // Simple micro-interaction for the input field
+    const input = document.querySelector('input[type="text"]');
+    const sendBtn = document.querySelector('button .material-symbols-outlined[data-weight="fill"]');
+
+    input.addEventListener('focus', () => {
+      input.parentElement.classList.add('shadow-md');
+    });
+
+    input.addEventListener('blur', () => {
+      input.parentElement.classList.remove('shadow-md');
+    });
+
+    // Dummy click effect for action buttons
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        let x = e.clientX - e.target.offsetLeft;
+        let y = e.clientY - e.target.offsetTop;
+        let ripples = document.createElement('span');
+        ripples.style.left = x + 'px';
+        ripples.style.top = y + 'px';
+        this.appendChild(ripples);
+        setTimeout(() => { ripples.remove() }, 1000);
+      });
+    });
+  </script>
+</body></html>

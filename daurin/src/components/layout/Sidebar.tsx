@@ -54,6 +54,8 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           { href: "/", label: "Home", icon: Home },
         ];
     }
+  }, [role]);
+  
   // if (!session) return null; // Disabled for mock mode
 
   return (

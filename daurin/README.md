@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Daurin — Marketplace Daur Ulang Terintegrasi
 
-## Getting Started
+Proyek Daurin (Tim Mie Ayam Solo) dibangun untuk PLAY IT! 2026. Aplikasi ini memfasilitasi transaksi sampah daur ulang dari Rumah Tangga ➔ Pengepul ➔ Industri Pengolahan, lengkap dengan fitur klasifikasi AI (TensorFlow.js) dan algoritma rute Geospatial.
 
-First, run the development server:
+## 🚀 Cara Deployment (Sesuai Aturan Juri/Hackathon)
+
+Berbeda dengan proyek Next.js biasa yang di-deploy ke Vercel, **Daurin wajib di-deploy di VPS (Jagoan Hosting)** lalu di-*tunneling* menggunakan **Cloudflare Tunnel** agar bisa diakses secara publik di `https://devmieayam.web.id`.
+
+### Langkah 1: Persiapan Server & Build
+Pastikan Anda sudah berada di dalam VPS Jagoan Hosting Anda.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. Install dependensi
+npm install
+
+# 2. Pastikan file .env sudah disesuaikan dengan koneksi database produksi
+# NEXTAUTH_URL=https://devmieayam.web.id
+# NEXT_PUBLIC_APP_URL=https://devmieayam.web.id
+
+# 3. Lakukan build aplikasi
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Langkah 2: Menjalankan Server dengan PM2
+Agar aplikasi berjalan nonstop di background (daemon) VPS:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Instalasi PM2 secara global (jika belum ada)
+npm install -g pm2
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Menjalankan aplikasi
+pm2 start npm --name daurin -- start
+pm2 save
+pm2 startup
+```
 
-## Learn More
+### Langkah 3: Setup Cloudflare Tunnel (cloudflared)
+Mengekspos port 3000 lokal ke domain publik `devmieayam.web.id`.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# 1. Login ke akun Cloudflare Anda
+cloudflared tunnel login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 2. Buat tunnel khusus
+cloudflared tunnel create daurin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 3. Edit konfigurasi di ~/.cloudflared/config.yml:
+# ---------------------------------------------
+# tunnel: <UUID_DARI_LANGKAH_SEBELUMNYA>
+# credentials-file: /root/.cloudflared/<UUID>.json
+# ingress:
+#   - hostname: devmieayam.web.id
+#     service: http://localhost:3000
+#   - service: http_status:404
+# ---------------------------------------------
 
-## Deploy on Vercel
+# 4. Arahkan DNS di Dashboard Cloudflare
+# Buka Cloudflare > DNS > Tambahkan CNAME:
+# Name: devmieayam
+# Target: <UUID>.cfargotunnel.com
+# Proxied: ON
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 5. Jalankan tunnel dan pasangkan ke PM2 agar terus berjalan
+pm2 start cloudflared --name tunnel -- tunnel run daurin
+pm2 save
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Langkah 4: Verifikasi
+Aplikasi seharusnya sudah dapat diakses oleh juri secara *live*.
+```bash
+curl -I https://devmieayam.web.id
+```
+*(Status kembalian harus HTTP 200)*
+
+---
+*Daurin v1.0 — Tim Mie Ayam Solo (Hackathon 2026)*

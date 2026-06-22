@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin | Household Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "emerald-wash": "#ecfdf5",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#001e2f",
+                    "on-tertiary-fixed": "#400013",
+                    "on-surface-variant": "#3f493f",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#d5e3fc",
+                    "industry-neutral": "#1e293b",
+                    "surface-container": "#e6eeff",
+                    "secondary-fixed-dim": "#89ceff",
+                    "primary-container": "#15803d",
+                    "on-primary-fixed": "#00210a",
+                    "surface-container-high": "#dce9ff",
+                    "status-available": "#22c55e",
+                    "surface-tint": "#006d30",
+                    "secondary-fixed": "#c9e6ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-primary-container": "#d3ffd5",
+                    "surface": "#f8f9ff",
+                    "status-claimed": "#f59e0b",
+                    "secondary-container": "#39b8fd",
+                    "surface-bright": "#f8f9ff",
+                    "surface-dim": "#ccdbf3",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#b64c62",
+                    "tertiary-fixed-dim": "#ffb2bd",
+                    "secondary": "#006591",
+                    "on-tertiary-fixed-variant": "#81233b",
+                    "on-secondary-container": "#004666",
+                    "status-negotiation": "#6366f1",
+                    "inverse-surface": "#233144",
+                    "primary": "#00652c",
+                    "on-primary-fixed-variant": "#005323",
+                    "on-secondary-fixed-variant": "#004c6e",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#95f8a7",
+                    "on-background": "#0d1c2e",
+                    "on-surface": "#0d1c2e",
+                    "primary-fixed-dim": "#79db8d",
+                    "tertiary": "#97344a",
+                    "surface-variant": "#d5e3fc",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#79db8d",
+                    "outline": "#6f7a6e",
+                    "tertiary-fixed": "#ffd9dd",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-tertiary-container": "#fff1f1",
+                    "outline-variant": "#becabc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "2rem",
+                    "margin-desktop": "2rem",
+                    "container-max": "1280px",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "margin-mobile": "1rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Geist"],
+                    "body-sm": ["Inter"],
+                    "headline-lg-mobile": ["Geist"],
+                    "data-mono": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #0d1c2e;
+            font-family: 'Inter', sans-serif;
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #becabc;
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #00652c;
+        }
+        .glass-header {
+            backdrop-filter: blur(8px);
+            background: rgba(248, 249, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50 bg-surface shadow-sm glass-header">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">Daurin</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-emerald-wash transition-colors px-2 py-1 rounded" href="#">Impact</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-emerald-wash transition-colors px-2 py-1 rounded" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md transition-transform active:scale-95">Switch Role</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="flex flex-col h-screen p-stack-md gap-stack-sm w-64 fixed left-0 top-16 hidden md:flex bg-surface-container-low border-r border-outline-variant z-40">
+<div class="flex items-center gap-3 px-2 py-4">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-on-primary-container font-black">D</div>
+<div>
+<h2 class="font-label-md text-label-md text-primary font-bold leading-tight">Daurin Marketplace</h2>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Circular Economy Hub</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold font-label-md text-label-md translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">recycling</span>
+<span>Listings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span>Negotiations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<button class="mt-4 bg-primary text-on-primary w-full py-3 rounded-xl font-headline-sm text-headline-sm flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                Post Waste
+            </button>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container/10 transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-grow md:ml-64 p-margin-mobile md:p-margin-desktop bg-background pb-24 md:pb-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-stack-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Welcome back, Sarah</h1>
+<p class="text-on-surface-variant font-body-md text-body-md">Your waste contributions are making a real difference today.</p>
+</div>
+<div class="flex items-center gap-2 bg-emerald-wash px-4 py-2 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-md text-label-md text-primary">Carbon Warrior Level 4</span>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Stat Cards -->
+<div class="md:col-span-4 bento-card p-6 flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Revenue</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Rp 1.450.000</h3>
+<p class="text-status-available font-label-sm text-label-sm mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                            +12% from last month
+                        </p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px] text-primary">payments</span>
+</div>
+</div>
+<div class="md:col-span-4 bento-card p-6 flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Impact Offset</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">124.5 kg <span class="text-headline-sm font-headline-sm text-on-surface-variant">CO2</span></h3>
+<p class="text-status-available font-label-sm text-label-sm mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">park</span>
+                            Equivalent to 5 trees planted
+                        </p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px] text-primary">co2</span>
+</div>
+</div>
+<div class="md:col-span-4 bento-card p-6 flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Listings</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">28</h3>
+<p class="text-on-surface-variant font-label-sm text-label-sm mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                            24 completed sales
+                        </p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px] text-primary">inventory_2</span>
+</div>
+</div>
+<!-- Active Listings Table -->
+<div class="md:col-span-8 bento-card overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Active Listings</h2>
+<button class="text-primary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Waste Material</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Weight</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Estimated Price</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-emerald-wash transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of neatly stacked clear plastic water bottles in bright natural light. The aesthetic is clean and industrial with soft shadows, highlighting the transparency and texture of the PET plastic. High resolution, professional product photography for a sustainable marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJU7Bm1qnDRvXhTCUfcIw1u9E63MP17ZJN_EDpX4VDYvS1EqRakK_XXpuiGUsB5qJno4d6jesTMQWOndi30wSZPyLCOpmoF7ya8hPwe_5n7SYgFLXZDyvUGmpzI5IxYcFaKn3Pd060arynLRYrSdf7aP72r4fbAARKmejtLUJPoqPYIkllcwopH5Ejq4rZ5G4bBGv0CnL_xq-OAAYQDvCbzITEMDBHMeyt4XfSIhJNdpfbuo_LLk2H5ASMHTw1NXxh17kPBfd_MQu0"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">PET Plastic Bottles</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">AI Verified • 98% Confidence</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">12.5 kg</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">Rp 62.500</td>
+<td class="px-6 py-4">
+<span class="bg-status-available/10 text-status-available px-3 py-1 rounded-full text-label-sm font-label-sm border border-status-available/20">Available</span>
+</td>
+</tr>
+<tr class="hover:bg-emerald-wash transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, organized stack of brown corrugated cardboard boxes flattened for recycling. The lighting is warm and directional, emphasizing the corrugated edges and earthy brown tones. The composition is minimalist and modern, set against a neutral grey studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe6ZW1XP5C2jXcy0nzxoZTFY3bDwdFDpk-49o-5DaooCM_Mv7ENSug9xjJQTIrTzr9HydgelkJZ1nLKWhUV_Iqp3H-cxr2arTDEAHXfbSw8gLwBLXvSWeeo7DCmEIodzunNGxn1voRNOIdTDESpjYaLKbaoO7TC7vUO1DCC_sm6QpB52VDU7BfjhSE92acVc28W79gH7td4TaytxdEgmOL2HTUWhfVEjmZawwWiQmk7IB8uOIhz1boVxxBElNHYBSmyRyMXbTg2v-Z"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Mixed Cardboard</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Manual Listing</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">45.0 kg</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">Rp 112.500</td>
+<td class="px-6 py-4">
+<span class="bg-status-claimed/10 text-status-claimed px-3 py-1 rounded-full text-label-sm font-label-sm border border-status-claimed/20">Claimed</span>
+</td>
+</tr>
+<tr class="hover:bg-emerald-wash transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up of clean aluminum beverage cans compressed and ready for recycling. The metallic surfaces reflect soft studio lighting with subtle blue and silver highlights. High-end commercial style with a focus on sustainable material textures and industrial precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB79cjnAsaJwG3mo3VCfa8D_EaYrHQzHR5gA0wy4yLklpV2Wc9Erfs82K9rn_9i0EbPFdgEDRQ6_nHgAVW0GUXAmvRrHgUqLBkKLathJUH2J9B5L5YOs-I_Elws4AC53TPg9S3awFI9qPQ44kzBsJEDc2S_YVjzC3H1y3vPlLhEA3I5eNJOfwWjYCHMujkC_fBx2p2BXHwMNIhXxCjyNlaigdiQgF3fbxRrkZF9TrdW3o7S8FEk3mbd4srfvTIFd8tkBHfVYNPxsX7r"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Aluminum Cans</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">AI Verified • 95% Confidence</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">8.2 kg</td>
+<td class="px-6 py-4 font-data-mono text-data-mono">Rp 164.000</td>
+<td class="px-6 py-4">
+<span class="bg-status-negotiation/10 text-status-negotiation px-3 py-1 rounded-full text-label-sm font-label-sm border border-status-negotiation/20">Negotiation</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Impact & SDG Summary -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- SDG Card -->
+<div class="bento-card p-6 bg-industry-neutral text-on-tertiary">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm">SDG Contributions</h3>
+<span class="material-symbols-outlined text-status-available">verified</span>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-label-sm font-label-sm mb-1 opacity-80">
+<span>Goal 12: Responsible Consumption</span>
+<span>75%</span>
+</div>
+<div class="w-full bg-on-surface-variant/30 h-2 rounded-full overflow-hidden">
+<div class="bg-status-available h-full w-3/4"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-sm font-label-sm mb-1 opacity-80">
+<span>Goal 13: Climate Action</span>
+<span>40%</span>
+</div>
+<div class="w-full bg-on-surface-variant/30 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-2/5"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-sm font-label-sm mb-1 opacity-80">
+<span>Goal 14: Life Below Water</span>
+<span>62%</span>
+</div>
+<div class="w-full bg-on-surface-variant/30 h-2 rounded-full overflow-hidden">
+<div class="bg-status-negotiation h-full w-[62%]"></div>
+</div>
+</div>
+</div>
+<p class="mt-6 font-body-sm text-body-sm opacity-70 leading-relaxed italic">"Small individual actions at scale drive systemic change."</p>
+</div>
+<!-- Logistics Widget -->
+<div class="bento-card p-6">
+<h3 class="font-label-md text-label-md text-on-surface mb-4">Active Pickup</h3>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-wash flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Budi's Logistics</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Estimated arrival: 14:30 PM</p>
+<div class="mt-3 flex gap-2">
+<button class="bg-surface-container-high px-3 py-1 rounded-lg font-label-sm text-label-sm hover:bg-surface-container-highest transition-colors">Call Driver</button>
+<button class="text-primary font-label-sm text-label-sm hover:underline">View Map</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</a>
+</nav>
+<!-- FAB (Mobile Only) -->
+<button class="md:hidden fixed right-6 bottom-20 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-xl z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Simple logic for interactive elements
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Subtle interaction logic could go here
+            });
+        });
+
+        // AI Listing Flow Mockup Toggle (Console Only)
+        function togglePostWasteFlow() {
+            console.log("Opening AI Listing Flow... Initializing Camera and Material Recognition...");
+        }
+    </script>
+</body></html>

@@ -38,3 +38,26 @@ export const CreateWasteListingSchema = z.object({
   photoUrl: z.string().url().optional(),
   aiClassification: z.string().optional(),
 });
+
+export const CreateMaterialListingSchema = z.object({
+  wasteType: WasteTypeEnum,
+  purpose: z.string().min(1, "Purpose is required"),
+  weightKg: z.number().positive("Weight must be positive"),
+  pricePerKg: z.number().positive("Price must be positive"),
+  photoUrl: z.string().url().optional(),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
+  sourceClaimId: z.string().optional(),
+});
+
+export const CreateOrderSchema = z.object({
+  materialId: z.string().min(1, "Material ID is required"),
+  volumeKg: z.number().positive("Volume must be positive"),
+  buyerNote: z.string().optional(),
+});
+
+export const NegotiateSchema = z.object({
+  type: z.enum(["OFFER", "COUNTER_OFFER", "DEAL", "CANCEL"]),
+  amount: z.number().positive().optional(),
+  message: z.string().optional(),
+});

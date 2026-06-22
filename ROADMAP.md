@@ -62,7 +62,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 | Jam | Task                                                                                                               | FR/ERD Ref                                   | Prioritas |
 | --- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------- | --------- |
 | 0–1 | Setup repo GitHub, buat README skeleton, breakdown task ke issue/kanban sederhana                                  | —                                            | 🔴 P0     |
-| 1–2 | Load TF.js + MobileNetV2 di browser: buat komponen `<WasteClassifier />` proof-of-concept, test dengan 3–5 foto    | FR-002.2, ERD §2.4 (`ai_classification`)     | 🔴 P0     |
+| 1–2 | ✅ Load TF.js + MobileNetV2 di browser: buat komponen `<WasteClassifier />` proof-of-concept, test dengan 3–5 foto    | FR-002.2, ERD §2.4 (`ai_classification`)     | 🔴 P0     |
 | 2–3 | Setup Leaflet.js + React-Leaflet + OpenStreetMap tile layer: buat komponen `<MapView />` dasar dengan marker dummy | FR-003.3, ERD §2.4 (`latitude`, `longitude`) | 🔴 P0     |
 
 ---
@@ -103,9 +103,9 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam | Task                                                                                                                                         | FR Ref   | Prioritas |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------- | --------- |
-| 5–6 | API `POST /api/waste-listings` · validasi role = `rumah_tangga` · upload foto ke Supabase Storage · simpan URL ke `WASTE_LISTINGS.photo_url` | FR-002.1 | 🔴 P0     |
-| 6–7 | API `GET /api/waste-listings?role=rt` (listing milik user saat ini) · API `PATCH /api/waste-listings/:id` (update status)                    | FR-002.3 | 🔴 P0     |
-| 7–8 | API `GET /api/waste-listings/marketplace` (filter by waste_type, status=tersedia) · sertakan `latitude`/`longitude` untuk peta               | FR-003.1 | 🔴 P0     |
+| 5–6 | ✅ API `POST /api/waste-listings` · validasi role = `rumah_tangga` · upload foto ke Supabase Storage · simpan URL ke `WASTE_LISTINGS.photo_url` | FR-002.1 | 🔴 P0     |
+| 6–7 | ✅ API `GET /api/waste-listings?role=rt` (listing milik user saat ini) · API `PATCH /api/waste-listings/:id` (update status)                    | FR-002.3 | 🔴 P0     |
+| 7–8 | ✅ API `GET /api/waste-listings/marketplace` (filter by waste_type, status=tersedia) · sertakan `latitude`/`longitude` untuk peta               | FR-003.1 | 🔴 P0     |
 
 #### Dev 2 — Frontend
 
@@ -119,8 +119,8 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam | Task                                                                                                                                                                                                  | FR Ref              | Prioritas |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------- |
-| 5–6 | Finalisasi komponen `<WasteClassifier />` · mapping output MobileNet ke 5 kelas Daurin (`plastik_pet`, `plastik_hdpe`, `kertas`, `logam`, `elektronik`) · simpan hasil ke state untuk dikirim ke form | FR-002.2, ERD §2.4  | 🔴 P0     |
-| 6–8 | Tulis fungsi utilitas `haversineDistance(lat1, lng1, lat2, lng2): number` · unit test manual di console · akan digunakan oleh algoritma rute                                                          | ERD §2.10, PRD §6.3 | 🟡 P1     |
+| 5–6 | ✅ Finalisasi komponen `<WasteClassifier />` · mapping output MobileNet ke 5 kelas Daurin (`plastik_pet`, `plastik_hdpe`, `kertas`, `logam`, `elektronik`) · simpan hasil ke state untuk dikirim ke form | FR-002.2, ERD §2.4  | 🔴 P0     |
+| 6–8 | ✅ Tulis fungsi utilitas `haversineDistance(lat1, lng1, lat2, lng2): number` · unit test manual di console · akan digunakan oleh algoritma rute                                                          | ERD §2.10, PRD §6.3 | 🟡 P1     |
 
 ---
 
@@ -130,10 +130,10 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam   | Task                                                                                                                                                                                                                 | FR Ref                           | Prioritas |
 | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------- |
-| 8–9   | API `POST /api/pickup-claims` · validasi role = pengepul, listing status = tersedia, waste_type match dengan `COLLECTOR_WASTE_TYPES` · update `WASTE_LISTINGS.status` → `diklaim` secara atomik (Prisma transaction) | FR-003.2, ERD §2.5 state machine | 🔴 P0     |
-| 9–10  | API `PATCH /api/pickup-claims/:id` (update status: diklaim → diambil → selesai) · saat selesai: update `WASTE_LISTINGS.status` → `selesai`, catat `final_price`                                                      | FR-003.2, ERD §3.1–3.2           | 🔴 P0     |
-| 10–11 | API `POST /api/material-listings` · validasi role = pengepul · opsional `source_claim_id` untuk traceability · simpan ke `MATERIAL_LISTINGS`                                                                         | FR-003.6, ERD §2.6               | 🔴 P0     |
-| 11–12 | API `GET /api/material-listings/marketplace` · filter: `material_type`, `status=tersedia`, range harga, lat/lng · sertakan koordinat untuk sorting by jarak di client                                                | FR-004.1                         | 🔴 P0     |
+| 8–9   | ✅ API `POST /api/pickup-claims` · validasi role = pengepul, listing status = tersedia, waste_type match dengan `COLLECTOR_WASTE_TYPES` · update `WASTE_LISTINGS.status` → `diklaim` secara atomik (Prisma transaction) | FR-003.2, ERD §2.5 state machine | 🔴 P0     |
+| 9–10  | ✅ API `PATCH /api/pickup-claims/:id` (update status: diklaim → diambil → selesai) · saat selesai: update `WASTE_LISTINGS.status` → `selesai`, catat `final_price`                                                      | FR-003.2, ERD §3.1–3.2           | 🔴 P0     |
+| 10–11 | ✅ API `POST /api/material-listings` · validasi role = pengepul · opsional `source_claim_id` untuk traceability · simpan ke `MATERIAL_LISTINGS`                                                                         | FR-003.6, ERD §2.6               | 🔴 P0     |
+| 11–12 | ✅ API `GET /api/material-listings/marketplace` · filter: `material_type`, `status=tersedia`, range harga, lat/lng · sertakan koordinat untuk sorting by jarak di client                                                | FR-004.1                         | 🔴 P0     |
 
 #### Dev 2 — Frontend
 
@@ -147,7 +147,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam   | Task                                                                                                                                                                                                                                       | FR Ref                       | Prioritas |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | --------- |
-| 8–10  | Implementasi algoritma rute nearest-neighbor · input: posisi pengepul + array `{id, lat, lng}` klaim aktif · output: array ID terurut + total jarak km + estimasi biaya bensin · integrasikan ke halaman peta sebagai panel "Rute Optimal" | FR-003.4, FR-003.5, PRD §6.3 | 🟡 P1     |
+| 8–10  | ✅ Implementasi algoritma rute nearest-neighbor · input: posisi pengepul + array `{id, lat, lng}` klaim aktif · output: array ID terurut + total jarak km + estimasi biaya bensin · integrasikan ke halaman peta sebagai panel "Rute Optimal" | FR-003.4, FR-003.5, PRD §6.3 | 🟡 P1     |
 | 10–12 | Setup Supabase Realtime subscription untuk tabel `NOTIFICATIONS` · buat helper `createNotification(userId, type, title, body, referenceId)` · panggil dari API klaim & update status                                                       | FR-002.4, ERD §2.12          | 🟡 P1     |
 
 ---
@@ -158,9 +158,9 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam     | Task                                                                                                                                                                                                                                                    | FR Ref                                     | Prioritas |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | --------- |
-| 12–13   | API `POST /api/orders` · validasi role = industri · buat ORDER dengan status `pending` · update `MATERIAL_LISTINGS.status` → `dipesan` · insert notifikasi ke pengepul                                                                                  | FR-004.2, ERD §2.7, §3.4                   | 🔴 P0     |
-| 13–14.5 | Implementasi state machine negosiasi · API `POST /api/negotiations` · action_type: `offer`, `counter_offer`, `deal`, `cancel` · saat `deal`: update ORDER → `deal`, simpan `final_price_per_kg`, `final_total_price` · buat TRANSACTION secara otomatis | FR-004.3, FR-004.4, ERD §2.8 state machine | 🔴 P0     |
-| 14.5–16 | API `GET /api/orders?role=industri` (riwayat order + status) · API `GET /api/negotiations/:orderId` (thread lengkap)                                                                                                                                    | FR-004.5                                   | 🟡 P1     |
+| 12–13   | ✅ API `POST /api/orders` · validasi role = industri · buat ORDER dengan status `pending` · update `MATERIAL_LISTINGS.status` → `dipesan` · insert notifikasi ke pengepul                                                                                  | FR-004.2, ERD §2.7, §3.4                   | 🔴 P0     |
+| 13–14.5 | ✅ Implementasi state machine negosiasi · API `POST /api/negotiations` · action_type: `offer`, `counter_offer`, `deal`, `cancel` · saat `deal`: update ORDER → `deal`, simpan `final_price_per_kg`, `final_total_price` · buat TRANSACTION secara otomatis | FR-004.3, FR-004.4, ERD §2.8 state machine | 🔴 P0     |
+| 14.5–16 | ✅ API `GET /api/orders?role=industri` (riwayat order + status) · API `GET /api/negotiations/:orderId` (thread lengkap)                                                                                                                                    | FR-004.5                                   | 🟡 P1     |
 
 #### Dev 2 — Frontend
 
@@ -187,10 +187,10 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam   | Task                                                                                                                                                                                                         | FR Ref                          | Prioritas |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- | --------- |
-| 16–17 | API `GET /api/marketplace/landing` · return 3 dataset: waste_listings (RT), material_listings (pengepul), processed_outputs (industri, jika ada) · filter status = tersedia                                  | FR-005.1                        | 🔴 P0     |
-| 17–18 | API `GET /api/dashboard/:role` · RT: jumlah listing + total nominal · Pengepul: klaim aktif + bahan baku listing + pendapatan · Industri: order aktif + total transaksi                                      | FR-005.2                        | 🔴 P0     |
-| 18–19 | API `GET /api/dashboard/impact` · aggregasi `IMPACT_LOGS`: total CO2 offset per waste_type, total nilai ekonomi · otomatis create IMPACT_LOG saat TRANSACTION dibuat (trigger di API transaksi)              | FR-005.3, ERD §2.13, Appendix A | 🟡 P1     |
-| 19–20 | Seed data dummy lengkap: 5 listing RT (berbagai jenis), 3 klaim selesai, 4 material listing, 2 order (1 deal, 1 negosiasi aktif), 2 transaksi → isi IMPACT_LOGS → pastikan semua fitur bisa didemonstrasikan | PRD §L deliverable #4           | 🔴 P0     |
+| 16–17 | ✅ API `GET /api/marketplace/landing` · return 3 dataset: waste_listings (RT), material_listings (pengepul), processed_outputs (industri, jika ada) · filter status = tersedia                                  | FR-005.1                        | 🔴 P0     |
+| 17–18 | ✅ API `GET /api/dashboard/:role` · RT: jumlah listing + total nominal · Pengepul: klaim aktif + bahan baku listing + pendapatan · Industri: order aktif + total transaksi                                      | FR-005.2                        | 🔴 P0     |
+| 18–19 | ✅ API `GET /api/dashboard/impact` · aggregasi `IMPACT_LOGS`: total CO2 offset per waste_type, total nilai ekonomi · otomatis create IMPACT_LOG saat TRANSACTION dibuat (trigger di API transaksi)              | FR-005.3, ERD §2.13, Appendix A | 🟡 P1     |
+| 19–20 | ✅ Seed data dummy lengkap: 5 listing RT (berbagai jenis), 3 klaim selesai, 4 material listing, 2 order (1 deal, 1 negosiasi aktif), 2 transaksi → isi IMPACT_LOGS → pastikan semua fitur bisa didemonstrasikan | PRD §L deliverable #4           | 🔴 P0     |
 
 ### Dev 2 — Frontend
 

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin Marketplace | Material Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#b64c62",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "status-claimed": "#f59e0b",
+                        "on-secondary-container": "#004666",
+                        "outline-variant": "#becabc",
+                        "primary-fixed-dim": "#79db8d",
+                        "on-surface-variant": "#3f493f",
+                        "on-tertiary-container": "#fff1f1",
+                        "secondary-container": "#39b8fd",
+                        "on-primary-container": "#d3ffd5",
+                        "status-available": "#22c55e",
+                        "industry-neutral": "#1e293b",
+                        "tertiary-fixed-dim": "#ffb2bd",
+                        "tertiary": "#97344a",
+                        "surface-container": "#e6eeff",
+                        "surface-tint": "#006d30",
+                        "outline": "#6f7a6e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "secondary-fixed": "#c9e6ff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#233144",
+                        "primary-container": "#15803d",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#dce9ff",
+                        "error": "#ba1a1a",
+                        "surface": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "status-negotiation": "#6366f1",
+                        "surface-variant": "#d5e3fc",
+                        "on-surface": "#0d1c2e",
+                        "primary-fixed": "#95f8a7",
+                        "emerald-wash": "#ecfdf5",
+                        "surface-dim": "#ccdbf3",
+                        "on-tertiary-fixed": "#400013",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary-fixed-variant": "#005323",
+                        "secondary": "#006591",
+                        "inverse-primary": "#79db8d",
+                        "on-tertiary-fixed-variant": "#81233b",
+                        "primary": "#00652c",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#00210a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#89ceff",
+                        "tertiary-fixed": "#ffd9dd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1280px",
+                        "gutter": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopAppBar from JSON -->
+<header class="bg-surface dark:bg-on-background shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Daurin</h1>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors px-2 py-1 rounded font-label-md text-label-md" href="#">Impact</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors px-2 py-1 rounded font-label-md text-label-md" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden lg:flex px-4 py-2 text-primary font-label-md text-label-md border border-primary rounded-xl hover:bg-emerald-wash transition-colors">Switch Role</button>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-transform active:scale-90">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest overflow-hidden cursor-pointer active:scale-95 transition-transform">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate procurement manager wearing a sharp navy blue suit, set against a blurred modern office background with soft daylight. The aesthetic is clean, high-end, and corporate, emphasizing trust and stability in a B2B marketplace context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCVWxqzujHs83qCcVkVbjzX385E6pa0J2gQLVhljmbRR0tii5EaU7ZqfUGOJ-lyucLCZAbGNuk_U90nW_kNqwo0tY0sLincLjCqW8qFOCjDiW5Fjz2Gb6QnapedX8Tx54UurB7aIGNt8J82s1fa9bIJUfa11e3v9Nlb-oLPZZxYNILNFrY3Ye8e6kVBKQR2QHQfzbInu7zYgkWpJis7hJmsizYqPn1GW5GJCHwCT_yqfscY5p6nuxCUGiUsRlpZhdmc55bbDQnFXkZ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Hidden on desktop for detail page focus as per "Contextual State & Identity") -->
+<!-- The sidebar is suppressed to prioritize the Material Detail content canvas -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Left Column: Media & Traceability -->
+<div class="flex-1 space-y-gutter">
+<!-- Material Gallery -->
+<section class="bg-surface rounded-xl overflow-hidden shadow-sm border border-outline-variant">
+<div class="relative aspect-[16/9] group overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="High-resolution, extreme close-up of premium processed PET flakes. The material is clear and crystalline with sharp edges, reflecting professional studio lighting that emphasizes purity and uniform particle size. The background is a clean, minimalist laboratory surface in soft whites and emerald tones, suggesting a high-tech circular economy environment." id="main-view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8GFUFclKM5C4mJw82SpSAlBkh6tmC24kMF7c3Q0oD7KCHDS9dl_MwmL9ldRBlJGSNQRv25QRtQyE1Hailugx17lHNThELU59I7oGKuHIespfYHxXayN6oIuAufHR_IeQguoqkeDPJaxP_3Ee3GhVfYUG0-4lzgY_tNsE5jhtRsOboADQb4ciyCOWOKNHZaKikgJtmhjQRbIu3qdWskVx-8Gd3vT_ewih1RLbkV80aie6U4303exw7FUvnNhJfRQ378MGDwscmnWfD"/>
+<div class="absolute top-4 right-4 bg-emerald-wash/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-primary-container flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm text-primary">AI-Verified 99.4% Purity</span>
+</div>
+</div>
+<div class="flex gap-2 p-4 overflow-x-auto scrollbar-hide">
+<div class="w-24 h-24 rounded-lg overflow-hidden border-2 border-primary shrink-0 cursor-pointer shadow-md">
+<img class="w-full h-full object-cover" data-alt="Close up of recycled PET flakes inside a professional sorting tray. Bright studio lighting shows the clarity and lack of contamination in the material." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR2j6qu1lqTbDhBLg5LRKilO9WihILSDLSb2wSF6aVJGPRO6jBlXCBGTjxooXyo5jjeKETmvZf2XPZc0v4knPiTHhI1QYDX8Q6ynUaJfAOd6M_5jQrqI7pjECvCbYxdYUKLsiokCx74iK_EcLJghC6JoRhFvyTXWTZP7_cBwEEFOjxYOJb-p5xY3gMm5X4aWjO-A-T3fQFQbu3Fa_QEImBsi1S7eHS0SamfEv0OnrD1n8MD2DdtEH6p18j2Avkv-QMcstpMjibJoe0"/>
+</div>
+<div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant shrink-0 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Industrial bag of processed PET flakes ready for shipment. The scale shows the industrial volume in a clean, high-end warehouse setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvh_P289KxvktP2gzhvdRJP0C5mVh1O9PVbmCalLAhB255UPcC29ypfdoHttw9iMu0djMCamvDO1GRtPVovcbl2gnxqn3XGlpTBZpLxpy4e9ndQWw0HuM32q-K2T3-Fvl6SNEZ4X43B-Sj0uKQDnVgzUmI0pVH8uRwPc4FHY9N_jWiaP5C0T-R-CR2K9lVofgRf9eAKhQpFcd8xY97L548ga29hm7ve7XaKSXXRw539OHe5yMpB4EVky_c562yygqCdk7G7VpxqM1Q"/>
+</div>
+<div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant shrink-0 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Chemical analysis screen showing the purity and moisture content levels for this specific batch of PET flakes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEzp_h2wdBEWdoBEV5Y62wUd_nvOW-WuUwcoAC41zDmxtLB6Enx5I1j5gj7gy4PM2qxx1Nzcry1iSlzg2L0f_cPg2MGqknPbxQmBDvwjyv5Lj6EHRc048ZevS5jqWaD0lFaI_ulb2ueMb1TVdOhQYZjhuZhJ5aVFizo29FRVoDCX07vwUU_-4DYoBndFfETMDEPQwfo3_7ZU-Q2aWxGSGJMqxxhZ9kXqxQnPhL7haaYcDfKjui3-s8qNWP6a3ajCCS7j_2XcXmLGor"/>
+</div>
+</div>
+</section>
+<!-- Supply Chain Traceability -->
+<section class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center justify-between mb-stack-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Supply Chain Traceability</h2>
+<span class="font-data-mono text-data-mono text-outline px-2 py-1 bg-surface-container rounded">Batch #PET-JKT-0924</span>
+</div>
+<div class="relative py-4">
+<!-- Horizontal Timeline Line -->
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant -translate-y-1/2 hidden md:block"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center mb-2 shadow-lg border-4 border-surface ring-2 ring-primary/20">
+<span class="material-symbols-outlined text-sm">home</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Source</span>
+<p class="text-xs text-on-surface-variant font-body-sm">12 Households in Jakarta</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center mb-2 shadow-lg border-4 border-surface ring-2 ring-primary/20">
+<span class="material-symbols-outlined text-sm">hail</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Collected by</span>
+<p class="text-xs text-on-surface-variant font-body-sm">Pak Budi</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center mb-2 shadow-lg border-4 border-surface ring-2 ring-primary/20">
+<span class="material-symbols-outlined text-sm">factory</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Processed at</span>
+<p class="text-xs text-on-surface-variant font-body-sm">Daurin Hub Central</p>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-2 shadow-lg border-4 border-surface ring-2 ring-secondary/20">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Verified</span>
+<p class="text-xs text-on-surface-variant font-body-sm">Quality Verified (AI)</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Specs & Actions -->
+<aside class="w-full lg:w-[400px] space-y-gutter">
+<!-- Pricing & Volume Card -->
+<div class="bg-surface p-stack-lg rounded-xl border border-outline-variant shadow-sm">
+<div class="mb-6">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Clear PET Flakes</h2>
+<span class="bg-emerald-wash text-primary font-label-sm text-label-sm px-2 py-1 rounded-full border border-primary/20">Industrial Grade</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">$1,150</span>
+<span class="font-label-md text-label-md text-outline">/ Ton</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/30">
+<p class="font-label-sm text-label-sm text-outline mb-1 uppercase">Available Volume</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">12.5 Tons</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/30">
+<p class="font-label-sm text-label-sm text-outline mb-1 uppercase">Minimum Order</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">2.0 Tons</p>
+</div>
+</div>
+<div class="space-y-4 mb-8">
+<h3 class="font-label-md text-label-md text-on-surface-variant border-b border-outline-variant pb-2">Material Specifications</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">Purity</span>
+<span class="font-data-mono text-data-mono font-bold text-on-surface">99.4%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">Moisture</span>
+<span class="font-data-mono text-data-mono font-bold text-on-surface">&lt; 1.0%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">Particle Size</span>
+<span class="font-data-mono text-data-mono font-bold text-on-surface">10-12 mm</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">PVC Content</span>
+<span class="font-data-mono text-data-mono font-bold text-on-surface">&lt; 50 ppm</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-label-md text-label-md shadow-md hover:bg-surface-tint active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">handshake</span>
+                        Start Negotiation
+                    </button>
+<p class="text-center text-xs text-outline mt-4 italic font-body-sm">Final pricing subject to logistics and volume negotiation.</p>
+</div>
+<!-- Supplier Profile -->
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4">Supplier Information</h3>
+<div class="flex items-center gap-4 mb-4">
+<div class="h-14 w-14 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container shadow-inner">
+<span class="material-symbols-outlined text-3xl">precision_manufacturing</span>
+</div>
+<div>
+<div class="flex items-center gap-1">
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Daurin Hub JKT</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex text-status-claimed">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">star_half</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">(4.8/5 • 124 Orders)</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">location_on</span>
+<span class="font-body-sm">Pulogadung Industrial Estate, Jakarta</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="font-body-sm">Avg. Dispatch: 2-3 Business Days</span>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface transition-colors">View Hub Profile</button>
+</div>
+</aside>
+</div>
+<!-- Similar Materials Section (Information Dense Utility) -->
+<section class="mt-stack-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md">Other Available Materials</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="Close-up of recycled HDPE blue pellets stored in an industrial container. The lighting is crisp, professional, and consistent with a B2B marketplace theme, focusing on material texture and uniformity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH9kChN6OO6wtzpIgWGov3NNUT4bsjNnIvmFRQLSvnepjoZRC3FGdugS4WBf2cGT3Yw0o4NAAh4sYtrVbpM76b_tDekTefkEnWj6JFT8XHwOxgtM5lO1D2wN0VvBG9ixHRPfA3S4u14HaGaKJrE5zeIH1M-dxjjyDnxLBlPi2QE7cTdjJGn9DAYl_765gsm4eFL4xKynBprM7JfyZI3qdcsE4ZzzwMsASHGrzCutG51Np629Nm7MIdv0T2HJRwhr_YPTXWkT1NHFJ7"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-secondary uppercase border border-secondary/20">HDPE Blue</div>
+</div>
+<div class="p-4">
+<h4 class="font-label-md text-label-md text-on-surface">Blue HDPE Regrind</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">8.2 Tons</span>
+<span class="font-label-md text-label-md text-primary">$920 / Ton</span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="High-density crushed green glass cullet in a processing facility. The image captures the sparkle of clean, sorted glass under bright industrial lights, suggesting high recyclability and processing standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtuJbrGlg3OhCOhtVhLzWfSHRVUq2z1oM78xTAnmYyS5lfePm4kTffXGutwwOQblW806C8fvR7IYMjXSCBZce_myYYby-qT4t-cDEdx3lqYpBXkz-blEcW0hkO_g7a0FOPR0AUXYSMPgnqHvlijVFIhaAcSRPyVLwXTi57RAuXzeay0l__CbWk9cFO-SzZo2kMayR89NWclNJBhJQU1xXojT21c_LPk3Sd-wxMCG-YcIwQ1n72qPiAd3JNDDTT0gICB_M7z_tlImO0"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-tertiary uppercase border border-tertiary/20">Glass Cullet</div>
+</div>
+<div class="p-4">
+<h4 class="font-label-md text-label-md text-on-surface">Mixed Green Glass Cullet</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">15.0 Tons</span>
+<span class="font-label-md text-label-md text-primary">$180 / Ton</span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="Baled corrugated cardboard in a recycling facility. The focus is on the tight compression and clean separation of the material, lit with neutral, high-quality warehouse lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcl8AmWHOz-mw_KiM2SlhDbE_8uENtqm1ojTHSTDmK7l-3PB5-lCUJXZpApMUQOWWWgs3hkYZF65KKdarMB7kxTgsZVLtuoSb03whP0aXIbClS_OAYKS8VX_7yPeVpXzcJxwYi36AkqJlS4tPuGSPf3s-tp45Cw-xrttN-fyM2chchOiKCZexl6yiUQPzTsuU3B_6mYZQSXyIJ2mWafJpnGNj1IvFBuK8a7nrLq2L7gU6aSfcdHSLazOQhk8EZI5jrS6T9WLJhBJE9"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-on-surface uppercase border border-outline/20">Cardboard</div>
+</div>
+<div class="p-4">
+<h4 class="font-label-md text-label-md text-on-surface">OCC Grade 11 Baled</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">25.5 Tons</span>
+<span class="font-label-md text-label-md text-primary">$240 / Ton</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:scale-95 transition-transform active:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:scale-95 transition-transform active:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:scale-95 transition-transform active:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm-mobile">Account</span>
+</a>
+</nav>
+<script>
+        // Simple interactivity for gallery thumb switching
+        document.querySelectorAll('section div.flex.gap-2 img').forEach(img => {
+            img.parentElement.addEventListener('click', () => {
+                const mainImg = document.getElementById('main-view');
+                const tempSrc = mainImg.src;
+                const tempAlt = mainImg.getAttribute('data-alt');
+                
+                mainImg.src = img.src;
+                mainImg.setAttribute('data-alt', img.getAttribute('data-alt'));
+                
+                // Remove active styling from all
+                document.querySelectorAll('section div.flex.gap-2 div').forEach(div => {
+                    div.classList.remove('border-primary', 'opacity-100', 'shadow-md');
+                    div.classList.add('border-outline-variant', 'opacity-70');
+                });
+                
+                // Add to current
+                img.parentElement.classList.remove('border-outline-variant', 'opacity-70');
+                img.parentElement.classList.add('border-primary', 'opacity-100', 'shadow-md');
+            });
+        });
+
+        // Negotiation button micro-interaction
+        const negBtn = document.querySelector('button.bg-primary');
+        negBtn.addEventListener('click', () => {
+            negBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Initiating...';
+            setTimeout(() => {
+                negBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Negotiation Room Created';
+                negBtn.classList.replace('bg-primary', 'bg-status-available');
+            }, 1200);
+        });
+    </script>
+</body></html>

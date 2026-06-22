@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin Marketplace | Collector Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600;700;800;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#004666",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed-variant": "#005323",
+                        "tertiary": "#97344a",
+                        "on-tertiary-container": "#fff1f1",
+                        "surface-dim": "#ccdbf3",
+                        "on-tertiary-fixed-variant": "#81233b",
+                        "primary": "#00652c",
+                        "tertiary-fixed-dim": "#ffb2bd",
+                        "industry-neutral": "#1e293b",
+                        "surface-tint": "#006d30",
+                        "primary-fixed-dim": "#79db8d",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e6eeff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary-container": "#b64c62",
+                        "secondary-container": "#39b8fd",
+                        "on-primary-container": "#d3ffd5",
+                        "surface-container-lowest": "#ffffff",
+                        "status-claimed": "#f59e0b",
+                        "outline-variant": "#becabc",
+                        "inverse-primary": "#79db8d",
+                        "on-surface-variant": "#3f493f",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary-fixed": "#00210a",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#89ceff",
+                        "primary-fixed": "#95f8a7",
+                        "error": "#ba1a1a",
+                        "on-background": "#0d1c2e",
+                        "surface-bright": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "secondary": "#006591",
+                        "status-available": "#22c55e",
+                        "outline": "#6f7a6e",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#c9e6ff",
+                        "on-surface": "#0d1c2e",
+                        "on-secondary-fixed": "#001e2f",
+                        "primary-container": "#15803d",
+                        "inverse-surface": "#233144",
+                        "on-secondary": "#ffffff",
+                        "status-negotiation": "#6366f1",
+                        "surface-variant": "#d5e3fc",
+                        "on-tertiary-fixed": "#400013",
+                        "emerald-wash": "#ecfdf5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem",
+                        "stack-sm": "0.5rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="bg-surface shadow-sm sticky top-0 z-50 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Daurin</h1>
+<nav class="hidden md:flex items-center gap-6 ml-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant font-label-md hover:bg-emerald-wash transition-colors px-2 py-1 rounded" href="#">Impact</a>
+<a class="text-on-surface-variant font-label-md hover:bg-emerald-wash transition-colors px-2 py-1 rounded" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:block bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md scale-95 active:scale-90 transition-transform">Switch Role</button>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-emerald-wash rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a young Southeast Asian man in a modern office environment. He is wearing a crisp white polo shirt, smiling confidently at the camera. The background is slightly blurred with soft natural light hitting the scene, maintaining a bright and trustworthy SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm9voSqhpACybgvyjz0qSWsBFGYNxObYGEL9aaGBuC8pn7CpH0l1QYQ9n09W7Evj34zYtTSJ2F49t-r8NCIWL5tSLrnPEfQzC4Arfsj9kPU0KV3VNSyzecBlula7B3p0qRWoYjHgVK9TB4Y0h-rAxGEqvB9Fshjcpt_lk3j9FhnYCUxZ67e83_yMnr0O3xtWUm2DeZnqex_r942IvP52rHi8EB_HpADULKWfmNsGjY32FKbLXsfucK48LxfiKTddWy3NnhA8AgSoNx"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar (Desktop) -->
+<aside class="h-full w-64 fixed left-0 top-16 hidden md:flex flex-col bg-surface-container-low border-r border-outline-variant p-stack-md gap-stack-sm z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">recycling</span>
+</div>
+<div>
+<p class="font-headline-sm text-label-md font-black text-primary leading-tight">Daurin Hub</p>
+<p class="text-[10px] text-on-surface-variant opacity-70">Circular Economy Hub</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all translate-x-0 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold translate-x-1" href="#">
+<span class="material-symbols-outlined">recycling</span>
+<span class="font-label-md">Listings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-md">Negotiations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 space-y-1">
+<button class="w-full bg-primary text-on-primary font-bold py-3 rounded-xl mb-4 hover:brightness-110 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Post Waste</span>
+</button>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen pb-24 md:pb-8">
+<!-- Action Bar: Search & Filters -->
+<section class="sticky top-16 bg-surface/80 backdrop-blur-md z-30 border-b border-outline-variant/30 px-margin-mobile md:px-margin-desktop py-4">
+<div class="max-w-container-max mx-auto flex flex-col gap-4">
+<!-- Top Row: Search and Toggle -->
+<div class="flex flex-col md:flex-row items-center gap-4">
+<div class="relative w-full flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all text-body-md" placeholder="Search by waste type or area..." type="text"/>
+</div>
+<div class="flex items-center bg-surface-container p-1 rounded-xl w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white shadow-sm rounded-lg font-label-md transition-all" id="listViewBtn">
+<span class="material-symbols-outlined">grid_view</span>
+<span>List</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg font-label-md transition-all" id="mapViewBtn">
+<span class="material-symbols-outlined">map</span>
+<span>Map</span>
+</button>
+</div>
+</div>
+<!-- Bottom Row: Filters -->
+<div class="flex items-center gap-3 overflow-x-auto pb-2 custom-scrollbar no-scrollbar">
+<button class="flex items-center gap-2 px-4 py-2 bg-emerald-wash border border-primary text-primary rounded-full font-label-md whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        All Materials
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-on-surface-variant hover:border-primary rounded-full font-label-md whitespace-nowrap transition-colors">
+<span class="material-symbols-outlined text-[18px]">opacity</span>
+                        PET Plastic
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-on-surface-variant hover:border-primary rounded-full font-label-md whitespace-nowrap transition-colors">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                        HDPE
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-on-surface-variant hover:border-primary rounded-full font-label-md whitespace-nowrap transition-colors">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                        Paper & Cardboard
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-on-surface-variant hover:border-primary rounded-full font-label-md whitespace-nowrap transition-colors">
+<span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
+                        Metal
+                    </button>
+<div class="h-6 w-[1px] bg-outline-variant mx-2 shrink-0"></div>
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-2 rounded-full shrink-0">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">distance</span>
+<select class="bg-transparent border-none p-0 focus:ring-0 font-label-md text-on-surface-variant cursor-pointer">
+<option>Within 5 km</option>
+<option>Within 10 km</option>
+<option>Within 20 km</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- Marketplace Content -->
+<section class="px-margin-mobile md:px-margin-desktop py-stack-md">
+<div class="max-w-container-max mx-auto">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-background">Nearby Listings</h2>
+<p class="text-body-sm text-on-surface-variant">Showing 24 listings near Jakarta Selatan</p>
+</div>
+<button class="flex items-center gap-2 text-primary font-label-md hover:underline">
+                        Sort by: Distance
+                        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<!-- Bento Grid / Cards Container -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="listingsGrid">
+<!-- Listing Card 1 (Premium/Featured) -->
+<div class="group relative bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High-quality photo of sorted PET plastic bottles packed neatly in a large transparent bag. The lighting is bright and professional, highlighting the transparency and cleanliness of the waste. In the top corner, a subtle green digital overlay indicates an AI verification process. The overall aesthetic is clean, industrial, and highly sustainable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClwpdSUeXTRCLffHxa5l11xGdpOqsL63ffzQhMy4xwfrtJWO4r6ZARPFw2dV_WeElMnbXJJ13cahdn9mYoKAJV6QjACG-r6swt2rm1UGUVXncEvANE6nBkW6chXzEzul9Yz-vjaAC-FtOLaMb02h0h5AqqBensEhZUILYcNGl0F7u500QfawZIkg4sa1tMb4YWtAMX5rXztd7Fm0J3rlnM3oBVh9XspMPGiy7Dwa16X-c06-cwaPi_eV-BHbYUsjyJ4j0-fo44glrx"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white px-3 py-1 rounded-full text-label-sm flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                                    AI Verified
+                                </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md text-primary font-data-mono px-2 py-1 rounded-lg text-xs shadow-sm">
+                                98% Confidence
+                            </div>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-label-md text-on-background">PET Plastic Bundle</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Kebayoran Baru, Jakarta
+                                    </p>
+</div>
+<div class="w-10 h-10 bg-emerald-wash rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">opacity</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 py-2">
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Weight</p>
+<p class="font-data-mono text-headline-sm text-primary">12.5 <span class="text-xs">kg</span></p>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Estimated Price</p>
+<p class="font-data-mono text-headline-sm text-on-background">35k <span class="text-xs">IDR</span></p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">distance</span>
+<span class="text-label-sm">1.2 km away</span>
+</div>
+<button class="bg-industry-neutral text-white px-4 py-2 rounded-lg font-label-sm hover:bg-primary transition-colors">View Detail</button>
+</div>
+</div>
+</div>
+<!-- Listing Card 2 -->
+<div class="group relative bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stack of clean, flattened cardboard boxes tied together with fiber rope. The lighting is warm and natural, creating a domestic but organized feel. The background shows a modern minimalist garage. The image is crisp and clear, following the marketplace's professional SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIvPOV5vGkj30uNfCNPjcfiKsUJUodlzi8iHggqYNUidFAgjYbbkERuw-rgIlhS2Tuf7DnCIeqP0nejG2LHH44-Dv2rT7CBwvUQd6pzmP1JzS4FSSFi5elzUVQsocNUPUmqJohNRJ-yWo9LfChSTB5_8LS4cJG9EHRNJ41_yP-HnSBH-JdTEuRoM3t0h_HSaSrjKArxN-YMZy_LhtNVvOvYSWM9kWdeh2EWpfddjMRGJxhINKzaor5JQFUltZYdAe8t52omzTs9Did"/>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-label-md text-on-background">Bulk Cardboard</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Cilandak, Jakarta
+                                    </p>
+</div>
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">description</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 py-2">
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Weight</p>
+<p class="font-data-mono text-headline-sm text-primary">45.0 <span class="text-xs">kg</span></p>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Estimated Price</p>
+<p class="font-data-mono text-headline-sm text-on-background">120k <span class="text-xs">IDR</span></p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">distance</span>
+<span class="text-label-sm">3.4 km away</span>
+</div>
+<button class="bg-industry-neutral text-white px-4 py-2 rounded-lg font-label-sm hover:bg-primary transition-colors">View Detail</button>
+</div>
+</div>
+</div>
+<!-- Listing Card 3 (Negotiation Status) -->
+<div class="group relative bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Assorted aluminum soda cans crushed and collected in a blue bin. The metallic textures reflect bright studio lighting, emphasizing the recyclable nature of the material. A clean, modern environment is suggested in the background. High contrast and vibrant colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWLKqJmhJeKtS8peWvWv4gcjsgzHxmQtIBaKdDq-gL8Ewo7Jr1b-ctYEvaD-zcB0puIDob1V33kNGZLtZFZDiQTI6FB6x3w7LmcBSwj2Q3OJ_14DcJ1tYeTF2CJ7lHz4lrbs8NmHFO6e8yj8nZoJtthnV-NLb0Uz-M0CVxkkWL65UAJGWa_RUkmqftD83IpMZHH87WSYicqiS5eGPSR_K6e2lkxgKitd0ph9WcFdelCffQqoSUXQGPRXEX6Jav7yMpSw8WidqRRsqE"/>
+<div class="absolute top-3 right-3">
+<span class="bg-status-negotiation text-white px-3 py-1 rounded-full text-label-sm animate-pulse-soft">Negotiation</span>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-label-md text-on-background">Mixed Aluminum Cans</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Kemang, Jakarta
+                                    </p>
+</div>
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 py-2">
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Weight</p>
+<p class="font-data-mono text-headline-sm text-primary">8.2 <span class="text-xs">kg</span></p>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Estimated Price</p>
+<p class="font-data-mono text-headline-sm text-on-background">90k <span class="text-xs">IDR</span></p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">distance</span>
+<span class="text-label-sm">0.8 km away</span>
+</div>
+<button class="bg-industry-neutral text-white px-4 py-2 rounded-lg font-label-sm hover:bg-primary transition-colors">View Detail</button>
+</div>
+</div>
+</div>
+<!-- Listing Card 4 -->
+<div class="group relative bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Several large HDPE plastic milk and detergent containers, cleaned and de-labeled, sitting on a wooden surface. Bright, airy composition with soft morning light coming through a window. The scene looks professional and focuses on the high-quality sorting of household waste for a marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO-iG6-WbM9CUS10tuNkCd_s7JLlfwSLuOUJXw6ylh5KPKII-_OKQQ03tRYkWe-xe0REg852jabdCMLDJe6WgzHRAz1Eqoc1diKkCJjpmH8EE2mh5kqBWt1TLlC1VBLm5BVqIQPWwu0x54eWI5_ZOGNfYtGnu-71x4EtGTQx0CTf3ByDLKJaxgBdA8dpibYN3UC63v4_KbXJFk7er_5H6mghwaLzXWRqB_LL7WqjgGlql9x_qjQND06Eth4MZD1vO7koxydQPKYQhf"/>
+<div class="absolute top-3 left-3">
+<span class="bg-primary/90 text-white px-3 py-1 rounded-full text-label-sm flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                                    AI Verified
+                                </span>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-label-md text-on-background">HDPE Containers</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Tebet, Jakarta
+                                    </p>
+</div>
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 py-2">
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Weight</p>
+<p class="font-data-mono text-headline-sm text-primary">5.5 <span class="text-xs">kg</span></p>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Estimated Price</p>
+<p class="font-data-mono text-headline-sm text-on-background">22k <span class="text-xs">IDR</span></p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">distance</span>
+<span class="text-label-sm">5.1 km away</span>
+</div>
+<button class="bg-industry-neutral text-white px-4 py-2 rounded-lg font-label-sm hover:bg-primary transition-colors">View Detail</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Map View (Hidden by default) -->
+<div class="hidden h-[600px] w-full rounded-2xl overflow-hidden border border-outline-variant relative" id="mapView">
+<div class="w-full h-full bg-surface-container flex items-center justify-center">
+<img class="w-full h-full object-cover grayscale-[0.3]" data-location="South Jakarta, Indonesia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAga8-o85q31TfxpkH-Q9FSx5V7rGbxyPqqlwXPgEab4UET_ghQLEle3cKShnvxeNHD1s_W_Kt4ZLnF0WsuJas9RTpRcdumJcdc0Z5ocnHFZz-pR8wi3oUl_yERqdKrNdOETmZ2IKi8bgCCoPoPlP6VHVC_MRDxx9DM_pB7G3PgoN2W_x7oPWWa4QPlGcoMZHBhsiW93A93OXeVD222DbAf9eBo3vWbLWIjo-AX5NxFaX6DTTo9KQQumbPqfM4kTT-VVvdiyU2SCFJO"/>
+<!-- Custom Map Overlays -->
+<div class="absolute top-4 left-4 bg-white p-3 rounded-xl shadow-lg border border-outline-variant max-w-xs">
+<p class="font-label-md text-on-background mb-2">Collector Radius</p>
+<div class="flex items-center gap-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"></span>
+<span class="text-body-sm">Your Location</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-body-sm">
+<span class="flex items-center gap-1">
+<span class="w-3 h-3 rounded-full bg-status-available"></span>
+                                        Available (18)
+                                    </span>
+<span class="text-on-surface-variant">2.1km avg</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="flex items-center gap-1">
+<span class="w-3 h-3 rounded-full bg-status-negotiation"></span>
+                                        Negotiating (6)
+                                    </span>
+<span class="text-on-surface-variant">4.5km avg</span>
+</div>
+</div>
+</div>
+<!-- Floating Markers Mockup -->
+<div class="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2 cursor-pointer group">
+<div class="bg-primary text-white p-2 rounded-xl rounded-bl-none shadow-xl flex items-center gap-2 transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-[18px]">opacity</span>
+<span class="font-data-mono font-bold">12kg</span>
+</div>
+<div class="absolute top-full left-0 mt-2 hidden group-hover:block w-48 bg-white p-3 rounded-xl shadow-2xl border border-outline-variant">
+<p class="font-label-md">PET Plastic</p>
+<p class="text-body-sm text-on-surface-variant">35,000 IDR • 1.2km</p>
+</div>
+</div>
+<div class="absolute top-1/4 right-1/4 -translate-y-1/2 -translate-x-1/2 cursor-pointer group">
+<div class="bg-industry-neutral text-white p-2 rounded-xl rounded-bl-none shadow-xl flex items-center gap-2 transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span class="font-data-mono font-bold">45kg</span>
+</div>
+</div>
+<div class="absolute bottom-1/4 left-1/2 -translate-y-1/2 -translate-x-1/2 cursor-pointer group">
+<div class="bg-status-negotiation text-white p-2 rounded-xl rounded-bl-none shadow-xl flex items-center gap-2 transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
+<span class="font-data-mono font-bold">8kg</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More / Pagination -->
+<div class="flex flex-col items-center justify-center mt-12 gap-4">
+<button class="bg-white border border-outline-variant px-8 py-3 rounded-xl font-label-md hover:bg-surface-container-low transition-all">Load More Listings</button>
+<p class="text-body-sm text-on-surface-variant">Showing 12 of 156 available batches</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-xl border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-[10px]">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-[10px]">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-[10px]">Account</span>
+</a>
+</nav>
+<!-- Floating Action Button (Mobile Contextual) -->
+<button class="md:hidden fixed bottom-20 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+<script>
+        // Simple View Toggling Logic
+        const listViewBtn = document.getElementById('listViewBtn');
+        const mapViewBtn = document.getElementById('mapViewBtn');
+        const listingsGrid = document.getElementById('listingsGrid');
+        const mapView = document.getElementById('mapView');
+
+        listViewBtn.addEventListener('click', () => {
+            listingsGrid.classList.remove('hidden');
+            listingsGrid.classList.add('grid');
+            mapView.classList.add('hidden');
+            
+            listViewBtn.classList.add('bg-white', 'shadow-sm');
+            listViewBtn.classList.remove('text-on-surface-variant');
+            mapViewBtn.classList.add('text-on-surface-variant');
+            mapViewBtn.classList.remove('bg-white', 'shadow-sm');
+        });
+
+        mapViewBtn.addEventListener('click', () => {
+            listingsGrid.classList.add('hidden');
+            listingsGrid.classList.remove('grid');
+            mapView.classList.remove('hidden');
+
+            mapViewBtn.classList.add('bg-white', 'shadow-sm');
+            mapViewBtn.classList.remove('text-on-surface-variant');
+            listViewBtn.classList.add('text-on-surface-variant');
+            listViewBtn.classList.remove('bg-white', 'shadow-sm');
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.01]');
+        });
+    </script>
+</body></html>

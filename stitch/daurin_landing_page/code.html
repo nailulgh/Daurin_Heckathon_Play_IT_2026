@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin | Ubah Sampah Jadi Berkah</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Daurin</span>
+<nav class="hidden md:flex items-center gap-6 ml-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors font-label-md text-label-md px-2 py-1 rounded" href="#">Impact</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors font-label-md text-label-md px-2 py-1 rounded" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-2 md:gap-4">
+<button class="hidden md:block px-4 py-2 text-primary font-label-md text-label-md hover:bg-emerald-wash transition-colors rounded-lg">Switch Role</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant scale-95 active:scale-90 transition-transform">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant scale-95 active:scale-90 transition-transform">account_circle</button>
+<button class="md:hidden material-symbols-outlined p-2">menu</button>
+</div>
+</header>
+<main class="overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center pt-8 pb-16 px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Decorative Element -->
+<div class="absolute top-0 right-0 -z-10 w-2/3 h-full opacity-10">
+
+</div>
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="z-10">
+<span class="inline-block py-1 px-3 rounded-full bg-emerald-wash text-primary font-label-md text-label-md mb-6">
+                        Circular Economy Leader
+                    </span>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-6 leading-tight">
+                        Ubah Sampah Jadi Berkah, <br/>
+<span class="text-primary">Satukan Rantai Daur Ulang.</span>
+</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-lg">
+                        Platform marketplace sirkular yang menghubungkan rumah tangga, pengumpul, dan industri untuk memaksimalkan dampak lingkungan dan ekonomi.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary hover:bg-primary-container text-on-primary px-8 py-4 rounded-lg font-label-md text-label-md shadow-lg transition-all scale-100 active:scale-95 flex items-center gap-2">
+                            Mulai Menjual
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="bg-surface-container-highest hover:bg-surface-dim text-on-surface px-8 py-4 rounded-lg font-label-md text-label-md transition-all flex items-center gap-2">
+                            Marketplace
+                            <span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+<div class="relative flex justify-center items-center">
+<div class="relative w-full aspect-square max-w-md">
+<div class="absolute inset-0 bg-primary rounded-3xl rotate-3 opacity-5"></div>
+<div class="absolute inset-0 bg-secondary-container rounded-3xl -rotate-3 opacity-5"></div>
+<div class="relative z-10 w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+<img class="w-full h-full object-cover" data-alt="A professional high-definition photograph of a clean, modern recycling facility using AI scanning technology to sort plastics. The lighting is bright and industrial-chic with cool tones and emerald green accents. In the foreground, a sleek tablet displays data visualizations of waste categories. The atmosphere is reliable, high-tech, and sustainable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF0AQQuKNOcwfRzVpwk8T6Ys1TYfTJ9WhctWWdANDscwSAKQefACOJpDHIOHHkcL7_LbHGhyvLYP1Vbxsx-pNt9cgOVjhY2fYwm-WSTC9H1bI1iO1eYKXmA6S05kd9Duk3w_YgcUud5qzRUIy5NxSgyh5hVdItYSfqYhsbMbTvWGrv99513qc3c-URwVpGQvCeRfoaoMVikEuni7ADFPWfaqXKmEeyGCXhnTLNpQ6M7YixWcbQKK2sFF7AVrPMYUr7ZKYKItHGpTjr"/>
+</div>
+<!-- Floating Micro-card -->
+<div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-xl shadow-xl border border-outline-variant animate-float z-20">
+<div class="flex items-center gap-3">
+<div class="bg-status-available p-2 rounded-full text-white">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">AI Verified</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">PET Plastic Grade A</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Impact Ticker Section -->
+<section class="bg-primary text-on-primary-container py-12">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:divide-x divide-primary-container/30">
+<div class="text-center md:text-left px-4">
+<p class="font-headline-md text-headline-md font-black">45,230<span class="text-secondary-fixed">kg</span></p>
+<p class="font-label-md text-label-md uppercase tracking-wider opacity-80">Waste Recycled</p>
+</div>
+<div class="text-center px-4">
+<p class="font-headline-md text-headline-md font-black">85,120<span class="text-secondary-fixed">kg</span></p>
+<p class="font-label-md text-label-md uppercase tracking-wider opacity-80">CO2 Offset</p>
+</div>
+<div class="text-center md:text-right px-4">
+<p class="font-headline-md text-headline-md font-black">1,200+</p>
+<p class="font-label-md text-label-md uppercase tracking-wider opacity-80">Active Contributors</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Ecosystem Section (The Three Pillars) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-md text-headline-md mb-4 text-on-surface">Ekosistem Marketplace Sirkular</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Menghubungkan setiap mata rantai daur ulang untuk menciptakan nilai ekonomi dari limbah yang sebelumnya terbuang.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Column 1: Rumah Tangga -->
+<div class="bg-surface p-8 rounded-xl shadow-sm border border-outline-variant hover:border-primary transition-colors group">
+<div class="bg-emerald-wash w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">home</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-3">Rumah Tangga</h3>
+<p class="text-body-sm text-on-surface-variant mb-6">Mulai memilah sampah dari sumbernya, kumpulkan poin, dan jual langsung ke pengepul terverifikasi di sekitar Anda.</p>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+                                AI Waste Detection
+                            </li>
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+                                Pickup Request
+                            </li>
+</ul>
+</div>
+<!-- Column 2: Pengepul -->
+<div class="bg-surface p-8 rounded-xl shadow-sm border border-outline-variant hover:border-primary transition-colors group">
+<div class="bg-secondary-fixed w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">local_shipping</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-3">Pengepul &amp; Hub</h3>
+<p class="text-body-sm text-on-surface-variant mb-6">Optimalkan rute armada, kelola inventori material, dan lakukan negosiasi bulk-order dengan industri besar.</p>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+                                Route Optimization
+                            </li>
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+                                B2B Marketplace Access
+                            </li>
+</ul>
+</div>
+<!-- Column 3: Industri -->
+<div class="bg-surface p-8 rounded-xl shadow-sm border border-outline-variant hover:border-primary transition-colors group">
+<div class="bg-primary-container/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">factory</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-3">Industri Pengolah</h3>
+<p class="text-body-sm text-on-surface-variant mb-6">Dapatkan pasokan bahan baku daur ulang berkualitas secara konsisten dengan transparansi data penuh.</p>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+                                Traceability Report
+                            </li>
+<li class="flex items-center gap-2 text-label-md font-label-md text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+                                ESG Data Insights
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Highlights (Bento Grid) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- AI Feature -->
+<div class="md:col-span-7 bg-white p-12 rounded-3xl border border-outline-variant flex flex-col justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 bg-emerald-wash text-primary rounded-full font-label-md text-label-md mb-4">Smart Classification</span>
+<h3 class="font-headline-md text-headline-md mb-4">Deteksi Material Berbasis AI</h3>
+<p class="text-on-surface-variant max-w-md">Unggah foto sampah Anda dan biarkan AI kami mengklasifikasikan jenis material, berat estimasi, dan harga pasar secara instan.</p>
+</div>
+<div class="mt-8 relative h-48 md:h-64 rounded-xl overflow-hidden shadow-inner border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A futuristic UI dashboard interface showing high-resolution camera footage of plastic bottles being identified by a green glowing bounding box. Labels like 'HDPE 95% Confidence' and 'Est. Weight: 2.5kg' appear over the items. The design is clean, professional, and reflects a data-driven sustainability platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcBTQtrhpN6IRdXw2vXGgHvfH9iJLo5-GV3QUx_m3Xra_EsI5gOtSQtt9Wp0fzGVurL5VqFWop6ocEGy7Gaazj3IlowyMeUKwAKtxa51VFK_QJPHv8Pu24D7KYltcsky__56nI6LQ06J8vzYtbRAs4CjsRdHv9tSBkXzz1bqSET2JLXu8xYTElhIf-aO4uSN5h9EeBkZglLd_pPev9E67ozjQBg0_uWmse60vZAjq58TFIGWbBhGLZb0Wq9VsVGDwANHMQwLSLzaKk"/>
+</div>
+</div>
+<!-- Logistics Feature -->
+<div class="md:col-span-5 bg-industry-neutral text-white p-12 rounded-3xl flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 bg-white/10 text-secondary-fixed rounded-full font-label-md text-label-md mb-4">Efficiency First</span>
+<h3 class="font-headline-md text-headline-md mb-4">Optimasi Rute Logistik</h3>
+<p class="text-surface-variant/80">Kurangi biaya operasional hingga 30% dengan sistem penjadwalan pengambilan otomatis yang cerdas.</p>
+</div>
+<div class="mt-8 flex justify-center">
+<div class="w-full h-48 bg-white/5 rounded-xl border border-white/10 p-4 relative">
+<div class="absolute inset-0 opacity-40">
+<div class="w-full h-full bg-cover bg-center" data-alt="A minimalist digital map of a city with glowing emerald and blue nodes representing pickup points. Sleek white lines illustrate optimized delivery routes connecting collectors to industrial hubs. The aesthetic is clean and corporate SaaS with a dark theme feel." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRWrhqEF88MzeoievunfBHmonjE4BKRqVAURdzM8bic-1QPyZzd2sbe0TtnIS-kjOX2JEyyP6H7dDnxj8PRcIGz8sCcziE7NU1Nw3m7BkaoEwThV6QwuYpKr-BdBlJXMHcoXt2ZX1-vfAHley9ohFwYp4vFfxvo7-hz2qJgtGsABe91fWHfQkM9a2ZKtBf8OMGgekDpJLH8iIv6PtGQHwprjCvK71JwKdo6UUe6vWJWzdfWEe_20NOkK9iDSg7NH_HXDEPsuF4Qhoo')"></div>
+</div>
+<div class="relative flex flex-col gap-2">
+<div class="h-2 w-24 bg-white/20 rounded"></div>
+<div class="h-2 w-32 bg-white/20 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Negotiation Feature -->
+<div class="md:col-span-5 bg-secondary-container p-12 rounded-3xl flex flex-col justify-between group">
+<div>
+<h3 class="font-headline-md text-headline-md mb-4 text-on-secondary-container">B2B Negotiation Hub</h3>
+<p class="text-on-secondary-container/80">Lakukan penawaran harga secara transparan langsung dengan pembeli skala industri.</p>
+</div>
+<div class="mt-8 space-y-3">
+<div class="bg-white p-3 rounded-lg w-fit ml-auto shadow-sm">
+<p class="text-label-sm font-label-sm text-primary">Tawaran: IDR 4.500/kg</p>
+</div>
+<div class="bg-secondary-fixed p-3 rounded-lg w-fit mr-auto shadow-sm">
+<p class="text-label-sm font-label-sm text-secondary">Counter: IDR 4.800/kg</p>
+</div>
+</div>
+</div>
+<!-- Sustainable Future -->
+<div class="md:col-span-7 bg-primary text-on-primary p-12 rounded-3xl flex items-center justify-between overflow-hidden group">
+<div class="max-w-xs">
+<h3 class="font-headline-md text-headline-md mb-4">Transparansi ESG &amp; Laporan Dampak</h3>
+<p class="text-on-primary-container/80">Setiap transaksi dicatat untuk menghasilkan laporan keberlanjutan yang siap audit.</p>
+</div>
+<div class="hidden md:block transform group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px] opacity-20">analytics</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest pt-16 pb-8 px-margin-mobile md:px-margin-desktop border-t border-outline-variant">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-2">
+<span class="font-headline-md text-headline-md font-black text-primary mb-6 block">Daurin.</span>
+<p class="text-on-surface-variant max-w-sm mb-8">
+                        Memberdayakan ekonomi sirkular Indonesia melalui teknologi marketplace yang transparan, efisien, dan berdampak.
+                    </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary border border-outline-variant hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary border border-outline-variant hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface mb-6">Platform</h4>
+<ul class="space-y-4 text-on-surface-variant font-label-md text-label-md">
+<li><a class="hover:text-primary" href="#">Marketplace</a></li>
+<li><a class="hover:text-primary" href="#">Impact Dashboard</a></li>
+<li><a class="hover:text-primary" href="#">Logistics Support</a></li>
+<li><a class="hover:text-primary" href="#">B2B Integration</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface mb-6">About</h4>
+<ul class="space-y-4 text-on-surface-variant font-label-md text-label-md">
+<li><a class="hover:text-primary" href="#">Our Mission</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Partnerships</a></li>
+<li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<!-- SDG Integration -->
+<div class="border-t border-outline-variant pt-8 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-wrap justify-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex flex-col items-center gap-1">
+<div class="w-12 h-12 bg-[#E5243B] rounded p-1">
+<img class="w-full h-full object-contain" data-alt="Official UN Sustainable Development Goal 1 icon representing No Poverty. A solid red square with stylized white figures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaRt3J14iY-2c--TSermOhQ-VJ-o9pQ158YgQ7-Z8MTp62I_j4BodLOeqw1cgEN4hsyog1V5TiJXCRCimSP064M5yn5o6zzY7sLy-movwrBlUYSQtjwWTahtPylHT2XENCDzf3Rkpues_8J7IGyFCEjCuyH2s0_0ZFqgZKMYgbfQmQ832VVnDZJrXoja66b8-jkJE67D53pR3MZe0KaQUYYRF-hp5vRf7al4bEBpVpVANNbAP553T46MSQmdYvKNSGGxvl_QroPrBH"/>
+</div>
+<span class="text-[10px] font-bold">SDG 1</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-12 h-12 bg-[#4C9F38] rounded p-1">
+<img class="w-full h-full object-contain" data-alt="Official UN Sustainable Development Goal 3 icon representing Good Health and Well-being. A solid green square with a stylized white heart and lifeline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkurNbhxF-vxH5nPacAj5ZCk2LLm2CUoNvR6xbvJc774sL5WHDoCpBaJeNnhZNr4UwekQFuFFDP2qKCK9WeAXeKhFmnjtVIQXcU_IBqHaVxuEH8lOlyltoA4QSXeExpWwFcgrHO1iUE9Xqcys81ftlo1lDg0nDm-r5yyjAr1YJSCA01XSdrTHaK7yzMTo-ZVU82Y-4jP4CtE3JJbmE8Z6U7vPg9sJKLBIBeU1SOx1fQ7RhhQrky7gksobuyMrCtBvofLW60xFPDKRM"/>
+</div>
+<span class="text-[10px] font-bold">SDG 3</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-12 h-12 bg-[#BF8B2E] rounded p-1">
+<img class="w-full h-full object-contain" data-alt="Official UN Sustainable Development Goal 12 icon representing Responsible Consumption and Production. A solid mustard yellow square with a stylized white infinity loop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHZU-Ywkf8sdu40sMVAa41guIVa55JuCPOQryEwL_zz0fgk7NysRwEEzbn5EPOmObin7bSxmrB15bRBbJG2gs9KQoimtRi91j_pb9ID20BIkQ0QqXuBv8181DxCtsPF-hmX2uoUr9q5sZGwEVAu-u3hgj1HdO1pNMZoPB9iAQSQHYaFK1AiHrz4p1TR7DUVCV1eSdjZPS7jOSsbcnyfTYRJzNi9u5lgbBQvLHxg8vRT9P_T3EPx2wDf_tzFQzXNY7awQCIrtD2yAol"/>
+</div>
+<span class="text-[10px] font-bold">SDG 12</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-12 h-12 bg-[#3F7E44] rounded p-1">
+<img class="w-full h-full object-contain" data-alt="Official UN Sustainable Development Goal 13 icon representing Climate Action. A solid dark green square with stylized white eye and earth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgS4qN8Tw0sFrHwPYSgWqWSTQjnQWknYVacg6AfAmC3sTR5biaBpVN33CNzaLT4bIb41xH8tsfbIi9D0jZo33XQgxVyl7Ro-5qTI31QLZWcJX7jy4cT0dJXOLwzNX_rO935RQgGBSodDMrBWGgyaQLJfo-CwZrUjOnxRfwRDCfbvdL9g1eoV9u3s66xOmtXhD5hnZ5Pu10XNyT1fldCpNoXM6WvOaRSy-kJmDFb6pZ6Z0ygws-EdpQgSQUbcY1rdkl-OgzYNUnQz2O"/>
+</div>
+<span class="text-[10px] font-bold">SDG 13</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-outline">© 2024 Daurin Marketplace. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150 active:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm-mobile">Account</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for smooth revealing of elements on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+</body></html>
