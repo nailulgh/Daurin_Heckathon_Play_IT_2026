@@ -1,5 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   secret: "daurin-local-development-secret-key-2026",
@@ -8,33 +10,32 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Gunakan 'industri@...', 'pengepul@...', dll" },
-        password: { label: "Password", type: "password", placeholder: "Sembarang password (Mock Mode)" },
+        password: { label: "Password", type: "password", placeholder: "Password akun Anda" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
-        // MOCK MODE: Bypass DB entirely and grant access based on email keyword
-        let role = "RUMAH_TANGGA";
-        let name = "Budi (Warga)";
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
 
-        if (credentials.email.toLowerCase().includes("pengepul")) {
-          role = "PENGEPUL";
-          name = "Pengepul Berkah";
-        } else if (credentials.email.toLowerCase().includes("industri")) {
-          role = "INDUSTRI";
-          name = "PT Daur Ulang Plastik";
-        } else if (credentials.email.toLowerCase().includes("admin")) {
-          role = "ADMIN";
-          name = "Admin Daurin";
+        if (!user) {
+          return null;
+        }
+
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+
+        if (!isPasswordValid) {
+          return null;
         }
 
         return {
-          id: `mock-id-${Date.now()}`,
-          email: credentials.email,
-          name: name,
-          role: role,
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
         };
       },
     }),

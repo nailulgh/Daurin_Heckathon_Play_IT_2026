@@ -28,19 +28,6 @@ export default function LoginForm() {
 
     setIsLoading(true);
     try {
-      // QUICK MAPPING PATCH FOR DEMO
-      if (formData.email.toLowerCase() === "pengepul@example.com") {
-        // Forcefully resolve the mock login authentication behind the scenes
-        await signIn("credentials", {
-          redirect: false,
-          email: formData.email,
-          password: formData.password,
-        });
-        // Instantly trigger client-side redirect without blocks
-        router.push("/pengepul/dashboard");
-        return;
-      }
-
       const result = await signIn("credentials", {
         redirect: false,
         email: formData.email,
@@ -50,13 +37,17 @@ export default function LoginForm() {
       if (result?.error) {
         setServerError("Invalid email or password.");
       } else {
-        const emailLower = formData.email.toLowerCase();
-        if (emailLower.includes("pengepul")) {
+        // Fetch session to get the actual user role from the database
+        const { getSession } = await import("next-auth/react");
+        const session = await getSession();
+        
+        const role = (session?.user as any)?.role;
+
+        if (role === "PENGEPUL") {
           router.push("/pengepul/dashboard");
-        } else if (emailLower.includes("industri")) {
+        } else if (role === "INDUSTRI") {
           router.push("/industri/dashboard");
         } else {
-          // Default to Rumah Tangga for "budi@gmail.com" or others
           router.push("/rumah-tangga/dashboard");
         }
         router.refresh();
