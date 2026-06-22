@@ -2,7 +2,7 @@
 
 > Universal instruction file for AI coding agents (GitHub Copilot, Cursor, Windsurf, Codeium, etc.)
 > Project: PLAY IT! 2026 Hackathon Web Application | Tim Mie Ayam Solo
-> Live URL: https://devmieayam.web.id
+> Live URL: https://greenshift.web.id
 
 ---
 
@@ -31,7 +31,7 @@ Auth:       NextAuth.js (credentials + role-based)
 Storage:    Supabase Storage (waste photos)
 Realtime:   Supabase Realtime (notifications, negotiation chat)
 Deployment: Jagoan Hosting + Cloudflare Tunnel (cloudflared)
-Domain:     devmieayam.web.id
+Domain:     greenshift.web.id
 Process:    PM2
 ```
 
@@ -320,10 +320,10 @@ SUPABASE_SERVICE_ROLE_KEY="eyJ..."
 
 # NextAuth
 NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
-NEXTAUTH_URL="https://devmieayam.web.id"
+NEXTAUTH_URL="https://greenshift.web.id"
 
 # App
-NEXT_PUBLIC_APP_URL="https://devmieayam.web.id"
+NEXT_PUBLIC_APP_URL="https://greenshift.web.id"
 NEXT_PUBLIC_MAPBOX_TOKEN=""   # Leave empty, using OpenStreetMap
 ```
 
@@ -592,19 +592,19 @@ cloudflared tunnel create daurin
 # tunnel: <UUID>
 # credentials-file: /root/.cloudflared/<UUID>.json
 # ingress:
-#   - hostname: devmieayam.web.id
+#   - hostname: greenshift.web.id
 #     service: http://localhost:3000
 #   - service: http_status:404
 
 # 4. Add DNS in Cloudflare Dashboard
-# Type: CNAME | Name: devmieayam | Target: <UUID>.cfargotunnel.com | Proxied: ON
+# Type: CNAME | Name: greenshift | Target: <UUID>.cfargotunnel.com | Proxied: ON
 
 # 5. Start tunnel via PM2
 pm2 start cloudflared -- tunnel run daurin
 pm2 save
 
 # 6. Verify
-curl -I https://devmieayam.web.id
+curl -I https://greenshift.web.id
 # Expected: HTTP 200, server: cloudflare
 ```
 

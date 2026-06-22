@@ -228,7 +228,7 @@ Algoritma rute pengambilan menggunakan pendekatan Nearest-Neighbor Greedy dengan
 | Real-time    | Supabase Realtime (WebSocket)      | Notifikasi & chat negosiasi tanpa setup tambahan                           |
 | Deployment   | Jagoan Hosting + Cloudflare Tunnel | VPS/shared hosting lokal Indonesia, latensi rendah, domain .web.id resmi   |
 | CDN & Tunnel | Cloudflare Tunnel (cloudflared)    | Expose app ke publik tanpa buka port; SSL otomatis; DDoS protection gratis |
-| Domain       | devmieayam.web.id                  | Domain .web.id via Jagoan Hosting; dikonfigurasi via Cloudflare DNS        |
+| Domain       | greenshift.web.id                  | Domain .web.id via Jagoan Hosting; dikonfigurasi via Cloudflare DNS        |
 
 ## **7.2 Arsitektur Sistem**
 
@@ -248,7 +248,7 @@ Infrastruktur deployment menggunakan Jagoan Hosting sebagai server aplikasi deng
 | **Komponen**      | **Detail**                            | **Konfigurasi**                                                                                     |
 | ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | Hosting Provider  | Jagoan Hosting (Indonesia)            | Server lokal Indonesia; latensi rendah untuk pengguna domestik                                      |
-| Domain            | devmieayam.web.id                     | Domain .web.id resmi; dikonfigurasi nameserver ke Cloudflare                                        |
+| Domain            | greenshift.web.id                     | Domain .web.id resmi; dikonfigurasi nameserver ke Cloudflare                                        |
 | Cloudflare Tunnel | cloudflared Zero Trust Tunnel         | Tunnel dari Jagoan Hosting ke Cloudflare edge; tidak perlu IP publik statis atau buka port firewall |
 | SSL/TLS           | Cloudflare SSL otomatis (Full/Strict) | HTTPS end-to-end; sertifikat dikelola Cloudflare secara otomatis                                    |
 | DNS               | Cloudflare DNS                        | NS domain di Cloudflare; CNAME ke tunnel UUID; propagasi instan                                     |
@@ -265,9 +265,9 @@ Infrastruktur deployment menggunakan Jagoan Hosting sebagai server aplikasi deng
 - Step 3 - Install cloudflared di Jagoan Hosting (curl script dari Cloudflare docs)
 - Step 4 - Buat tunnel: cloudflared tunnel login > cloudflared tunnel create daurin
 - Step 5 - Konfigurasi config.yml: ingress rule localhost:3000 ke tunnel UUID
-- Step 6 - Cloudflare Dashboard > DNS: CNAME devmieayam.web.id ke &lt;tunnel-uuid&gt;.cfargotunnel.com
+- Step 6 - Cloudflare Dashboard > DNS: CNAME greenshift.web.id ke &lt;tunnel-uuid&gt;.cfargotunnel.com
 - Step 7 - Jalankan: cloudflared tunnel run daurin (via PM2 juga agar persist)
-- Step 8 - Test <https://devmieayam.web.id> dari device lain; verifikasi SSL aktif (gembok hijau)
+- Step 8 - Test <https://greenshift.web.id> dari device lain; verifikasi SSL aktif (gembok hijau)
 - Backup Plan: Jika tunnel bermasalah, gunakan ngrok sebagai fallback instant (ngrok http 3000)
 
 ## **7.5 Database Schema Overview**
@@ -346,7 +346,7 @@ Dengan tim 3 orang: Dev 1 (Backend/DB), Dev 2 (Frontend/UI), Dev 3 (AI/Map/Integ
 
 | **Jam** | **Aktivitas**                                                                                                                                                   | **PIC**       |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| 20-22   | Deploy app ke Jagoan Hosting + setup Cloudflare Tunnel (cloudflared service) + konfigurasi DNS devmieayam.web.id di Cloudflare dashboard + test live URL publik | Dev 1 + Dev 3 |
+| 20-22   | Deploy app ke Jagoan Hosting + setup Cloudflare Tunnel (cloudflared service) + konfigurasi DNS greenshift.web.id di Cloudflare dashboard + test live URL publik | Dev 1 + Dev 3 |
 | 22-23   | Finalisasi README (cara run, tech, asumsi, demo accounts) + commit push                                                                                         | Dev 3         |
 | 23-24   | Latihan demo script & pitching; backup demo dengan data dummy siap                                                                                              | Semua         |
 
