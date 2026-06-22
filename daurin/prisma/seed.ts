@@ -264,7 +264,7 @@ async function main() {
       buyerId: industri1.id,
       materialId: ml2.id,
       volumeKg: 500,
-      status: "DEAL",
+      status: "SELESAI",
       finalPrice: 2800,
     }
   });

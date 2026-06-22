@@ -83,6 +83,18 @@
 **Impact:**
 - Modul autentikasi telah lengkap. Lanjut siap mengerjakan Listing Sampah (CRUD).
 
+## [2026-06-22] — FASE 3: Dashboard API, Impact & Seed Data
+- Mengimplementasikan `GET /api/dashboard` yang terintegrasi secara riil dengan Prisma Aggregates (`_count`, `_sum`) untuk 3 role berbeda (RT, Pengepul, Industri).
+- Membuat public endpoint `GET /api/dashboard/impact` untuk menghitung pengurangan karbon (CO2 Offset), total transaksi (dari `WasteListing` dan `Order`), total berat, dan total nilai ekonomi untuk *landing page*.
+- Memperbarui skrip `prisma/seed.ts` dan menjalankannya untuk membuat data simulasi yang realistis (3 role, >5 listing sampah, klaim dan transaksi B2B di wilayah Malang Raya).
+
+## [2026-06-22] — Frontend-Backend Integration (Phase 2)
+- Diintegrasikan `/pengepul/marketplace` ke `POST /api/listings/[id]/claim`
+- Diintegrasikan `/pengepul/peta` untuk memuat marker peta dinamis dan memanggil algoritma nearest-neighbor `routeOptimizer`
+- Diubah `/pengepul/bahan-baku/new` untuk menggunakan `MaterialListingForm` asli untuk upload file ke Supabase
+- Diintegrasikan `/industri/pesanan/[id]` State Machine (OFFER/DEAL/CANCEL) untuk hit endpoint `/api/orders/[id]/negotiate`
+- Dimodifikasi `GET /api/listings` untuk menerima param `?myClaims=true` guna mempermudah map frontend.
+
 ## [2026-06-22] — FASE 1: Fondasi Backend & Database Setup
 
 - ✅ Init project Next.js 14 (App Router + TypeScript) dan integrasi Tailwind CSS.

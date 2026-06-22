@@ -4,8 +4,15 @@ import { calculateCO2Offset } from "@/lib/co2";
 
 export async function GET(req: Request) {
   try {
+    const totalListings = await prisma.wasteListing.count();
+    
     const completedListings = await prisma.wasteListing.findMany({
       where: { status: "SELESAI" }
+    });
+
+    const completedOrders = await prisma.order.findMany({
+      where: { status: "SELESAI" },
+      include: { transaction: true }
     });
 
     let totalWeightKg = 0;
@@ -27,14 +34,21 @@ export async function GET(req: Request) {
       byWasteType[listing.wasteType].co2 += co2;
     });
 
-    const totalTransactions = completedListings.length;
+    // Add value from completed Orders
+    completedOrders.forEach(order => {
+      if (order.transaction) {
+        totalValueRp += order.transaction.amount;
+      }
+    });
+
+    const totalTransactions = completedListings.length + completedOrders.length;
 
     return NextResponse.json({
-      totalListings: totalTransactions,
+      totalListings,
       totalTransactions,
-      totalWeightKg,
+      totalWeightKg: Number(totalWeightKg.toFixed(2)),
       totalValueRp,
-      co2OffsetKg,
+      co2OffsetKg: Number(co2OffsetKg.toFixed(2)),
       byWasteType
     });
   } catch (error) {

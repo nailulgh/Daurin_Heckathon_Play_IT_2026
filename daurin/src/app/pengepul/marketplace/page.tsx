@@ -30,12 +30,29 @@ export default function PengepulMarketplace() {
     fetchListings();
   }, []);
 
-  const handleClaim = (id: string, title: string) => {
-    setClaimedIds((prev) => [...prev, id]);
-    toast({
-      title: "Sampah Berhasil Diklaim!",
-      description: `Menerima order ${title}. Masuk ke menu Peta Jemput untuk mengambil.`,
-    });
+  const handleClaim = async (id: string, title: string) => {
+    try {
+      const res = await fetch(`/api/listings/${id}/claim`, {
+        method: "POST",
+      });
+      
+      if (!res.ok) {
+        throw new Error("Gagal mengklaim sampah");
+      }
+      
+      setClaimedIds((prev) => [...prev, id]);
+      toast({
+        title: "Sampah Berhasil Diklaim!",
+        description: `Menerima order ${title}. Masuk ke menu Peta Jemput untuk mengambil.`,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Gagal",
+        description: "Terjadi kesalahan saat mengklaim sampah.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

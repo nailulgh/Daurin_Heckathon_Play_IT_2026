@@ -52,79 +52,111 @@ export default function IndustryNegotiationPage() {
   const isMyTurn = logs.length > 0 && logs[logs.length - 1].actorRole !== "INDUSTRI";
   const lastOfferAmount = logs.length > 0 ? logs[logs.length - 1].amount : undefined;
 
-  const handleSendOffer = (amount: number, message: string) => {
+  const handleSendOffer = async (amount: number, message: string) => {
     setIsSubmitting(true);
     
-    // Simulate API Delay
-    setTimeout(() => {
-      const newLog: NegotiationLog = {
-        id: `log${Date.now()}`,
-        type: "COUNTER_OFFER",
-        actorRole: "INDUSTRI",
-        actorName: "PT Daur Ulang Plastik (Anda)",
-        amount,
-        message,
-        createdAt: new Date(),
-      };
+    try {
+      const res = await fetch(`/api/orders/${id}/negotiate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "COUNTER_OFFER", amount, message }),
+      });
       
-      setLogs((prev) => [...prev, newLog]);
-      setIsSubmitting(false);
+      if (!res.ok) throw new Error("Gagal mengirim penawaran");
+      
+      const newLog = await res.json();
+      
+      setLogs((prev) => [...prev, {
+        id: newLog.id,
+        type: newLog.type,
+        actorRole: "INDUSTRI",
+        actorName: "Anda",
+        amount: newLog.amount,
+        message: newLog.message,
+        createdAt: new Date(newLog.createdAt),
+      }]);
       
       toast({
         title: "Penawaran Terkirim",
-        description: `Penawaran sebesar Rp${amount.toLocaleString("id-ID")}/kg telah dikirim ke Pengepul.`,
+        description: `Penawaran sebesar Rp${amount.toLocaleString("id-ID")}/kg telah dikirim.`,
       });
-    }, 1000);
+    } catch (error) {
+      toast({ title: "Gagal", description: "Terjadi kesalahan sistem.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleAcceptDeal = () => {
+  const handleAcceptDeal = async () => {
     setIsSubmitting(true);
     
-    setTimeout(() => {
-      const newLog: NegotiationLog = {
-        id: `log${Date.now()}`,
-        type: "DEAL",
+    try {
+      const res = await fetch(`/api/orders/${id}/negotiate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "DEAL", amount: lastOfferAmount }),
+      });
+      
+      if (!res.ok) throw new Error("Gagal menyetujui penawaran");
+      
+      const newLog = await res.json();
+      
+      setLogs((prev) => [...prev, {
+        id: newLog.id,
+        type: newLog.type,
         actorRole: "INDUSTRI",
         actorName: "Sistem",
-        amount: lastOfferAmount || 0,
-        createdAt: new Date(),
-      };
+        amount: newLog.amount,
+        createdAt: new Date(newLog.createdAt),
+      }]);
       
-      setLogs((prev) => [...prev, newLog]);
       setStatus("DEAL");
-      setIsSubmitting(false);
-      
       toast({
         title: "Kesepakatan Berhasil (DEAL)",
-        description: "Transaksi telah disepakati dan menunggu konfirmasi pengiriman.",
+        description: "Transaksi telah disepakati.",
         className: "bg-emerald-50 border-emerald-200 text-emerald-900",
       });
-    }, 1000);
+    } catch (error) {
+      toast({ title: "Gagal", description: "Terjadi kesalahan sistem.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setIsSubmitting(true);
     
-    setTimeout(() => {
-      const newLog: NegotiationLog = {
-        id: `log${Date.now()}`,
-        type: "CANCEL",
+    try {
+      const res = await fetch(`/api/orders/${id}/negotiate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "CANCEL" }),
+      });
+      
+      if (!res.ok) throw new Error("Gagal membatalkan");
+      
+      const newLog = await res.json();
+      
+      setLogs((prev) => [...prev, {
+        id: newLog.id,
+        type: newLog.type,
         actorRole: "INDUSTRI",
         actorName: "Sistem",
         amount: 0,
-        createdAt: new Date(),
-      };
+        createdAt: new Date(newLog.createdAt),
+      }]);
       
-      setLogs((prev) => [...prev, newLog]);
       setStatus("DIBATALKAN");
-      setIsSubmitting(false);
-      
       toast({
         title: "Negosiasi Dibatalkan",
-        description: "Anda telah membatalkan negosiasi ini secara permanen.",
+        description: "Anda telah membatalkan negosiasi ini.",
         variant: "destructive",
       });
-    }, 1000);
+    } catch (error) {
+      toast({ title: "Gagal", description: "Terjadi kesalahan sistem.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

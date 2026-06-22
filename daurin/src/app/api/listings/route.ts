@@ -16,10 +16,14 @@ export async function GET(req: Request) {
 
     const session = await getServerSession(authOptions);
 
-    // If RUMAH_TANGGA, they might want to see their own listings
     const myListings = searchParams.get("myListings");
+    const myClaims = searchParams.get("myClaims");
+    
     if (myListings === "true" && session?.user) {
       where.userId = (session.user as any).id;
+    } else if (myClaims === "true" && session?.user) {
+      where.pickupClaim = { collectorId: (session.user as any).id };
+      where.status = "DIKLAIM";
     }
 
     const listings = await prisma.wasteListing.findMany({
