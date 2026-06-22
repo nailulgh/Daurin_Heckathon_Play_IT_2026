@@ -1,7 +1,3 @@
-import * as tf from "@tensorflow/tfjs";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-
-// Define the exact string literals required by the API contract
 export type WasteClass =
   | "PLASTIK_PET"
   | "PLASTIK_HDPE"
@@ -20,65 +16,30 @@ export interface ClassificationResult {
   needsManualReview: boolean; // true if confidence < 0.5
 }
 
-// Global singleton cache for the model
-let cachedModel: mobilenet.MobileNet | null = null;
-
 /**
- * Loads the MobileNet model. Caches it in module scope to prevent multiple downloads.
+ * Heuristics mapping from external API string to Daurin's WasteClass.
  */
-export async function loadModel(): Promise<void> {
-  if (cachedModel) return;
-
-  // Make sure we have a WebGL or fallback backend initialized
-  await tf.ready();
-  
-  cachedModel = await mobilenet.load({
-    version: 2,
-    alpha: 1.0,
-  });
-}
-
-/**
- * Checks if the MobileNet model has been successfully loaded into the cache.
- */
-export function isModelLoaded(): boolean {
-  return cachedModel !== null;
-}
-
-/**
- * Heuristics mapping from ImageNet (MobileNet) classes to Daurin's WasteClass.
- * This is a proof-of-concept map since MobileNet recognizes 1000 general objects.
- */
-function mapMobileNetClassToDaurin(className: string): WasteClass {
+function mapExternalApiClassToDaurin(className: string): WasteClass {
   const lowerName = className.toLowerCase();
 
-  // PLASTIK_PET (Bottles, clear plastic)
-  if (lowerName.includes("bottle") || lowerName.includes("water") || lowerName.includes("pop") || lowerName.includes("nipple")) {
+  if (lowerName.includes("pet") || lowerName.includes("hdpe") || lowerName.includes("plastik")) {
+    if (lowerName.includes("hdpe")) return "PLASTIK_HDPE";
     return "PLASTIK_PET";
   }
 
-  // PLASTIK_HDPE (Opaque plastics, tubs, barrels)
-  if (lowerName.includes("bucket") || lowerName.includes("pail") || lowerName.includes("barrel") || lowerName.includes("tub") || lowerName.includes("jug")) {
-    return "PLASTIK_HDPE";
-  }
-
-  // KERTAS_KARDUS (Cardboard, paper)
-  if (lowerName.includes("carton") || lowerName.includes("box") || lowerName.includes("envelope") || lowerName.includes("paper") || lowerName.includes("binder")) {
+  if (lowerName.includes("kertas") || lowerName.includes("kardus") || lowerName.includes("paper")) {
     return "KERTAS_KARDUS";
   }
 
-  // LOGAM_KALENG (Metal cans, tins)
-  if (lowerName.includes("can") || lowerName.includes("tin") || lowerName.includes("pot") || lowerName.includes("pan") || lowerName.includes("bucket")) {
+  if (lowerName.includes("logam") || lowerName.includes("kaleng") || lowerName.includes("metal")) {
     return "LOGAM_KALENG";
   }
 
-  // KACA (Glass containers)
-  if (lowerName.includes("glass") || lowerName.includes("beer") || lowerName.includes("wine") || lowerName.includes("pitcher") || lowerName.includes("jar") || lowerName.includes("beaker") || lowerName.includes("cup")) {
+  if (lowerName.includes("kaca") || lowerName.includes("glass")) {
     return "KACA";
   }
 
-  // ELEKTRONIK (Electronics)
-  if (lowerName.includes("computer") || lowerName.includes("phone") || lowerName.includes("keyboard") || lowerName.includes("mouse") || lowerName.includes("monitor") || lowerName.includes("television") || lowerName.includes("modem") || lowerName.includes("printer") || lowerName.includes("remote") || lowerName.includes("laptop")) {
+  if (lowerName.includes("elektronik") || lowerName.includes("electronic")) {
     return "ELEKTRONIK";
   }
 
@@ -87,70 +48,42 @@ function mapMobileNetClassToDaurin(className: string): WasteClass {
 }
 
 /**
- * Classifies an image using MobileNet and maps it to Daurin's WasteClass.
+ * Classifies an image using the external AI API (Flask).
  */
 export async function classifyWasteImage(
-  input: File | HTMLImageElement
+  input: File
 ): Promise<ClassificationResult> {
-  if (!cachedModel) {
-    await loadModel();
+  const API_URL = process.env.NEXT_PUBLIC_AI_API_URL || "https://racism-relative-antsy.ngrok-free.dev/api/daurin/v1/predict";
+  
+  const formData = new FormData();
+  formData.append('image', input);
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    body: formData
+  });
+
+  if (!response.ok) {
+    throw new Error('Gagal menghubungi server AI eksternal');
   }
 
-  if (!cachedModel) {
-    throw new Error("Failed to load MobileNet model.");
+  const data = await response.json();
+  
+  if (!data.success) {
+    throw new Error(data.error || 'Server merespon dengan kegagalan');
   }
 
-  let imgElement: HTMLImageElement;
+  const mappedClass = mapExternalApiClassToDaurin(data.classification || "");
 
-  if (input instanceof File) {
-    imgElement = await new Promise<HTMLImageElement>((resolve, reject) => {
-      const img = new Image();
-      const objectUrl = URL.createObjectURL(input);
-      img.onload = () => {
-        resolve(img);
-        URL.revokeObjectURL(objectUrl);
-      };
-      img.onerror = (e) => {
-        reject(new Error("Failed to load image file into HTMLImageElement."));
-        URL.revokeObjectURL(objectUrl);
-      };
-      img.src = objectUrl;
-    });
-  } else {
-    imgElement = input;
-  }
-
-  // Predict top 3 classes
-  const predictions = await cachedModel.classify(imgElement, 3);
-
-  // Map ImageNet classes to Daurin's WasteClass
-  const mappedPredictions = predictions.map((p) => ({
-    class: mapMobileNetClassToDaurin(p.className),
-    confidence: p.probability,
-  }));
-
-  // Consolidate duplicate mapped classes by taking the max confidence
-  const consolidatedMap = new Map<WasteClass, number>();
-  for (const p of mappedPredictions) {
-    const existing = consolidatedMap.get(p.class) || 0;
-    if (p.confidence > existing) {
-      consolidatedMap.set(p.class, p.confidence);
-    }
-  }
-
-  const allPredictions = Array.from(consolidatedMap.entries())
-    .map(([cls, conf]) => ({ class: cls, confidence: conf }))
-    .sort((a, b) => b.confidence - a.confidence); // Highest confidence first
-
-  const topPrediction = allPredictions[0] || {
-    class: "PLASTIK_PET",
-    confidence: 0,
-  };
+  // Simulated confidence since the external API currently only returns the class string
+  const simulatedConfidence = 0.95;
 
   return {
-    topClass: topPrediction.class,
-    confidence: topPrediction.confidence,
-    allPredictions: allPredictions,
-    needsManualReview: topPrediction.confidence < 0.5,
+    topClass: mappedClass,
+    confidence: simulatedConfidence,
+    allPredictions: [
+      { class: mappedClass, confidence: simulatedConfidence }
+    ],
+    needsManualReview: false,
   };
 }
