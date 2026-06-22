@@ -1,54 +1,56 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-
-// Fix default marker icon assets mapping in Next.js Leaflet client builds
-const markerIcon = new L.Icon({
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
 
 export default function CollectorMap() {
-  // Center map position on Malang coordinates area
-  const centerPosition: [number, number] = [-7.983908, 112.621391];
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstance = useRef<any>(null);
+
+  useEffect(() => {
+    // Dynamically inject vanilla leaflet on client-side to prevent React Context consumer runtime crashes
+    if (typeof window !== "undefined" && mapRef.current && !mapInstance.current) {
+      const mapNode = mapRef.current;
+      import("leaflet").then((L) => {
+        // Fix marker default icon configurations
+        const defaultIcon = L.icon({
+          iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+          iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+          shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+        });
+
+        // Initialize map instance directly into DOM node
+        const map = L.map(mapNode).setView([-7.983908, 112.621391], 13);
+        mapInstance.current = map;
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add Mock Pick-up Point Markers around Malang Area
+        L.marker([-7.973908, 112.631391], { icon: defaultIcon })
+          .addTo(map)
+          .bindPopup("<b class='text-slate-900'>Rumah Budi (Warga)</b><br><span class='text-xs text-slate-600'>Plastik PET &bull; 12.5 Kg</span>");
+
+        L.marker([-7.993908, 112.611391], { icon: defaultIcon })
+          .addTo(map)
+          .bindPopup("<b class='text-slate-900'>Rumah Siti (Warga)</b><br><span class='text-xs text-slate-600'>Kertas Kardus &bull; 8.0 Kg</span>");
+      });
+    }
+
+    return () => {
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
+      }
+    };
+  }, []);
 
   return (
     <div className="w-full h-[500px] rounded-xl overflow-hidden shadow-sm border border-slate-200 relative z-0">
-      <MapContainer 
-        center={centerPosition} 
-        zoom={13} 
-        style={{ width: "100%", height: "100%" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        
-        {/* Mock Marker Point A - Rumah Budi */}
-        <Marker position={[-7.973908, 112.631391]} icon={markerIcon}>
-          <Popup>
-            <div className="text-sm font-sans p-1">
-              <p className="font-bold text-slate-900">Rumah Budi (Warga)</p>
-              <p className="text-slate-600 text-xs mt-0.5">Kategori: Plastik PET &bull; 12.5 Kg</p>
-            </div>
-          </Popup>
-        </Marker>
-
-        {/* Mock Marker Point B - Rumah Siti */}
-        <Marker position={[-7.993908, 112.611391]} icon={markerIcon}>
-          <Popup>
-            <div className="text-sm font-sans p-1">
-              <p className="font-bold text-slate-900">Rumah Siti (Warga)</p>
-              <p className="text-slate-600 text-xs mt-0.5">Kategori: Kertas Kardus &bull; 8.0 Kg</p>
-            </div>
-          </Popup>
-        </Marker>
-      </MapContainer>
+      <div ref={mapRef} className="w-full h-full" id="vanilla-leaflet-map" />
     </div>
   );
 }
