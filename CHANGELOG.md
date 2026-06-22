@@ -1,5 +1,9 @@
 ## [2026-06-23] — Perbaikan Performa & Validasi UI
 
+- ✅ **Feature (Realtime UX)**: Mengubah ikon lonceng (*Notification Bell*) statis di Navbar menjadi komponen React fungsional (`NotificationBell.tsx`) yang terhubung langsung dengan API `/api/notifications`. Lonceng kini menampilkan angka *unread* dan daftar riwayat notifikasi dalam *dropdown* elegan, lengkap dengan fitur "Tandai sudah dibaca".
+- ✅ **Bug Fix (Auth/Logout)**: Memperbaiki isu *redirect* otomatis ke *domain production* (`https://greenshift.web.id/login`) saat melakukan *logout* dari `localhost` dengan mematikan *callbackUrl* bawaan NextAuth dan menggunakan rute navigasi jendela asali (`window.location.href`).
+- ✅ **Bug Fix (TypeScript)**: Menginstal deklarasi *type* yang hilang (`@types/json5`, `@types/long`, `@types/offscreencanvas`, `@types/prop-types`, `@types/seedrandom`) untuk menyelesaikan *error implicit type library* pada konfigurasi `tsconfig.json`.
+- ✅ **UI Enhancement (Auth Pages)**: Mendesain ulang kotak *login* dan *register* menjadi lebih luas, profesional, dan memberikan tambahan tombol "Kembali ke Beranda" yang menggunakan komponen ikon dari `lucide-react`.
 - ✅ **Dashboard Cache**: Mengimplementasikan In-Memory Cache (Promise.all + Map) pada `/api/dashboard` untuk menekan *latency* database secara drastis.
 - ✅ **Form Validation (Unauthenticated)**: Mengintegrasikan `useSession` pada `WasteListingForm.tsx` dan `MaterialListingForm.tsx` dengan komponen `AlertDialog` dari `shadcn/ui` untuk menolak dan memberikan *pop up* peringatan wajib *login* bagi *user* anonim yang belum diautentikasi.
 

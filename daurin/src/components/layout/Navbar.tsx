@@ -7,6 +7,7 @@ import { LogOut, User, Menu, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { useSession, signOut } from "next-auth/react";
+import NotificationBell from "./NotificationBell";
 
 interface NavbarProps {
   onMenuClick?: () => void;
@@ -17,7 +18,8 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const { data: session, status } = useSession();
   
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/login" });
+    await signOut({ redirect: false });
+    window.location.href = "/login";
   };
 
   const getDisplayRole = (role: string) => {
@@ -102,11 +104,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
         </div>
 
         <div className="ml-auto flex items-center space-x-4">
-          <Button variant="ghost" size="icon" className="text-gray-500 relative">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-daurin-accent"></span>
-            <span className="sr-only">Notifications</span>
-          </Button>
+          {session?.user && <NotificationBell />}
 
           {renderUserSection()}
         </div>
