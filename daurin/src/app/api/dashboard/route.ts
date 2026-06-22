@@ -29,6 +29,7 @@ export async function GET() {
         totalListings: stats._count.id,
         totalWeightSold: stats._sum.weightKg || 0,
         totalEarned: stats._sum.earnedAmount || 0,
+        totalIncome: stats._sum.earnedAmount || 0,
         activeListings,
       });
     }

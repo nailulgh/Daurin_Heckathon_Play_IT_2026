@@ -9,9 +9,7 @@ import { usePathname } from "next/navigation";
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
-  // Bypass useSession for Pure Front-End Mock Mode
-  // const { data: session } = useSession();
-  const session = true; // Force sidebar layout in Mock Mode
+  const { data: session } = useSession();
 
   const isAuthPage = pathname === "/login" || pathname === "/register";
 

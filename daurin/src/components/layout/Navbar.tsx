@@ -6,31 +6,18 @@ import { usePathname } from "next/navigation";
 import { LogOut, User, Menu, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useSession, signOut } from "next-auth/react";
+
 interface NavbarProps {
   onMenuClick?: () => void;
 }
 
 export default function Navbar({ onMenuClick }: NavbarProps) {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   
-  const [mounted, setMounted] = useState(false);
-  const [user, setUser] = useState<{ name: string; role: string } | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-    const session = localStorage.getItem("mock_session");
-    if (session) {
-      try {
-        setUser(JSON.parse(session));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("mock_session");
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
   };
 
   const getDisplayRole = (role: string) => {
@@ -43,11 +30,12 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   };
 
   const renderUserSection = () => {
-    if (!mounted) {
+    if (status === "loading") {
       return <div className="h-10 w-32 bg-slate-100 animate-pulse rounded-md hidden md:block"></div>;
     }
 
-    if (user) {
+    if (session?.user) {
+      const user = session.user as any;
       return (
         <div className="flex items-center gap-4">
           <div className="hidden md:flex flex-col items-end">
