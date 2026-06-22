@@ -36,11 +36,11 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam     | Task                                                                                                       | FR/ERD Ref    | Prioritas |
 | ------- | ---------------------------------------------------------------------------------------------------------- | ------------- | --------- |
-| 0–0.5   | Init project Next.js 14 (App Router + TypeScript), install Prisma, Supabase client, NextAuth               | —             | 🔴 P0     |
-| 0.5–1.5 | Buat `schema.prisma` lengkap: `USERS`, `COLLECTOR_PROFILES`, `COLLECTOR_WASTE_TYPES`, `INDUSTRY_PROFILES`  | ERD §2.1–2.3  | 🔴 P0     |
-| 1.5–2   | Tambah tabel listing ke schema: `WASTE_LISTINGS`, `PICKUP_CLAIMS`, `MATERIAL_LISTINGS`                     | ERD §2.4–2.6  | 🔴 P0     |
-| 2–2.5   | Tambah tabel transaksi ke schema: `ORDERS`, `NEGOTIATIONS`, `TRANSACTIONS`, `NOTIFICATIONS`, `IMPACT_LOGS` | ERD §2.7–2.13 | 🔴 P0     |
-| 2.5–3   | `prisma migrate dev` ke Supabase · buat seed awal (3 akun demo per role)                                   | ERD §2.1      | 🔴 P0     |
+| 0–0.5   | ✅ Init project Next.js 14 (App Router + TypeScript), install Prisma, Supabase client, NextAuth               | —             | 🔴 P0     |
+| 0.5–1.5 | ✅ Buat `schema.prisma` lengkap: `USERS`, `COLLECTOR_PROFILES`, `COLLECTOR_WASTE_TYPES`, `INDUSTRY_PROFILES`  | ERD §2.1–2.3  | 🔴 P0     |
+| 1.5–2   | ✅ Tambah tabel listing ke schema: `WASTE_LISTINGS`, `PICKUP_CLAIMS`, `MATERIAL_LISTINGS`                     | ERD §2.4–2.6  | 🔴 P0     |
+| 2–2.5   | ✅ Tambah tabel transaksi ke schema: `ORDERS`, `NEGOTIATIONS`, `TRANSACTIONS`, `NOTIFICATIONS`, `IMPACT_LOGS` | ERD §2.7–2.13 | 🔴 P0     |
+| 2.5–3   | ✅ `prisma migrate dev` ke Supabase · buat seed awal (3 akun demo per role)                                   | ERD §2.1      | 🔴 P0     |
 
 > **Catatan:** Tabel bonus (`ROUTE_SESSIONS`, `RATINGS`, `CHAT_MESSAGES`, `PROCESSED_OUTPUTS`) ikut di-schema sekarang agar tidak ada migrasi ulang nanti. Cukup definisikan, tidak perlu langsung diisi.
 
