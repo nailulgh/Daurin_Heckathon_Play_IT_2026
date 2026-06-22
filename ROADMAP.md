@@ -227,7 +227,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam     | Task                                                                                                                               | Ref                   | Prioritas |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------- |
-| 23–23.5 | Finalisasi `README.md`: cara run lokal, env vars yang diperlukan, tech stack, daftar asumsi, akun demo per role (email + password) | PRD §L deliverable #3 | 🔴 P0     |
+| 23–23.5 | ✅ Finalisasi `README.md`: cara run lokal, env vars yang diperlukan, tech stack, daftar asumsi, akun demo per role (email + password) | PRD §L deliverable #3 | 🔴 P0     |
 | 23.5–24 | Final commit push · pastikan commit history span 24 jam ada                                                                        | PRD §L deliverable #2 | 🔴 P0     |
 
 ### Semua — Latihan Demo & Pitching
