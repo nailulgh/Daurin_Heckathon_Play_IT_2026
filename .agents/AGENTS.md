@@ -1,4 +1,5 @@
 # AGENTS.md — Daurin Marketplace Daur Ulang
+
 > Universal instruction file for AI coding agents (GitHub Copilot, Cursor, Windsurf, Codeium, etc.)
 > Project: PLAY IT! 2026 Hackathon Web Application | Tim Mie Ayam Solo
 > Live URL: https://devmieayam.web.id
@@ -335,18 +336,22 @@ NEXT_PUBLIC_MAPBOX_TOKEN=""   # Leave empty, using OpenStreetMap
 ```typescript
 // Implementation contract — agent must follow this interface exactly
 
-export type WasteClass = 
-  | 'PLASTIK_PET' | 'PLASTIK_HDPE' | 'KERTAS_KARDUS' 
-  | 'LOGAM_KALENG' | 'KACA' | 'ELEKTRONIK';
+export type WasteClass =
+  | "PLASTIK_PET"
+  | "PLASTIK_HDPE"
+  | "KERTAS_KARDUS"
+  | "LOGAM_KALENG"
+  | "KACA"
+  | "ELEKTRONIK";
 
 export interface ClassificationResult {
   topClass: WasteClass;
-  confidence: number;           // 0-1
+  confidence: number; // 0-1
   allPredictions: Array<{
     class: WasteClass;
     confidence: number;
   }>;
-  needsManualReview: boolean;   // true if confidence < 0.5
+  needsManualReview: boolean; // true if confidence < 0.5
 }
 
 // Must use MobileNetV2 via @tensorflow/tfjs + @tensorflow-models/mobilenet
@@ -355,14 +360,15 @@ export interface ClassificationResult {
 // Output: ClassificationResult
 
 export async function classifyWasteImage(
-  input: File | HTMLImageElement
-): Promise<ClassificationResult>
+  input: File | HTMLImageElement,
+): Promise<ClassificationResult>;
 
-export async function loadModel(): Promise<void>
-export function isModelLoaded(): boolean
+export async function loadModel(): Promise<void>;
+export function isModelLoaded(): boolean;
 ```
 
 **Component:** `src/components/listing/AIPhotoClassifier.tsx`
+
 - Show loading spinner while model loads (first time ~2-3s)
 - Show confidence bar per prediction
 - If confidence < 50%: show "Hasil tidak yakin, pilih manual" warning
@@ -374,27 +380,31 @@ export function isModelLoaded(): boolean
 ## 🗺️ Geo Module — Route Optimizer
 
 **File:** `src/lib/geo/haversine.ts`
+
 ```typescript
 export function haversineDistance(
-  lat1: number, lng1: number,
-  lat2: number, lng2: number
-): number  // returns distance in kilometers
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number,
+): number; // returns distance in kilometers
 ```
 
 **File:** `src/lib/geo/routeOptimizer.ts`
+
 ```typescript
 export interface RoutePoint {
   id: string;
   lat: number;
   lng: number;
-  label: string;       // listing address/description
+  label: string; // listing address/description
   wasteType: string;
 }
 
 export interface OptimizedRoute {
   orderedPoints: RoutePoint[];
   totalDistanceKm: number;
-  estimatedCostRp: number;    // based on 40km/liter, Rp10000/liter
+  estimatedCostRp: number; // based on 40km/liter, Rp10000/liter
   estimatedDurationMin: number; // based on 30km/h avg urban speed
 }
 
@@ -404,8 +414,8 @@ export interface OptimizedRoute {
 export function optimizeRoute(
   startLat: number,
   startLng: number,
-  points: RoutePoint[]
-): OptimizedRoute
+  points: RoutePoint[],
+): OptimizedRoute;
 ```
 
 ---
@@ -413,19 +423,20 @@ export function optimizeRoute(
 ## 🌿 CO2 Module
 
 **File:** `src/lib/co2.ts`
+
 ```typescript
 // CO2 offset per kg by waste type (kg CO2e saved vs landfill)
 export const CO2_FACTORS: Record<string, number> = {
-  PLASTIK_PET:    1.75,   // EPA WARM midpoint
-  PLASTIK_HDPE:   1.80,
-  KERTAS_KARDUS:  0.90,
-  LOGAM_KALENG:   8.75,   // Aluminum recycling
-  KACA:           0.40,
-  ELEKTRONIK:     20.0,   // StEP Initiative estimate
+  PLASTIK_PET: 1.75, // EPA WARM midpoint
+  PLASTIK_HDPE: 1.8,
+  KERTAS_KARDUS: 0.9,
+  LOGAM_KALENG: 8.75, // Aluminum recycling
+  KACA: 0.4,
+  ELEKTRONIK: 20.0, // StEP Initiative estimate
 };
 
-export function calculateCO2Offset(wasteType: string, weightKg: number): number
-export function formatCO2(kg: number): string  // e.g. "1.75 kg" or "1.2 ton"
+export function calculateCO2Offset(wasteType: string, weightKg: number): number;
+export function formatCO2(kg: number): string; // e.g. "1.75 kg" or "1.2 ton"
 ```
 
 ---
@@ -433,12 +444,14 @@ export function formatCO2(kg: number): string  // e.g. "1.75 kg" or "1.2 ton"
 ## 🔗 API Contract (All Endpoints)
 
 ### Auth
+
 ```
 POST /api/auth/register    body: { name, email, password, role, lat?, lng?, wasteTypesHandled? }
 POST /api/auth/[...nextauth]  NextAuth handlers
 ```
 
 ### Waste Listings (Rumah Tangga → Pengepul)
+
 ```
 GET  /api/listings          ?wasteType=&status=&lat=&lng=&radius=
 POST /api/listings          body: { wasteType, weightKg, pricePerKg, description, photoUrl, aiClassification }
@@ -450,6 +463,7 @@ PATCH /api/listings/[id]/pickup  (collector marks picked up → status: DIAMBIL)
 ```
 
 ### Material Listings (Pengepul → Industri)
+
 ```
 GET  /api/materials         ?wasteType=&status=&lat=&lng=&minPrice=&maxPrice=
 POST /api/materials         body: { wasteType, purpose, weightKg, pricePerKg, photoUrl, lat?, lng? }
@@ -459,22 +473,25 @@ DELETE /api/materials/[id]  (only if TERSEDIA)
 ```
 
 ### Orders & Negotiation (Industri ↔ Pengepul)
+
 ```
 GET  /api/orders            ?status= (filtered by user role)
 POST /api/orders            body: { materialId, volumeKg }
 GET  /api/orders/[id]
-POST /api/orders/[id]/negotiate  
+POST /api/orders/[id]/negotiate
      body: { type: 'OFFER'|'COUNTER_OFFER'|'DEAL'|'CANCEL', amount?, message? }
      State machine: MENUNGGU→NEGOSIASI (first offer), NEGOSIASI→DEAL, any→DIBATALKAN
 ```
 
 ### Upload
+
 ```
 POST /api/upload            multipart/form-data: file
      Returns: { url: string }  (Supabase Storage public URL)
 ```
 
 ### Dashboard
+
 ```
 GET  /api/dashboard         Returns aggregated public stats:
      { totalListings, totalTransactions, totalWeightKg, totalValueRp, co2OffsetKg, byWasteType[] }
@@ -485,6 +502,7 @@ GET  /api/dashboard         Returns aggregated public stats:
 ## ⚙️ State Machines (Must Enforce in API Layer)
 
 ### WasteListing Status
+
 ```
 TERSEDIA → DIKLAIM   (via POST /api/listings/[id]/claim — only PENGEPUL)
 DIKLAIM  → DIAMBIL   (via PATCH — only the claiming collector)
@@ -492,6 +510,7 @@ DIAMBIL  → SELESAI   (auto when related MaterialListing gets TERJUAL transacti
 ```
 
 ### Order Status
+
 ```
 MENUNGGU → NEGOSIASI    (first OFFER submitted by INDUSTRI)
 NEGOSIASI → DEAL        (either party sends DEAL type)
@@ -500,6 +519,7 @@ DEAL → SELESAI          (transaction created — auto)
 ```
 
 ### MaterialListing Status
+
 ```
 TERSEDIA → DIPESAN  (when Order created)
 DIPESAN  → TERJUAL  (when Order reaches SELESAI)
@@ -534,13 +554,14 @@ DIPESAN  → TERSEDIA (if Order DIBATALKAN)
 
 `prisma/seed.ts` must create:
 
-| Role | Accounts | Data |
-|------|----------|------|
-| Rumah Tangga | 3 users | 5 waste listings each (mix of statuses) |
-| Pengepul | 2 users | Different wasteTypesHandled; 3 claimed listings; 4 material listings |
-| Industri | 2 users | 2 active orders with negotiation history |
+| Role         | Accounts | Data                                                                 |
+| ------------ | -------- | -------------------------------------------------------------------- |
+| Rumah Tangga | 3 users  | 5 waste listings each (mix of statuses)                              |
+| Pengepul     | 2 users  | Different wasteTypesHandled; 3 claimed listings; 4 material listings |
+| Industri     | 2 users  | 2 active orders with negotiation history                             |
 
 Demo accounts (for juri):
+
 ```
 rt@daurin.id       / demo123  (Rumah Tangga)
 pengepul@daurin.id / demo123  (Pengepul)
@@ -548,6 +569,7 @@ industri@daurin.id / demo123  (Industri)
 ```
 
 All seed coordinates must be within Malang Raya area:
+
 - Center: `-7.9825, 112.6308` (Kota Malang)
 - Radius: ~15km
 
@@ -598,7 +620,9 @@ curl -I https://devmieayam.web.id
 6. **State machine transitions must be atomic** — use Prisma transactions where status changes cascade
 7. **Map component must be dynamically imported** (Leaflet breaks SSR)
    ```typescript
-   const CollectorMap = dynamic(() => import('@/components/map/CollectorMap'), { ssr: false })
+   const CollectorMap = dynamic(() => import("@/components/map/CollectorMap"), {
+     ssr: false,
+   });
    ```
 8. **AI model loads once** — use module-level cache, never reload per request
 9. **All monetary values in IDR (Rupiah)** — store as `Float` in DB (no currency conversion)
@@ -608,7 +632,33 @@ curl -I https://devmieayam.web.id
 
 ---
 
-## 📋 Feature Priority Queue (Execute in This Order)
+## � CHANGELOG Requirements
+
+**When to update:** After every significant feature, bugfix, or schema change is merged.
+
+**Format:**
+
+```markdown
+## [YYYY-MM-DD] — [Feature/Fix Description]
+
+- What changed
+- Why it changed
+- Impact (DB migration needed? Breaking change?)
+```
+
+**Example:**
+
+```markdown
+## [2026-06-22] — AI Waste Classifier + Route Optimizer
+
+- Implemented TensorFlow.js MobileNet for waste type detection
+- Added haversine distance + nearest-neighbor route algorithm
+- Schema: Added `aiClassification`, `aiConfidenceScore` to WASTE_LISTINGS
+```
+
+---
+
+## �📋 Feature Priority Queue (Execute in This Order)
 
 ```
 P0 — Must complete before hour 18:
@@ -649,4 +699,4 @@ P2 — Bonus if time allows:
 
 ---
 
-*Last updated: PLAY IT! 2026 Final — Tim Mie Ayam Solo*
+_Last updated: PLAY IT! 2026 Final — Tim Mie Ayam Solo_
