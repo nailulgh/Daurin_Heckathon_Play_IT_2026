@@ -1,13 +1,13 @@
+import { prisma } from "@/lib/prisma";
+import { CreateOrderSchema } from "@/lib/validators";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 export async function GET() {
   return NextResponse.json([
     { id: "o1", materialId: "m1", status: "NEGOSIASI", volumeKg: 50, finalPrice: 150000 }
   ]);
 }
-<<<<<<< HEAD
-export async function POST() {
-  return NextResponse.json({ id: "o2", status: "MENUNGGU" }, { status: 201 });
-=======
 
 export async function POST(req: Request) {
   try {
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const parsed = CreateOrderSchema.safeParse(body);
-    
+
     if (!parsed.success) {
       return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
     }
@@ -56,5 +56,4 @@ export async function POST(req: Request) {
     console.error("POST /api/orders error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
->>>>>>> 0f8a44cafa872f659585a23a7995d88193afe4bd
 }
