@@ -21,12 +21,15 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
-  // Bypass useSession for Pure Front-End Mock Mode
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
-  let role = "RUMAH_TANGGA";
-  if (pathname.startsWith("/pengepul")) role = "PENGEPUL";
-  if (pathname.startsWith("/industri")) role = "INDUSTRI";
+  let role = (session?.user as any)?.role || "RUMAH_TANGGA";
+  
+  // Fallback for mock mode if session is not yet loaded or missing
+  if (!session) {
+    if (pathname.startsWith("/pengepul")) role = "PENGEPUL";
+    if (pathname.startsWith("/industri")) role = "INDUSTRI";
+  }
 
   const links = React.useMemo(() => {
     switch (role) {
@@ -34,14 +37,13 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         return [
           { href: "/rumah-tangga/dashboard", label: "Dashboard", icon: LayoutDashboard },
           { href: "/rumah-tangga/listing", label: "Jual Sampah", icon: Store },
-          { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
         ];
       case "PENGEPUL":
         return [
           { href: "/pengepul/dashboard", label: "Dashboard", icon: LayoutDashboard },
           { href: "/pengepul/peta", label: "Peta Jemput", icon: Map },
           { href: "/pengepul/bahan-baku/new", label: "Bahan Baku", icon: PackageSearch },
-          { href: "/pengepul/marketplace", label: "Marketplace", icon: ShoppingCart },
+          { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
         ];
       case "INDUSTRI":
         return [
@@ -55,8 +57,6 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         ];
     }
   }, [role]);
-  
-  // if (!session) return null; // Disabled for mock mode
 
   return (
     <>
