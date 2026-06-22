@@ -15,7 +15,7 @@ Sebagian besar antarmuka (UI/UX) dan *routing* halaman telah selesai dibuat (Sca
 - [x] **Halaman Dashboard** (`/rumah-tangga/dashboard`) - *UI Selesai, Data Masih Mock*
 - [x] **Halaman Form Jual Sampah** (`/rumah-tangga/listing`) - *UI Selesai*
 - [x] **Komponen AI Klasifikasi** (`<WasteClassifier />`) - *Selesai & terhubung ke form*
-- [ ] **Integrasi API Jual Sampah** - Form saat ini masih menggunakan `setTimeout` simulasi, **belum menembak API** `POST /api/listings`.
+- [x] **Integrasi API Jual Sampah** - Form telah terhubung ke API `POST /api/listings` dengan validasi dan redirect.
 - [ ] **Integrasi API Dashboard** - Belum fetch data `GET /api/listings` milik user.
 
 ## 3. 🚛 Sisi Pengepul (FR-003)

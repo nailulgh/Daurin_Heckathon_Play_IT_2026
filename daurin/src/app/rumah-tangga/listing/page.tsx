@@ -4,24 +4,48 @@ import React, { useState } from "react";
 import WasteForm from "@/components/household/WasteForm";
 import { useToast } from "@/hooks/use-toast";
 import { Leaf } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function HouseholdListingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  const router = useRouter();
+
   const handleFormSubmit = async (data: any) => {
     setIsSubmitting(true);
     
-    // Simulate API Call based on PRD simulated interactions
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch("/api/listings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Gagal memposting sampah");
+      }
+
       toast({
         title: "Berhasil Diposting!",
         description: `Sampah ${data.wasteType.replace(/_/g, " ")} seberat ${data.weightKg}kg telah masuk ke Marketplace.`,
         variant: "default",
       });
-      // In a real flow, we'd router.push('/rumah-tangga/dashboard') or similar.
-    }, 1500);
+      
+      router.push("/rumah-tangga/dashboard");
+      router.refresh();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

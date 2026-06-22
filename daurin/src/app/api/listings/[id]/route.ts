@@ -1,19 +1,14 @@
 import { NextResponse } from "next/server";
-<<<<<<< HEAD
-=======
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { createNotification } from "@/lib/notifications";
 
->>>>>>> 0f8a44cafa872f659585a23a7995d88193afe4bd
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json({ id: params.id, title: "Mock Listing", status: "TERSEDIA", weightKg: 10, pricePerKg: 2000 });
 }
+
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
-<<<<<<< HEAD
-  return NextResponse.json({ success: true });
-=======
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -93,8 +88,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   } catch (error) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
->>>>>>> 0f8a44cafa872f659585a23a7995d88193afe4bd
 }
+
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json({ success: true });
 }

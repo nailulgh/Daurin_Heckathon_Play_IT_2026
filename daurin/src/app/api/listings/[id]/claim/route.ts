@@ -1,8 +1,4 @@
 import { NextResponse } from "next/server";
-<<<<<<< HEAD
-export async function POST(req: Request, { params }: { params: { id: string } }) {
-  return NextResponse.json({ success: true, message: "Claimed successfully" });
-=======
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -57,5 +53,4 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     console.error("POST /api/listings/[id]/claim error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
->>>>>>> 0f8a44cafa872f659585a23a7995d88193afe4bd
 }

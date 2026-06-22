@@ -1,10 +1,79 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-export async function GET() {
-  return NextResponse.json([
-    { id: "1", title: "Mock Listing 1", status: "TERSEDIA", weightKg: 5, pricePerKg: 1000, user: { name: "Budi" } },
-    { id: "2", title: "Mock Listing 2", status: "DIKLAIM", weightKg: 12, pricePerKg: 1500, user: { name: "Siti" } }
-  ]);
+import { CreateWasteListingSchema } from "@/lib/validators";
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const status = searchParams.get("status") as any;
+    const wasteType = searchParams.get("wasteType") as any;
+
+    const where: any = {};
+    if (status) where.status = status;
+    if (wasteType) where.wasteType = wasteType;
+
+    const session = await getServerSession(authOptions);
+
+    // If RUMAH_TANGGA, they might want to see their own listings
+    const myListings = searchParams.get("myListings");
+    if (myListings === "true" && session?.user) {
+      where.userId = (session.user as any).id;
+    }
+
+    const listings = await prisma.wasteListing.findMany({
+      where,
+      include: {
+        user: { select: { name: true, lat: true, lng: true, address: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(listings, { status: 200 });
+  } catch (error) {
+    console.error("GET /api/listings error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
-export async function POST() {
-  return NextResponse.json({ id: "3", title: "New Mock Listing", status: "TERSEDIA" }, { status: 201 });
+
+export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if ((session.user as any).role !== "RUMAH_TANGGA") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    const parsed = CreateWasteListingSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const listing = await prisma.wasteListing.create({
+      data: {
+        ...parsed.data,
+        userId: (session.user as any).id,
+      },
+    });
+
+    return NextResponse.json(listing, { status: 201 });
+  } catch (error) {
+    console.error("POST /api/listings error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
