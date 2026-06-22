@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NegotiateSchema } from "@/lib/validators";
+import { createNotification } from "@/lib/notifications";
 
 export async function POST(req: Request, { params }: { params: { id: string } }) {
   try {
@@ -107,6 +108,29 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 
       return negotiation;
     });
+
+    const targetUserId = isBuyer ? order.material.collectorId : order.buyerId;
+    let notifTitle = "Pesan Negosiasi Baru";
+    let notifBody = "Ada aktivitas negosiasi baru di pesanan Anda.";
+    
+    if (type === "OFFER" || type === "COUNTER_OFFER") {
+      notifTitle = "Penawaran Harga";
+      notifBody = `Menerima penawaran harga sebesar Rp${amount}/kg.`;
+    } else if (type === "DEAL") {
+      notifTitle = "Negosiasi DEAL!";
+      notifBody = "Harga telah disepakati dan transaksi berhasil dibuat.";
+    } else if (type === "CANCEL") {
+      notifTitle = "Negosiasi Dibatalkan";
+      notifBody = "Pihak lain membatalkan negosiasi ini.";
+    }
+
+    await createNotification(
+      targetUserId,
+      "NEGOTIATION",
+      notifTitle,
+      notifBody,
+      params.id
+    );
 
     return NextResponse.json(transaction, { status: 201 });
   } catch (error) {

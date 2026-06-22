@@ -23,7 +23,7 @@ You are a **senior full-stack engineer** working on Daurin, a 24-hour hackathon 
 **Stack:** Next.js 14 + TypeScript + Tailwind + Prisma + PostgreSQL (Supabase) + NextAuth  
 **AI:** TensorFlow.js + MobileNetV2 (browser-side, no backend AI server)  
 **Maps:** Leaflet.js + OpenStreetMap (no API key)  
-**Deploy:** Jagoan Hosting + Cloudflare Tunnel → `https://devmieayam.web.id`  
+**Deploy:** Jagoan Hosting + Cloudflare Tunnel → `https://greenshift.web.id`  
 **Deadline:** 24 hours
 
 **Three user roles:**
@@ -311,12 +311,12 @@ useEffect(() => {
 
 ## 🚀 Deployment Context
 
-The app runs on Jagoan Hosting (Linux server), tunneled via Cloudflare to `devmieayam.web.id`.
+The app runs on Jagoan Hosting (Linux server), tunneled via Cloudflare to `greenshift.web.id`.
 
 ```bash
 # Production environment variables that Gemini should reference:
-NEXTAUTH_URL=https://devmieayam.web.id
-NEXT_PUBLIC_APP_URL=https://devmieayam.web.id
+NEXTAUTH_URL=https://greenshift.web.id
+NEXT_PUBLIC_APP_URL=https://greenshift.web.id
 
 # PM2 ecosystem file for Gemini to generate:
 # ecosystem.config.js

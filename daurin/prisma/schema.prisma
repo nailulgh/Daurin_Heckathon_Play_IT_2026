@@ -69,6 +69,7 @@ model User {
   materialListing   MaterialListing[]
   buyerOrders       Order[]          @relation("BuyerOrders")
   negotiations      Negotiation[]
+  notifications     Notification[]
 }
 
 model WasteListing {
@@ -153,4 +154,16 @@ model Transaction {
   amount    Float
   status    String   @default("SIMULATED")
   createdAt DateTime @default(now())
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  type        String
+  title       String
+  body        String
+  referenceId String?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
 }

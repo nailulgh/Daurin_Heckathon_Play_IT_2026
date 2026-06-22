@@ -1,3 +1,32 @@
+## [2026-06-22] — FASE 4: Deployment & Disaster Recovery
+
+- ✅ **Server Setup (Rocky 8)**: Instalasi Node.js, ekstraksi `daurin.tar.gz`, sinkronisasi Prisma, dan setup PM2 *daemon* untuk _process management_ Node.js (`daurin`).
+- ✅ **Cloudflare Tunnel Configuration**: Instalasi `cloudflared`, eksekusi tunnel `daurin-tunnel` di PM2 untuk rute *reverse-proxy* ke localhost:3000.
+- ✅ **Disaster Recovery (Domain Migration)**: Migrasi seluruh environment dan target domain dari `devmieayam.web.id` yang mengalami kegagalan jaringan (network failure) menuju server cadangan **`greenshift.web.id`**. Skrip *Search-and-Replace* massal diterapkan pada dokumentasi utama (PRD, Roadmap, Gemini instruksi).
+
+**Why it changed:**
+- Menyelesaikan prioritas mutlak Hackathon untuk meluncurkan *backend server* ke publik dan memastikan produk bisa dipresentasikan via internet, di tengah kendala matinya server utama.
+
+**Impact:**
+- REST API Daurin kini dapat diakses secara publik melalui `https://greenshift.web.id/api/...`.
+- Keseluruhan arsitektur backend telah kokoh, stabil, dan _live_.
+
+## [2026-06-22] — FASE 3: Supabase Realtime Notifications (P1)
+
+- ✅ **Schema Database**: Menambahkan tabel `Notification` pada `prisma/schema.prisma` dan membuat relasinya terhadap `User`.
+- ✅ **API Helper**: Membuat `src/lib/notifications.ts` untuk abstraksi `createNotification`.
+- ✅ **Integrasi Bisnis Logic**: 
+  - Menyisipkan `createNotification` ke dalam `POST /api/listings/[id]/claim` (Notifikasi untuk Rumah Tangga saat sampah diklaim).
+  - Menyisipkan `createNotification` ke dalam `PATCH /api/listings/[id]` (Notifikasi saat status `DIAMBIL` dan `SELESAI`).
+  - Menyisipkan `createNotification` ke dalam state machine negosiasi `POST /api/orders/[id]/negotiate`.
+- ✅ **API Endpoint**: Membuat `GET /api/notifications` untuk mengambil notifikasi per user dan `PATCH` untuk menandainya sebagai telah dibaca.
+
+**Why it changed:**
+- Mengimplementasikan fitur opsional/P1 dari `ROADMAP.md` (Jam 10-12) terkait sistem notifikasi untuk memperbaiki *user experience* dan memberikan feedback langsung.
+
+**Impact:**
+- Backend sepenuhnya mendukung fitur riwayat notifikasi. Frontend kini bisa memanggil `GET /api/notifications` untuk membuat UI "Lonceng Notifikasi" dan/atau berlangganan perubahan menggunakan Supabase Realtime *postgres_changes* di sisi klien.
+
 ## [2026-06-22] — FASE 3: Core Logic Data/AI/Integration
 
 - ✅ **AI Image Classifier**: Implementasi wrapper `src/lib/ai/wasteClassifier.ts` menggunakan TensorFlow.js MobileNetV2 dengan mapping output kelas ImageNet ke tipe enum Daurin.

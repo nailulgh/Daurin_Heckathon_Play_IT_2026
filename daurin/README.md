@@ -4,7 +4,7 @@ Proyek Daurin (Tim Mie Ayam Solo) dibangun untuk PLAY IT! 2026. Aplikasi ini mem
 
 ## 🚀 Cara Deployment (Sesuai Aturan Juri/Hackathon)
 
-Berbeda dengan proyek Next.js biasa yang di-deploy ke Vercel, **Daurin wajib di-deploy di VPS (Jagoan Hosting)** lalu di-*tunneling* menggunakan **Cloudflare Tunnel** agar bisa diakses secara publik di `https://devmieayam.web.id`.
+Berbeda dengan proyek Next.js biasa yang di-deploy ke Vercel, **Daurin wajib di-deploy di VPS (Jagoan Hosting)** lalu di-*tunneling* menggunakan **Cloudflare Tunnel** agar bisa diakses secara publik di `https://greenshift.web.id`.
 
 ### Langkah 1: Persiapan Server & Build
 Pastikan Anda sudah berada di dalam VPS Jagoan Hosting Anda.
@@ -14,8 +14,8 @@ Pastikan Anda sudah berada di dalam VPS Jagoan Hosting Anda.
 npm install
 
 # 2. Pastikan file .env sudah disesuaikan dengan koneksi database produksi
-# NEXTAUTH_URL=https://devmieayam.web.id
-# NEXT_PUBLIC_APP_URL=https://devmieayam.web.id
+# NEXTAUTH_URL=https://greenshift.web.id
+# NEXT_PUBLIC_APP_URL=https://greenshift.web.id
 
 # 3. Lakukan build aplikasi
 npm run build
@@ -35,7 +35,7 @@ pm2 startup
 ```
 
 ### Langkah 3: Setup Cloudflare Tunnel (cloudflared)
-Mengekspos port 3000 lokal ke domain publik `devmieayam.web.id`.
+Mengekspos port 3000 lokal ke domain publik `greenshift.web.id`.
 
 ```bash
 # 1. Login ke akun Cloudflare Anda
@@ -49,14 +49,14 @@ cloudflared tunnel create daurin
 # tunnel: <UUID_DARI_LANGKAH_SEBELUMNYA>
 # credentials-file: /root/.cloudflared/<UUID>.json
 # ingress:
-#   - hostname: devmieayam.web.id
+#   - hostname: greenshift.web.id
 #     service: http://localhost:3000
 #   - service: http_status:404
 # ---------------------------------------------
 
 # 4. Arahkan DNS di Dashboard Cloudflare
 # Buka Cloudflare > DNS > Tambahkan CNAME:
-# Name: devmieayam
+# Name: greenshift
 # Target: <UUID>.cfargotunnel.com
 # Proxied: ON
 
@@ -68,7 +68,7 @@ pm2 save
 ### Langkah 4: Verifikasi
 Aplikasi seharusnya sudah dapat diakses oleh juri secara *live*.
 ```bash
-curl -I https://devmieayam.web.id
+curl -I https://greenshift.web.id
 ```
 *(Status kembalian harus HTTP 200)*
 

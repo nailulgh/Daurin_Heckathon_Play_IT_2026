@@ -69,7 +69,6 @@ export async function POST(req: Request) {
           buyerId: (session.user as any).id,
           materialId: parsed.data.materialId,
           volumeKg: parsed.data.volumeKg,
-          buyerNote: parsed.data.buyerNote,
           status: "MENUNGGU",
         }
       });

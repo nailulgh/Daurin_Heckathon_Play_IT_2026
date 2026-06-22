@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { createNotification } from "@/lib/notifications";
 
 export async function POST(req: Request, { params }: { params: { id: string } }) {
   try {
@@ -37,6 +38,15 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         data: { status: "DIKLAIM" }
       })
     ]);
+
+    // Send notification to the household (RT)
+    await createNotification(
+      listing.userId,
+      "CLAIM",
+      "Sampah Anda Diklaim!",
+      `Seorang pengepul telah mengklaim sampah ${listing.wasteType} Anda dan akan segera mengambilnya.`,
+      params.id
+    );
 
     return NextResponse.json(transaction[0], { status: 201 });
   } catch (error) {

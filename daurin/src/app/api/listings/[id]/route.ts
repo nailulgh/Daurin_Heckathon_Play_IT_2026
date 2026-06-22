@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { createNotification } from "@/lib/notifications";
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
@@ -58,6 +59,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
             data: { status: "DIAMBIL" },
           })
         ]);
+        await createNotification(
+          listing.userId,
+          "UPDATE",
+          "Sampah Anda Sedang Diambil",
+          `Pengepul sedang dalam perjalanan atau sudah mengambil sampah ${listing.wasteType} Anda.`,
+          params.id
+        );
         return NextResponse.json(updated[1]);
       } else if (body.status === "SELESAI") {
         const finalPrice = body.finalPrice || (listing.weightKg * listing.pricePerKg);
@@ -71,6 +79,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
             data: { status: "SELESAI", earnedAmount: finalPrice },
           })
         ]);
+        await createNotification(
+          listing.userId,
+          "UPDATE",
+          "Transaksi Selesai!",
+          `Sampah ${listing.wasteType} Anda telah selesai diproses. Anda mendapatkan nominal yang disepakati.`,
+          params.id
+        );
         return NextResponse.json(updated[1]);
       }
     }
