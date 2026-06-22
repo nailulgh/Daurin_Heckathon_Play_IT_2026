@@ -10,20 +10,22 @@ interface CollectorStats {
   processedMaterialsB2BKg: number;
 }
 
-// Mock based on PRD / Dummy Data structure
-const MOCK_COLLECTOR_STATS: CollectorStats = {
-  activeRoutePayloadKg: 7.5,
-  activePickupClaims: 2,
-  processedMaterialsB2BKg: 500,
-};
-
 export default function CollectorDashboardPage() {
-  const [stats, setStats] = useState<CollectorStats | null>(null);
+  const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setStats(MOCK_COLLECTOR_STATS);
-    }, 500);
+    async function fetchStats() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+      }
+    }
+    fetchStats();
   }, []);
 
   if (!stats) {
@@ -60,7 +62,7 @@ export default function CollectorDashboardPage() {
             <Truck className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.activeRoutePayloadKg.toFixed(1)} kg</div>
+            <div className="text-3xl font-extrabold text-slate-900">{(stats.totalCollectedKg || 0).toFixed(1)} kg</div>
             <p className="text-xs text-slate-500 mt-1">Total muatan dalam perjalanan</p>
           </CardContent>
         </Card>
@@ -72,7 +74,7 @@ export default function CollectorDashboardPage() {
             <CheckSquare className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.activePickupClaims}</div>
+            <div className="text-3xl font-extrabold text-slate-900">{stats.activeClaims || 0}</div>
             <p className="text-xs text-slate-500 mt-1">Status: MENUNGGU</p>
           </CardContent>
         </Card>
@@ -84,7 +86,7 @@ export default function CollectorDashboardPage() {
             <PackageSearch className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.processedMaterialsB2BKg.toLocaleString("id-ID")} kg</div>
+            <div className="text-3xl font-extrabold text-slate-900">{(stats.totalMaterials || 0).toLocaleString("id-ID")} kg</div>
             <p className="text-xs text-slate-500 mt-1">Ditawarkan di Marketplace</p>
           </CardContent>
         </Card>

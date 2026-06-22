@@ -10,20 +10,22 @@ interface IndustryStats {
   simulatedProductionOutput: number;
 }
 
-// Mock based on PRD / Dummy Data structure
-const MOCK_INDUSTRY_STATS: IndustryStats = {
-  totalVolumeProcuredKg: 1200,
-  activeNegotiations: 1,
-  simulatedProductionOutput: 960, // e.g. 80% yield from procured volume
-};
-
 export default function IndustryDashboardPage() {
-  const [stats, setStats] = useState<IndustryStats | null>(null);
+  const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setStats(MOCK_INDUSTRY_STATS);
-    }, 500);
+    async function fetchStats() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+      }
+    }
+    fetchStats();
   }, []);
 
   if (!stats) {
@@ -60,7 +62,7 @@ export default function IndustryDashboardPage() {
             <PackageOpen className="h-4 w-4 text-blue-900" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.totalVolumeProcuredKg.toLocaleString("id-ID")} kg</div>
+            <div className="text-3xl font-extrabold text-slate-900">{(stats.totalMaterialBoughtKg || 0).toLocaleString("id-ID")} kg</div>
             <p className="text-xs text-slate-500 mt-1">Total akumulasi dari order DEAL</p>
           </CardContent>
         </Card>
@@ -72,7 +74,7 @@ export default function IndustryDashboardPage() {
             <MessageSquareText className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.activeNegotiations}</div>
+            <div className="text-3xl font-extrabold text-slate-900">{stats.activeOrders || 0}</div>
             <p className="text-xs text-slate-500 mt-1">Thread negosiasi aktif</p>
           </CardContent>
         </Card>
@@ -84,7 +86,7 @@ export default function IndustryDashboardPage() {
             <Factory className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.simulatedProductionOutput.toLocaleString("id-ID")} kg</div>
+            <div className="text-3xl font-extrabold text-slate-900">{((stats.totalMaterialBoughtKg || 0) * 0.8).toLocaleString("id-ID")} kg</div>
             <p className="text-xs text-slate-500 mt-1">Estimasi yield produk akhir (80%)</p>
           </CardContent>
         </Card>

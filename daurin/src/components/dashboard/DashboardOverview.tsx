@@ -11,19 +11,22 @@ export default function DashboardOverview() {
   const pathname = typeof window !== 'undefined' ? window.location.pathname : "";
 
   useEffect(() => {
-    // BYPASSED FOR PURE FRONT-END MOCK MODE
-    let mockData: any = { role: "RUMAH_TANGGA", totalListings: 5, totalWeightSold: 12.5, totalIncome: 45000 };
-    
-    if (pathname.includes("/pengepul")) {
-      mockData = { role: "PENGEPUL", totalCollectedKg: 120, activeMaterialListings: 3, totalMaterialIncome: 350000 };
-    } else if (pathname.includes("/industri")) {
-      mockData = { role: "INDUSTRI", totalMaterialBoughtKg: 500, totalSpend: 1500000, totalOrdersCompleted: 12 };
+    async function fetchDashboard() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.ok) {
+          const fetchedData = await res.json();
+          setData(fetchedData);
+        } else {
+          console.error("Failed to fetch dashboard data");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
     }
-
-    setTimeout(() => {
-      setData(mockData);
-      setLoading(false);
-    }, 400);
+    fetchDashboard();
   }, [pathname]);
 
   if (loading) {

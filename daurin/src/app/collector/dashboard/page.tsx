@@ -12,18 +12,39 @@ const CollectorHubMap = dynamic(
   { ssr: false }
 );
 
-// Mock data based on daurin_dummy_data.md
-const MOCK_COLLECTOR_BASE = { lat: -7.9888, lng: 112.6222 };
-const MOCK_PICKUP_POINTS: PickupPoint[] = [
-  { id: "1", lat: -7.9666, lng: 112.6326, label: "Budi (Rumah Tangga) - PET", weightKg: 2.5, status: "MENUNGGU" },
-  { id: "2", lat: -7.9555, lng: 112.6111, label: "Siti (Rumah Tangga) - Kardus", weightKg: 5.0, status: "MENUNGGU" },
-];
+
 
 export default function CollectorHubPage() {
   const { toast } = useToast();
-  const [pickupPoints, setPickupPoints] = useState<PickupPoint[]>(MOCK_PICKUP_POINTS);
+  const [pickupPoints, setPickupPoints] = useState<PickupPoint[]>([]);
   const [optimizedRoute, setOptimizedRoute] = useState<PickupPoint[] | null>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [collectorBase] = useState({ lat: -7.9888, lng: 112.6222 }); // Hardcoded base for demo
+
+  useEffect(() => {
+    async function fetchPoints() {
+      try {
+        const res = await fetch("/api/listings?status=TERSEDIA");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            const points: PickupPoint[] = data.map((item: any) => ({
+              id: item.id,
+              lat: item.user?.lat || -7.9666,
+              lng: item.user?.lng || 112.6326,
+              label: `${item.user?.name || 'Unknown'} - ${item.wasteType}`,
+              weightKg: item.weightKg,
+              status: item.status
+            }));
+            setPickupPoints(points);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch pickup points:", error);
+      }
+    }
+    fetchPoints();
+  }, []);
 
   const handleOptimizeRoute = () => {
     setIsOptimizing(true);
@@ -62,8 +83,8 @@ export default function CollectorHubPage() {
         {/* Left Side: Map Area */}
         <div className="flex-1 rounded-xl shadow-sm border border-slate-200 overflow-hidden relative min-h-[400px]">
           <CollectorHubMap 
-            collectorLat={MOCK_COLLECTOR_BASE.lat}
-            collectorLng={MOCK_COLLECTOR_BASE.lng}
+            collectorLat={collectorBase.lat}
+            collectorLng={collectorBase.lng}
             pickupPoints={pickupPoints}
             optimizedRoute={optimizedRoute}
           />

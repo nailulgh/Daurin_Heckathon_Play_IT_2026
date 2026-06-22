@@ -12,22 +12,37 @@ interface HouseholdStats {
   completedListings: number;
 }
 
-// Mock based on PRD / Dummy Data structure
-const MOCK_HOUSEHOLD_STATS: HouseholdStats = {
-  totalWeightKg: 12.5,
-  totalEarningsIDR: 45000,
-  activeListings: 2,
-  completedListings: 5,
-};
-
 export default function HouseholdDashboardPage() {
-  const [stats, setStats] = useState<HouseholdStats | null>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [listings, setListings] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate data fetch based on session role
-    setTimeout(() => {
-      setStats(MOCK_HOUSEHOLD_STATS);
-    }, 500);
+    async function fetchData() {
+      try {
+        const [dashRes, listRes] = await Promise.all([
+          fetch("/api/dashboard"),
+          fetch("/api/listings?myListings=true")
+        ]);
+        
+        if (dashRes.ok) {
+          const dashData = await dashRes.json();
+          setStats(dashData);
+        }
+        
+        if (listRes.ok) {
+          const listData = await listRes.json();
+          if (Array.isArray(listData)) {
+            setListings(listData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
   }, []);
 
   if (!stats) {
@@ -64,7 +79,7 @@ export default function HouseholdDashboardPage() {
             <Scale className="h-4 w-4 text-emerald-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.totalWeightKg.toFixed(1)} kg</div>
+            <div className="text-3xl font-extrabold text-slate-900">{(stats.totalWeightSold || 0).toFixed(1)} kg</div>
             <p className="text-xs text-slate-500 mt-1">Akumulasi keseluruhan</p>
           </CardContent>
         </Card>
@@ -76,7 +91,7 @@ export default function HouseholdDashboardPage() {
             <Wallet className="h-4 w-4 text-emerald-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-emerald-600">{formatRupiah(stats.totalEarningsIDR)}</div>
+            <div className="text-3xl font-extrabold text-emerald-600">{formatRupiah(stats.totalIncome || stats.totalEarned || 0)}</div>
             <p className="text-xs text-emerald-700/70 mt-1 font-medium">Saldo dicairkan</p>
           </CardContent>
         </Card>
@@ -100,7 +115,7 @@ export default function HouseholdDashboardPage() {
             <PackageCheck className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-extrabold text-slate-900">{stats.completedListings}</div>
+            <div className="text-3xl font-extrabold text-slate-900">{stats.completedListings || stats.totalListings || 0}</div>
             <p className="text-xs text-slate-500 mt-1">Sukses dijemput pengepul</p>
           </CardContent>
         </Card>
@@ -122,22 +137,29 @@ export default function HouseholdDashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {[
-                  { id: "LST-001", date: "20 Jun 2025", category: "Plastik PET", weight: 3.5, status: "Tersedia", badge: "bg-emerald-100 text-emerald-800" },
-                  { id: "LST-003", date: "19 Jun 2025", category: "Besi/Baja", weight: 8.0, status: "Diklaim oleh Rudi Scrap", badge: "bg-blue-100 text-blue-800" },
-                  { id: "LST-002", date: "18 Jun 2025", category: "Kardus", weight: 7.2, status: "Selesai Diambil", badge: "bg-slate-100 text-slate-800" },
-                ].map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="py-4 px-6 text-sm text-slate-600">{item.date}</td>
-                    <td className="py-4 px-6 text-sm font-semibold text-slate-900">{item.category}</td>
-                    <td className="py-4 px-6 text-sm text-slate-600">{item.weight} kg</td>
-                    <td className="py-4 px-6">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${item.badge}`}>
-                        {item.status}
-                      </span>
-                    </td>
+                {listings.map((item: any) => {
+                  let badgeColor = "bg-slate-100 text-slate-800";
+                  if (item.status === "TERSEDIA") badgeColor = "bg-emerald-100 text-emerald-800";
+                  else if (item.status === "DIKLAIM") badgeColor = "bg-blue-100 text-blue-800";
+                  
+                  return (
+                    <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 text-sm text-slate-600">{new Date(item.createdAt).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                      <td className="py-4 px-6 text-sm font-semibold text-slate-900">{item.wasteType}</td>
+                      <td className="py-4 px-6 text-sm text-slate-600">{item.weightKg} kg</td>
+                      <td className="py-4 px-6">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${badgeColor}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {listings.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="py-4 px-6 text-center text-sm text-slate-500">Belum ada riwayat penjualan sampah.</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

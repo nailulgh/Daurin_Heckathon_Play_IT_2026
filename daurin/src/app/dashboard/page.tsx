@@ -7,15 +7,7 @@ import VolumeTrendChart from "@/components/dashboard/VolumeTrendChart";
 import { calculateCO2Offset } from "@/lib/co2";
 import { Globe } from "lucide-react";
 
-// Mock Time Series Data for Demo purposes
-const MOCK_TREND_DATA = [
-  { month: "Jan", Plastik: 400, Kertas: 240, Logam: 150 },
-  { month: "Feb", Plastik: 300, Kertas: 139, Logam: 200 },
-  { month: "Mar", Plastik: 500, Kertas: 400, Logam: 250 },
-  { month: "Apr", Plastik: 700, Kertas: 500, Logam: 300 },
-  { month: "May", Plastik: 650, Kertas: 550, Logam: 380 },
-  { month: "Jun", Plastik: 800, Kertas: 600, Logam: 450 },
-];
+
 
 export default function GlobalDashboardPage() {
   const [totalVolume, setTotalVolume] = useState(0);
@@ -24,36 +16,22 @@ export default function GlobalDashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In a real implementation, this would fetch from an aggregate analytics endpoint.
-    // Here we will simulate the calculation based on mock data and the strict CO2 math.
-
-    setTimeout(() => {
-      // 1. Calculate mock totals based on the trend data above
-      let vol = 0;
-      let co2 = 0;
-      
-      MOCK_TREND_DATA.forEach((data) => {
-        // Plastik
-        vol += data.Plastik;
-        co2 += calculateCO2Offset("PLASTIK_PET", data.Plastik); // using PET midpoint 1.75
-        
-        // Kertas
-        vol += data.Kertas;
-        co2 += calculateCO2Offset("KERTAS_KARDUS", data.Kertas); // 0.9
-        
-        // Logam
-        vol += data.Logam;
-        co2 += calculateCO2Offset("LOGAM_KALENG", data.Logam); // 8.75
-      });
-
-      setTotalVolume(vol);
-      setTotalCO2(co2);
-      
-      // Simulate IDR Circulation (e.g. roughly Rp 5,000 per kg average across the board)
-      setTotalCirculation(vol * 5000);
-      
-      setLoading(false);
-    }, 1000);
+    async function fetchImpact() {
+      try {
+        const res = await fetch("/api/dashboard/impact");
+        if (res.ok) {
+          const data = await res.json();
+          setTotalVolume(data.totalWeightKg || 0);
+          setTotalCO2(data.co2OffsetKg || 0);
+          setTotalCirculation(data.totalValueRp || 0);
+        }
+      } catch (error) {
+        console.error("Failed to fetch impact data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchImpact();
   }, []);
 
   if (loading) {
@@ -96,7 +74,7 @@ export default function GlobalDashboardPage() {
 
       {/* Bottom Row: Charts */}
       <div className="grid grid-cols-1 gap-6">
-        <VolumeTrendChart data={MOCK_TREND_DATA} />
+        <VolumeTrendChart data={[]} />
       </div>
 
     </div>

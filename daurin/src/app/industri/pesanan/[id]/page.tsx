@@ -8,38 +8,47 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Building2, PackageSearch } from "lucide-react";
 
-// Mock initial data based on daurin_dummy_data.md (Simulating fetch)
-const MOCK_INITIAL_LOGS: NegotiationLog[] = [
-  {
-    id: "log1",
-    type: "OFFER",
-    actorRole: "INDUSTRI",
-    actorName: "PT Daur Ulang Plastik",
-    amount: 8000,
-    message: "Penawaran awal untuk 200kg",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
-  },
-  {
-    id: "log2",
-    type: "COUNTER_OFFER",
-    actorRole: "PENGEPUL",
-    actorName: "Bank Sampah Malang",
-    amount: 8200,
-    message: "Harga pasaran sedang naik pak, 8200 bagaimana?",
-    createdAt: new Date(Date.now() - 1000 * 60 * 30), // 30 mins ago
-  }
-];
+
 
 export default function IndustryNegotiationPage() {
   const { id } = useParams();
   const { toast } = useToast();
   
-  const [logs, setLogs] = useState<NegotiationLog[]>(MOCK_INITIAL_LOGS);
+  const [logs, setLogs] = useState<NegotiationLog[]>([]);
   const [status, setStatus] = useState<"NEGOSIASI" | "DEAL" | "DIBATALKAN">("NEGOSIASI");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderData, setOrderData] = useState<any>(null);
+
+  React.useEffect(() => {
+    async function fetchOrder() {
+      try {
+        const res = await fetch(`/api/orders/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setOrderData(data);
+          setStatus(data.status);
+          
+          if (data.negotiations && Array.isArray(data.negotiations)) {
+            const fetchedLogs = data.negotiations.map((neg: any) => ({
+              id: neg.id,
+              type: neg.type,
+              actorRole: neg.actor.role,
+              actorName: neg.actor.name,
+              amount: neg.amount,
+              message: neg.message,
+              createdAt: new Date(neg.createdAt)
+            }));
+            setLogs(fetchedLogs);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching order:", error);
+      }
+    }
+    if (id) fetchOrder();
+  }, [id]);
 
   // In a real app, this would be computed based on whether the last log was from the other party.
-  // We simulate that it's Industry's turn since the last log was from PENGEPUL.
   const isMyTurn = logs.length > 0 && logs[logs.length - 1].actorRole !== "INDUSTRI";
   const lastOfferAmount = logs.length > 0 ? logs[logs.length - 1].amount : undefined;
 
@@ -137,7 +146,7 @@ export default function IndustryNegotiationPage() {
           </div>
           <p className="mt-1 text-slate-500 flex items-center">
             <PackageSearch className="w-4 h-4 mr-1.5" />
-            ID Pesanan: #{id} | Flake PET Bersih Grade A (200kg)
+            ID Pesanan: #{id} {orderData?.material?.wasteType && `| ${orderData.material.wasteType} (${orderData.volumeKg}kg)`}
           </p>
         </div>
       </div>
