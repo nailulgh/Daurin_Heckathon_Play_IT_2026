@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { classifyWasteImage, isModelLoaded, loadModel } from "@/lib/ai/wasteClassifier";
+import React, { useState, useRef } from "react";
+import { classifyWasteImage } from "@/lib/ai/wasteClassifier";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { UploadCloud, CheckCircle, AlertTriangle, Loader2 } from "lucide-react";
@@ -23,19 +23,6 @@ export default function AIPhotoClassifier({ onClassificationComplete }: AIPhotoC
   const [loadingMsg, setLoadingMsg] = useState<string | null>(null);
   const [result, setResult] = useState<PredictionResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // Pre-load the model when the component mounts to save time
-    if (!isModelLoaded()) {
-      setLoadingMsg("Memuat model AI...");
-      loadModel().then(() => {
-        setLoadingMsg(null);
-      }).catch(err => {
-        console.error("Gagal memuat model:", err);
-        setLoadingMsg(null);
-      });
-    }
-  }, []);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
