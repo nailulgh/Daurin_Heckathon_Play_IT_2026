@@ -1,35 +1,40 @@
-import { AuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "./prisma";
-// We would usually import bcrypt or argon2 here, but we'll mock it for the setup
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
+  secret: "daurin-local-development-secret-key-2026",
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "email", placeholder: "Gunakan 'industri@...', 'pengepul@...', dll" },
+        password: { label: "Password", type: "password", placeholder: "Sembarang password (Mock Mode)" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
+        // MOCK MODE: Bypass DB entirely and grant access based on email keyword
+        let role = "RUMAH_TANGGA";
+        let name = "Budi (Warga)";
 
-        if (!user || user.password !== credentials.password) {
-          // Replace with proper password comparison in actual implementation
-          return null;
+        if (credentials.email.toLowerCase().includes("pengepul")) {
+          role = "PENGEPUL";
+          name = "Pengepul Berkah";
+        } else if (credentials.email.toLowerCase().includes("industri")) {
+          role = "INDUSTRI";
+          name = "PT Daur Ulang Plastik";
+        } else if (credentials.email.toLowerCase().includes("admin")) {
+          role = "ADMIN";
+          name = "Admin Daurin";
         }
 
         return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          id: `mock-id-${Date.now()}`,
+          email: credentials.email,
+          name: name,
+          role: role,
         };
       },
     }),
@@ -38,7 +43,7 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = user.role;
+        token.role = (user as any).role;
       }
       return token;
     },

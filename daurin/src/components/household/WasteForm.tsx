@@ -1,0 +1,215 @@
+"use client";
+
+import React, { useState, useRef } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { UploadCloud, CheckCircle2, AlertCircle } from "lucide-react";
+import { WasteType } from "@/components/marketplace/FilterSidebar";
+
+export interface AIClassificationResult {
+  label: WasteType;
+  confidence: number;
+}
+
+interface WasteFormProps {
+  onSubmit: (data: any) => void;
+  isSubmitting: boolean;
+}
+
+export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
+  const [wasteType, setWasteType] = useState<WasteType>("PLASTIK_PET");
+  const [weightKg, setWeightKg] = useState<number | "">("");
+  const [pricePerKg, setPricePerKg] = useState<number | "">("");
+  const [description, setDescription] = useState("");
+  
+  // Image & AI state
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isClassifying, setIsClassifying] = useState(false);
+  const [aiResult, setAiResult] = useState<AIClassificationResult | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImagePreview(url);
+      simulateAIClassification(url);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImagePreview(url);
+      simulateAIClassification(url);
+    }
+  };
+
+  const simulateAIClassification = (imageUrl: string) => {
+    setIsClassifying(true);
+    setAiResult(null);
+    
+    // Simulate TensorFlow.js MobileNetV2 latency and inference
+    setTimeout(() => {
+      setIsClassifying(false);
+      // Mock result based on PRD FR-002.2 expected behavior
+      const mockResult: AIClassificationResult = {
+        label: "PLASTIK_PET",
+        confidence: 0.94,
+      };
+      setAiResult(mockResult);
+      // Auto-fill form based on AI detection
+      setWasteType(mockResult.label);
+    }, 2000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!weightKg || !pricePerKg) return;
+    
+    onSubmit({
+      wasteType,
+      weightKg: Number(weightKg),
+      pricePerKg: Number(pricePerKg),
+      description,
+      photoUrl: imagePreview,
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
+      <div className="space-y-6">
+        
+        {/* Drag & Drop Zone */}
+        <div className="space-y-2">
+          <Label className="text-slate-900 font-semibold">Upload Foto Sampah (Wajib untuk AI)</Label>
+          <div 
+            className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+              imagePreview ? "border-emerald-500 bg-emerald-50" : "border-slate-300 hover:border-emerald-400 hover:bg-slate-50"
+            }`}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+            />
+            {imagePreview ? (
+              <div className="flex flex-col items-center">
+                <img src={imagePreview} alt="Preview" className="h-40 object-contain rounded-md mb-4 shadow-sm" />
+                <Button type="button" variant="outline" size="sm" className="text-slate-600">Ganti Foto</Button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center text-slate-500 cursor-pointer">
+                <UploadCloud className="w-12 h-12 mb-3 text-slate-400" />
+                <p className="font-medium text-slate-700">Tarik & lepas foto ke sini</p>
+                <p className="text-sm mt-1">atau klik untuk menelusuri file</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* AI Result Banner */}
+        {isClassifying && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center text-amber-800">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-amber-600 mr-3 shrink-0"></div>
+            <p className="text-sm font-medium">Model AI sedang menganalisis gambar...</p>
+          </div>
+        )}
+
+        {aiResult && !isClassifying && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start text-emerald-800">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 mr-3 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-bold text-emerald-900">AI Classification Berhasil</p>
+              <p className="text-sm mt-1">
+                Sistem mendeteksi <span className="font-bold">{aiResult.label.replace(/_/g, " ")}</span> dengan tingkat kepercayaan <span className="font-bold">{(aiResult.confidence * 100).toFixed(1)}%</span>.
+              </p>
+              <p className="text-xs mt-2 text-emerald-700">*Kategori telah dipilih otomatis berdasarkan hasil ini.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Form Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+          <div className="space-y-2">
+            <Label htmlFor="wasteType" className="text-slate-900 font-semibold">Kategori Sampah</Label>
+            <Select value={wasteType} onValueChange={(val) => setWasteType(val as WasteType)}>
+              <SelectTrigger id="wasteType" className="border-slate-200 focus:ring-emerald-600">
+                <SelectValue placeholder="Pilih Kategori" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="PLASTIK_PET">Plastik PET</SelectItem>
+                <SelectItem value="PLASTIK_HDPE">Plastik HDPE</SelectItem>
+                <SelectItem value="KERTAS_KARDUS">Kertas & Kardus</SelectItem>
+                <SelectItem value="LOGAM_KALENG">Logam & Kaleng</SelectItem>
+                <SelectItem value="KACA">Kaca</SelectItem>
+                <SelectItem value="ELEKTRONIK">Elektronik</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="weight" className="text-slate-900 font-semibold">Berat (Kg)</Label>
+            <Input 
+              id="weight" 
+              type="number" 
+              min="0.1" 
+              step="0.1"
+              required 
+              placeholder="0.0" 
+              value={weightKg} 
+              onChange={(e) => setWeightKg(e.target.value === "" ? "" : Number(e.target.value))}
+              className="border-slate-200 focus-visible:ring-emerald-600"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <Label htmlFor="price" className="text-slate-900 font-semibold">Harga Jual per Kg (Rp)</Label>
+            <Input 
+              id="price" 
+              type="number" 
+              min="0" 
+              required 
+              placeholder="Contoh: 3000" 
+              value={pricePerKg} 
+              onChange={(e) => setPricePerKg(e.target.value === "" ? "" : Number(e.target.value))}
+              className="border-slate-200 focus-visible:ring-emerald-600"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <Label htmlFor="description" className="text-slate-900 font-semibold">Deskripsi Singkat</Label>
+            <Textarea 
+              id="description" 
+              rows={3}
+              placeholder="Misal: Kondisi sudah dicuci bersih, siap jemput sore hari..." 
+              value={description} 
+              onChange={(e) => setDescription(e.target.value)}
+              className="border-slate-200 focus-visible:ring-emerald-600 resize-none"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-4 flex justify-end">
+        <Button 
+          type="submit" 
+          disabled={isSubmitting || !weightKg || !pricePerKg} 
+          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 w-full md:w-auto"
+        >
+          {isSubmitting ? "Menyimpan..." : "Posting Sampah"}
+        </Button>
+      </div>
+    </form>
+  );
+}

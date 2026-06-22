@@ -37,9 +37,15 @@ export default function LoginForm() {
       if (result?.error) {
         setServerError("Invalid email or password.");
       } else {
-        // We will fetch session role or let middleware handle the redirect. 
-        // For now, redirect to a dashboard based on a fetch or just generic dashboard
-        router.push("/dashboard");
+        const emailLower = formData.email.toLowerCase();
+        if (emailLower.includes("pengepul")) {
+          router.push("/pengepul/dashboard");
+        } else if (emailLower.includes("industri")) {
+          router.push("/industri/dashboard");
+        } else {
+          // Default to Rumah Tangga for "budi@gmail.com" or others
+          router.push("/rumah-tangga/dashboard");
+        }
         router.refresh();
       }
     } catch (err) {

@@ -1,0 +1,75 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+
+const CreateOrderSchema = z.object({
+  materialId: z.string(),
+  volumeKg: z.number().positive(),
+  initialOfferPrice: z.number().positive(),
+  message: z.string().optional(),
+});
+
+export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user || (session.user as any).role !== "INDUSTRI") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    const parsed = CreateOrderSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+    }
+
+    const { materialId, volumeKg, initialOfferPrice, message } = parsed.data;
+    const buyerId = (session.user as any).id;
+
+    // Transaction to create Order and the first Negotiation (OFFER)
+    const result = await prisma.$transaction(async (tx) => {
+      const material = await tx.materialListing.findUnique({
+        where: { id: materialId },
+      });
+
+      if (!material) throw new Error("Material not found");
+      if (material.status !== "TERSEDIA") throw new Error("Material not available");
+
+      const order = await tx.order.create({
+        data: {
+          buyerId,
+          materialId,
+          volumeKg,
+          status: "NEGOSIASI", // Jump to NEGOSIASI since we make an initial offer
+        },
+      });
+
+      const negotiation = await tx.negotiation.create({
+        data: {
+          orderId: order.id,
+          actorId: buyerId,
+          type: "OFFER",
+          amount: initialOfferPrice,
+          message: message || "Penawaran awal",
+        },
+      });
+
+      await tx.materialListing.update({
+        where: { id: materialId },
+        data: { status: "DIPESAN" },
+      });
+
+      return { order, negotiation };
+    });
+
+    return NextResponse.json(result, { status: 201 });
+  } catch (error: any) {
+    console.error("POST /api/orders error:", error);
+    if (error.message === "Material not found" || error.message === "Material not available") {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
