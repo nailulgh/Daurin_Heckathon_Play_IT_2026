@@ -62,7 +62,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 | Jam | Task                                                                                                               | FR/ERD Ref                                   | Prioritas |
 | --- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------- | --------- |
 | 0–1 | Setup repo GitHub, buat README skeleton, breakdown task ke issue/kanban sederhana                                  | —                                            | 🔴 P0     |
-| 1–2 | Load TF.js + MobileNetV2 di browser: buat komponen `<WasteClassifier />` proof-of-concept, test dengan 3–5 foto    | FR-002.2, ERD §2.4 (`ai_classification`)     | 🔴 P0     |
+| 1–2 | ✅ Load TF.js + MobileNetV2 di browser: buat komponen `<WasteClassifier />` proof-of-concept, test dengan 3–5 foto    | FR-002.2, ERD §2.4 (`ai_classification`)     | 🔴 P0     |
 | 2–3 | Setup Leaflet.js + React-Leaflet + OpenStreetMap tile layer: buat komponen `<MapView />` dasar dengan marker dummy | FR-003.3, ERD §2.4 (`latitude`, `longitude`) | 🔴 P0     |
 
 ---
@@ -119,8 +119,8 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam | Task                                                                                                                                                                                                  | FR Ref              | Prioritas |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------- |
-| 5–6 | Finalisasi komponen `<WasteClassifier />` · mapping output MobileNet ke 5 kelas Daurin (`plastik_pet`, `plastik_hdpe`, `kertas`, `logam`, `elektronik`) · simpan hasil ke state untuk dikirim ke form | FR-002.2, ERD §2.4  | 🔴 P0     |
-| 6–8 | Tulis fungsi utilitas `haversineDistance(lat1, lng1, lat2, lng2): number` · unit test manual di console · akan digunakan oleh algoritma rute                                                          | ERD §2.10, PRD §6.3 | 🟡 P1     |
+| 5–6 | ✅ Finalisasi komponen `<WasteClassifier />` · mapping output MobileNet ke 5 kelas Daurin (`plastik_pet`, `plastik_hdpe`, `kertas`, `logam`, `elektronik`) · simpan hasil ke state untuk dikirim ke form | FR-002.2, ERD §2.4  | 🔴 P0     |
+| 6–8 | ✅ Tulis fungsi utilitas `haversineDistance(lat1, lng1, lat2, lng2): number` · unit test manual di console · akan digunakan oleh algoritma rute                                                          | ERD §2.10, PRD §6.3 | 🟡 P1     |
 
 ---
 
@@ -147,7 +147,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam   | Task                                                                                                                                                                                                                                       | FR Ref                       | Prioritas |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | --------- |
-| 8–10  | Implementasi algoritma rute nearest-neighbor · input: posisi pengepul + array `{id, lat, lng}` klaim aktif · output: array ID terurut + total jarak km + estimasi biaya bensin · integrasikan ke halaman peta sebagai panel "Rute Optimal" | FR-003.4, FR-003.5, PRD §6.3 | 🟡 P1     |
+| 8–10  | ✅ Implementasi algoritma rute nearest-neighbor · input: posisi pengepul + array `{id, lat, lng}` klaim aktif · output: array ID terurut + total jarak km + estimasi biaya bensin · integrasikan ke halaman peta sebagai panel "Rute Optimal" | FR-003.4, FR-003.5, PRD §6.3 | 🟡 P1     |
 | 10–12 | Setup Supabase Realtime subscription untuk tabel `NOTIFICATIONS` · buat helper `createNotification(userId, type, title, body, referenceId)` · panggil dari API klaim & update status                                                       | FR-002.4, ERD §2.12          | 🟡 P1     |
 
 ---

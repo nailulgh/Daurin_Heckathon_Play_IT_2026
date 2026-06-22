@@ -1,3 +1,15 @@
+## [2026-06-22] — FASE 3: Core Logic Data/AI/Integration
+
+- ✅ **AI Image Classifier**: Implementasi wrapper `src/lib/ai/wasteClassifier.ts` menggunakan TensorFlow.js MobileNetV2 dengan mapping output kelas ImageNet ke tipe enum Daurin.
+- ✅ **Geospatial Distance**: Implementasi algoritma jarak lurus `src/lib/geo/haversine.ts`.
+- ✅ **Route Optimizer**: Implementasi algoritma Nearest-Neighbor di `src/lib/geo/routeOptimizer.ts` untuk mengurutkan titik pengambilan sampah pengepul beserta estimasi biaya bahan bakar dan durasi perjalanan (berdasarkan dummy data wilayah Malang Raya).
+
+**Why it changed:**
+- Mengerjakan checklist prioritas P0 dan P1 pada Fase 3 yang bersifat *core logic* independen (tidak bergantung langsung pada komponen Frontend) sesuai roadmap.
+
+**Impact:**
+- Modul utilitas untuk AI klasifikasi sampah dan rute pengumpulan pengepul telah lengkap, siap untuk dihubungkan ke UI Frontend pada fase selanjutnya.
+
 ## [2026-06-22] — FASE 2 & 3: Fitur Pengepul, Industri, dan Aggregation (Backend)
 
 - ✅ **API Upload**: Mengimplementasi `POST /api/upload` untuk unggah gambar ke Supabase Storage.
