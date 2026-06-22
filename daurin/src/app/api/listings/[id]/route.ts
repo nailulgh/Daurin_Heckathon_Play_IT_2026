@@ -64,7 +64,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
         const updated = await prisma.$transaction([
           prisma.pickupClaim.update({
             where: { listingId: params.id },
-            data: { status: "SELESAI", finalPrice },
+            data: { status: "SELESAI" },
           }),
           prisma.wasteListing.update({
             where: { id: params.id },
