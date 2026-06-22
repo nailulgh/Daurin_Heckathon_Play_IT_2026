@@ -79,15 +79,15 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam | Task                                                                                                                                                                                       | FR Ref             | Prioritas |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ | --------- |
-| 3–4 | Implementasi NextAuth dengan Credentials Provider · buat `api/auth/[...nextauth]` · JWT dengan payload `{ id, role, email }`                                                               | FR-001.2, FR-001.3 | 🔴 P0     |
-| 4–5 | Buat API `POST /api/auth/register` · handle 3 role · buat `COLLECTOR_PROFILES` + `COLLECTOR_WASTE_TYPES` otomatis saat register pengepul · buat `INDUSTRY_PROFILES` saat register industri | FR-001.1, FR-001.4 | 🔴 P0     |
+| 3–4 | ✅ Implementasi NextAuth dengan Credentials Provider · buat `api/auth/[...nextauth]` · JWT dengan payload `{ id, role, email }`                                                               | FR-001.2, FR-001.3 | 🔴 P0     |
+| 4–5 | ✅ Buat API `POST /api/auth/register` · handle 3 role · buat `COLLECTOR_PROFILES` + `COLLECTOR_WASTE_TYPES` otomatis saat register pengepul · buat `INDUSTRY_PROFILES` saat register industri | FR-001.1, FR-001.4 | 🔴 P0     |
 
 #### Dev 2 — Frontend
 
 | Jam | Task                                                                                                                             | FR Ref   | Prioritas |
 | --- | -------------------------------------------------------------------------------------------------------------------------------- | -------- | --------- |
-| 3–4 | Hubungkan form register ke API · handle error · redirect ke dashboard per role                                                   | FR-001.1 | 🔴 P0     |
-| 4–5 | Tambah middleware Next.js untuk route protection: `/rt/*`, `/pengepul/*`, `/industri/*` · unauthorized redirect ke `/auth/login` | FR-001.3 | 🔴 P0     |
+| 3–4 | ✅ Hubungkan form register ke API · handle error · redirect ke dashboard per role                                                   | FR-001.1 | 🔴 P0     |
+| 4–5 | ✅ Tambah middleware Next.js untuk route protection: `/rt/*`, `/pengepul/*`, `/industri/*` · unauthorized redirect ke `/auth/login` | FR-001.3 | 🔴 P0     |
 
 #### Dev 3 — Data/AI/Integration
 

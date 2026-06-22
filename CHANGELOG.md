@@ -1,3 +1,17 @@
+## [2026-06-22] — FASE 2: Fitur Core (Auth & RBAC)
+
+- ✅ **Backend Auth**: Mengimplementasi `POST /api/auth/register` API untuk pendaftaran user (Rumah Tangga, Pengepul, Industri).
+- ✅ **Frontend Auth**: Membuat komponen form `RegisterForm` dan `LoginForm` yang terhubung ke API backend.
+- ✅ Menerapkan Zod validation di form registrasi dan login.
+- ✅ Memasang route protection lewat Next.js Middleware dan NextAuth callbacks.
+- ✅ Install ulang paket Prisma yang sebelumnya sempat gagal (Network error `ECONNRESET`).
+
+**Why it changed:**
+- Menyelesaikan prioritas Fase 2 awal (jam 3-5) yang mewajibkan seluruh flow registrasi dan autentikasi fungsional agar proses marketplace dan negosiasi aman.
+
+**Impact:**
+- Modul autentikasi telah lengkap. Lanjut siap mengerjakan Listing Sampah (CRUD).
+
 ## [2026-06-22] — FASE 1: Fondasi Backend & Database Setup
 
 - ✅ Init project Next.js 14 (App Router + TypeScript) dan integrasi Tailwind CSS.
