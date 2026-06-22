@@ -109,7 +109,7 @@ export default function NegotiationActionControls({
             rows={2}
             placeholder="Misal: Saya ambil 2 ton jika harga bisa 8500..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e: any) => setMessage(e.target.value)}
             className="border-slate-300 focus-visible:ring-blue-600 resize-none"
             disabled={isSubmitting}
           />

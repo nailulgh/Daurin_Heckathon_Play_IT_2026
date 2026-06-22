@@ -20,11 +20,11 @@ interface WasteFormProps {
 }
 
 export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
-  const [wasteType, setWasteType] = useState<WasteType>("PLASTIK_PET");
+  const [wasteType, setWasteType] = useState<WasteType | "">("");
   const [weightKg, setWeightKg] = useState<number | "">("");
   const [pricePerKg, setPricePerKg] = useState<number | "">("");
   const [description, setDescription] = useState("");
-  
+
   // Image & AI state
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isClassifying, setIsClassifying] = useState(false);
@@ -36,7 +36,7 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
     if (file) {
       const url = URL.createObjectURL(file);
       setImagePreview(url);
-      simulateAIClassification(url);
+      simulateAIClassification(url, file.name); // Tambahkan file.name di sini
     }
   };
 
@@ -46,32 +46,47 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
     if (file) {
       const url = URL.createObjectURL(file);
       setImagePreview(url);
-      simulateAIClassification(url);
+      simulateAIClassification(url, file.name); // Tambahkan file.name di sini
     }
   };
 
-  const simulateAIClassification = (imageUrl: string) => {
+  const simulateAIClassification = (imageUrl: string, fileName: string) => {
     setIsClassifying(true);
     setAiResult(null);
-    
+
     // Simulate TensorFlow.js MobileNetV2 latency and inference
     setTimeout(() => {
       setIsClassifying(false);
-      // Mock result based on PRD FR-002.2 expected behavior
-      const mockResult: AIClassificationResult = {
-        label: "PLASTIK_PET",
-        confidence: 0.94,
-      };
-      setAiResult(mockResult);
-      // Auto-fill form based on AI detection
-      setWasteType(mockResult.label);
+      
+      let detectedLabel: WasteType | null = null;
+      const name = fileName.toLowerCase();
+      
+      if (name.includes("kertas") || name.includes("kardus")) detectedLabel = "KERTAS_KARDUS";
+      else if (name.includes("kaca") || name.includes("gelas")) detectedLabel = "KACA";
+      else if (name.includes("kaleng") || name.includes("logam") || name.includes("besi") || name.includes("aluminium")) detectedLabel = "LOGAM_KALENG";
+      else if (name.includes("hdpe")) detectedLabel = "PLASTIK_HDPE";
+      else if (name.includes("elektronik") || name.includes("kabel") || name.includes("tv")) detectedLabel = "ELEKTRONIK";
+      else if (name.includes("botol") || name.includes("plastik") || name.includes("pet")) detectedLabel = "PLASTIK_PET";
+
+      if (detectedLabel) {
+        const mockResult: AIClassificationResult = {
+          label: detectedLabel,
+          confidence: 0.85 + Math.random() * 0.1,
+        };
+        setAiResult(mockResult);
+        setWasteType(mockResult.label);
+      } else {
+        // Fallback to manual input if AI doesn't know
+        setAiResult({ label: "MANUAL" as any, confidence: 0 });
+        setWasteType("");
+      }
     }, 2000);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!weightKg || !pricePerKg) return;
-    
+
     onSubmit({
       wasteType,
       weightKg: Number(weightKg),
@@ -84,26 +99,30 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
       <div className="space-y-6">
-        
+
         {/* Drag & Drop Zone */}
         <div className="space-y-2">
           <Label className="text-slate-900 font-semibold">Upload Foto Sampah (Wajib untuk AI)</Label>
-          <div 
-            className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
-              imagePreview ? "border-emerald-500 bg-emerald-50" : "border-slate-300 hover:border-emerald-400 hover:bg-slate-50"
-            }`}
+          <div
+            className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${imagePreview ? "border-emerald-500 bg-emerald-50" : "border-slate-300 hover:border-emerald-400 hover:bg-slate-50"
+              }`}
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
           >
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              className="hidden" 
-              accept="image/*" 
-              onChange={handleImageUpload} 
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleImageUpload}
             />
-            {imagePreview ? (
+            {isClassifying ? (
+              <div className="flex flex-col items-center justify-center py-6">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-emerald-600 mb-4"></div>
+                <p className="text-emerald-700 font-semibold animate-pulse">AI sedang menganalisis jenis sampah...</p>
+              </div>
+            ) : imagePreview ? (
               <div className="flex flex-col items-center">
                 <img src={imagePreview} alt="Preview" className="h-40 object-contain rounded-md mb-4 shadow-sm" />
                 <Button type="button" variant="outline" size="sm" className="text-slate-600">Ganti Foto</Button>
@@ -119,22 +138,30 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
         </div>
 
         {/* AI Result Banner */}
-        {isClassifying && (
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center text-amber-800">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-amber-600 mr-3 shrink-0"></div>
-            <p className="text-sm font-medium">Model AI sedang menganalisis gambar...</p>
-          </div>
-        )}
-
         {aiResult && !isClassifying && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start text-emerald-800">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 mr-3 shrink-0 mt-0.5" />
+          <div className={`border rounded-lg p-4 flex items-start ${aiResult.confidence > 0 ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-amber-50 border-amber-200 text-amber-800"}`}>
+            {aiResult.confidence > 0 ? (
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 mr-3 shrink-0 mt-0.5" />
+            ) : (
+              <AlertCircle className="w-5 h-5 text-amber-600 mr-3 shrink-0 mt-0.5" />
+            )}
             <div>
-              <p className="text-sm font-bold text-emerald-900">AI Classification Berhasil</p>
-              <p className="text-sm mt-1">
-                Sistem mendeteksi <span className="font-bold">{aiResult.label.replace(/_/g, " ")}</span> dengan tingkat kepercayaan <span className="font-bold">{(aiResult.confidence * 100).toFixed(1)}%</span>.
-              </p>
-              <p className="text-xs mt-2 text-emerald-700">*Kategori telah dipilih otomatis berdasarkan hasil ini.</p>
+              {aiResult.confidence > 0 ? (
+                <>
+                  <p className="text-sm font-bold text-emerald-900">AI Classification Berhasil</p>
+                  <p className="text-sm mt-1">
+                    Sistem mendeteksi <span className="font-bold">{aiResult.label.replace(/_/g, " ")}</span> dengan tingkat kepercayaan <span className="font-bold">{(aiResult.confidence * 100).toFixed(1)}%</span>.
+                  </p>
+                  <p className="text-xs mt-2 text-emerald-700">*Kategori telah dipilih otomatis berdasarkan hasil ini.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm font-bold text-amber-900">AI Belum Dapat Mengenali</p>
+                  <p className="text-sm mt-1">
+                    Model AI vision saat ini belum mendeteksi jenis spesifik pada foto ini. Silakan pilih <strong>Kategori Sampah</strong> secara manual.
+                  </p>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -143,9 +170,9 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
           <div className="space-y-2">
             <Label htmlFor="wasteType" className="text-slate-900 font-semibold">Kategori Sampah</Label>
-            <Select value={wasteType} onValueChange={(val) => setWasteType(val as WasteType)}>
-              <SelectTrigger id="wasteType" className="border-slate-200 focus:ring-emerald-600">
-                <SelectValue placeholder="Pilih Kategori" />
+            <Select disabled={!aiResult} value={wasteType || undefined} onValueChange={(val) => setWasteType(val as WasteType)}>
+              <SelectTrigger id="wasteType" className="border-slate-200 focus:ring-emerald-600 disabled:opacity-70 disabled:bg-slate-50">
+                <SelectValue placeholder="Menunggu upload foto..." />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="PLASTIK_PET">Plastik PET</SelectItem>
@@ -160,14 +187,14 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
 
           <div className="space-y-2">
             <Label htmlFor="weight" className="text-slate-900 font-semibold">Berat (Kg)</Label>
-            <Input 
-              id="weight" 
-              type="number" 
-              min="0.1" 
+            <Input
+              id="weight"
+              type="number"
+              min="0.1"
               step="0.1"
-              required 
-              placeholder="0.0" 
-              value={weightKg} 
+              required
+              placeholder="0.0"
+              value={weightKg}
               onChange={(e) => setWeightKg(e.target.value === "" ? "" : Number(e.target.value))}
               className="border-slate-200 focus-visible:ring-emerald-600"
             />
@@ -175,13 +202,13 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
 
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="price" className="text-slate-900 font-semibold">Harga Jual per Kg (Rp)</Label>
-            <Input 
-              id="price" 
-              type="number" 
-              min="0" 
-              required 
-              placeholder="Contoh: 3000" 
-              value={pricePerKg} 
+            <Input
+              id="price"
+              type="number"
+              min="0"
+              required
+              placeholder="Contoh: 3000"
+              value={pricePerKg}
               onChange={(e) => setPricePerKg(e.target.value === "" ? "" : Number(e.target.value))}
               className="border-slate-200 focus-visible:ring-emerald-600"
             />
@@ -189,12 +216,12 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
 
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="description" className="text-slate-900 font-semibold">Deskripsi Singkat</Label>
-            <Textarea 
-              id="description" 
+            <Textarea
+              id="description"
               rows={3}
-              placeholder="Misal: Kondisi sudah dicuci bersih, siap jemput sore hari..." 
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Misal: Kondisi sudah dicuci bersih, siap jemput sore hari..."
+              value={description}
+              onChange={(e: any) => setDescription(e.target.value)}
               className="border-slate-200 focus-visible:ring-emerald-600 resize-none"
             />
           </div>
@@ -202,9 +229,9 @@ export default function WasteForm({ onSubmit, isSubmitting }: WasteFormProps) {
       </div>
 
       <div className="pt-4 flex justify-end">
-        <Button 
-          type="submit" 
-          disabled={isSubmitting || !weightKg || !pricePerKg} 
+        <Button
+          type="submit"
+          disabled={isSubmitting || !weightKg || !pricePerKg}
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 w-full md:w-auto"
         >
           {isSubmitting ? "Menyimpan..." : "Posting Sampah"}

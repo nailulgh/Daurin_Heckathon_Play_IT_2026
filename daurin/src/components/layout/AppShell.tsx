@@ -4,12 +4,20 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
   // Bypass useSession for Pure Front-End Mock Mode
   // const { data: session } = useSession();
   const session = true; // Force sidebar layout in Mock Mode
+
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+
+  if (isAuthPage) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">

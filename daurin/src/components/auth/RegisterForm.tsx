@@ -64,7 +64,7 @@ export default function RegisterForm() {
         const errorData = await res.json();
         setServerError(errorData.error?.formErrors?.[0] || "Registration failed");
       } else {
-        router.push("/auth/login?registered=true");
+        router.push("/login?registered=true");
       }
     } catch (err) {
       setServerError("An unexpected error occurred.");

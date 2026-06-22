@@ -106,6 +106,43 @@ export default function HouseholdDashboardPage() {
         </Card>
 
       </div>
+
+      {/* Tracking Table */}
+      <div className="mt-12">
+        <h2 className="text-xl font-bold text-slate-900 mb-6">Status Penjualan Sampah Anda</h2>
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-sm font-semibold text-slate-600">
+                  <th className="py-4 px-6">Tanggal</th>
+                  <th className="py-4 px-6">Kategori</th>
+                  <th className="py-4 px-6">Berat</th>
+                  <th className="py-4 px-6">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {[
+                  { id: "LST-001", date: "20 Jun 2025", category: "Plastik PET", weight: 3.5, status: "Tersedia", badge: "bg-emerald-100 text-emerald-800" },
+                  { id: "LST-003", date: "19 Jun 2025", category: "Besi/Baja", weight: 8.0, status: "Diklaim oleh Rudi Scrap", badge: "bg-blue-100 text-blue-800" },
+                  { id: "LST-002", date: "18 Jun 2025", category: "Kardus", weight: 7.2, status: "Selesai Diambil", badge: "bg-slate-100 text-slate-800" },
+                ].map((item) => (
+                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-4 px-6 text-sm text-slate-600">{item.date}</td>
+                    <td className="py-4 px-6 text-sm font-semibold text-slate-900">{item.category}</td>
+                    <td className="py-4 px-6 text-sm text-slate-600">{item.weight} kg</td>
+                    <td className="py-4 px-6">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${item.badge}`}>
+                        {item.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

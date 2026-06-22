@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { LogOut, User, Menu, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

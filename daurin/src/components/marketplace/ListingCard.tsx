@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Scale, Tag, Package, User } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ListingCardProps {
   id: string;
@@ -33,11 +34,23 @@ export default function ListingCard({
   cardType,
   onActionClick,
 }: ListingCardProps) {
+  const { toast } = useToast();
+  const [isClaimed, setIsClaimed] = useState(status === "diklaim");
+
   const formatRupiah = (val: number) =>
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(val);
 
   const getThemeByCardType = () => {
     if (cardType === "HOUSEHOLD") {
+      if (isClaimed) {
+        return {
+          badgeBg: "bg-slate-100",
+          badgeText: "text-slate-800",
+          btnColor: "bg-slate-400 cursor-not-allowed",
+          actionText: "Telah Diklaim",
+          borderColor: "border-slate-200",
+        };
+      }
       return {
         badgeBg: "bg-emerald-100",
         badgeText: "text-emerald-800",
@@ -68,6 +81,19 @@ export default function ListingCard({
   const theme = getThemeByCardType();
   const displayLabel = wasteType.replace(/_/g, " ");
 
+  const handleActionClick = () => {
+    if (cardType === "HOUSEHOLD" && !isClaimed) {
+      setIsClaimed(true);
+      toast({
+        title: "Sampah Berhasil Diklaim",
+        description: "Ditambahkan ke Rute Peta Jemput Anda.",
+        variant: "default",
+      });
+      return;
+    }
+    onActionClick(id);
+  };
+
   return (
     <Card className={`overflow-hidden hover:shadow-lg transition-shadow border ${theme.borderColor} flex flex-col h-full bg-white`}>
       <div className="relative h-48 w-full bg-slate-100 border-b border-slate-200 flex items-center justify-center overflow-hidden">
@@ -78,7 +104,7 @@ export default function ListingCard({
         )}
         <div className="absolute top-2 right-2 flex flex-col gap-2">
           <Badge className={`font-semibold px-2.5 py-0.5 ${theme.badgeBg} ${theme.badgeText} border-none shadow-sm`}>
-            {status}
+            {isClaimed && cardType === "HOUSEHOLD" ? "diklaim" : status}
           </Badge>
         </div>
       </div>
@@ -124,7 +150,8 @@ export default function ListingCard({
 
       <CardFooter className="pt-0 pb-4 px-4 mt-auto">
         <Button 
-          onClick={() => onActionClick(id)}
+          onClick={handleActionClick}
+          disabled={cardType === "HOUSEHOLD" && isClaimed}
           className={`w-full text-white font-semibold ${theme.btnColor} shadow-sm`}
         >
           {theme.actionText}
