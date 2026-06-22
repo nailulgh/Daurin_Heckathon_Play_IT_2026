@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { UploadCloud } from "lucide-react";
 
 export default function MaterialListingForm() {
@@ -21,6 +23,8 @@ export default function MaterialListingForm() {
   const [weightKg, setWeightKg] = useState("");
   const [pricePerKg, setPricePerKg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showLoginWarning, setShowLoginWarning] = useState(false);
+  const { status } = useSession();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -32,6 +36,11 @@ export default function MaterialListingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "unauthenticated") {
+      setShowLoginWarning(true);
+      return;
+    }
+
     if (!wasteType || !weightKg || !pricePerKg || !purpose) {
       toast({ title: "Form tidak lengkap", variant: "destructive" });
       return;
@@ -170,6 +179,21 @@ export default function MaterialListingForm() {
           </Button>
         </form>
       </CardContent>
+
+      <Dialog open={showLoginWarning} onOpenChange={setShowLoginWarning}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Akses Ditolak</DialogTitle>
+            <DialogDescription>
+              Harus login dulu! Anda perlu memiliki akun dan masuk sebagai Pengepul untuk menjual bahan baku.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4">
+            <Button variant="outline" onClick={() => setShowLoginWarning(false)}>Tutup</Button>
+            <Button onClick={() => router.push("/login")} className="bg-blue-600 hover:bg-blue-700 text-white">Login Sekarang</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

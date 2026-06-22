@@ -1,3 +1,14 @@
+## [2026-06-23] — Perbaikan Performa & Validasi UI
+
+- ✅ **Dashboard Cache**: Mengimplementasikan In-Memory Cache (Promise.all + Map) pada `/api/dashboard` untuk menekan *latency* database secara drastis.
+- ✅ **Form Validation (Unauthenticated)**: Mengintegrasikan `useSession` pada `WasteListingForm.tsx` dan `MaterialListingForm.tsx` dengan komponen `AlertDialog` dari `shadcn/ui` untuk menolak dan memberikan *pop up* peringatan wajib *login* bagi *user* anonim yang belum diautentikasi.
+
+**Why it changed:**
+- Mempercepat performa dashboard dan mengamankan alur submit dari pengguna yang belum login dengan memberikan interaksi UX yang lebih baik (*pop up dialog*).
+
+**Impact:**
+- Dashboard kini memuat seketika dan *unauthorized users* mendapatkan arahan yang jelas untuk login sebelum mensubmit form.
+
 ## [2026-06-22] — FASE 4: Deployment & Disaster Recovery
 
 - ✅ **Server Setup (Rocky 8)**: Instalasi Node.js, ekstraksi `daurin.tar.gz`, sinkronisasi Prisma, dan setup PM2 *daemon* untuk _process management_ Node.js (`daurin`).

@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import AIPhotoClassifier from "./AIPhotoClassifier";
 
 export default function WasteListingForm() {
@@ -22,6 +24,8 @@ export default function WasteListingForm() {
   const [pricePerKg, setPricePerKg] = useState("");
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showLoginWarning, setShowLoginWarning] = useState(false);
+  const { status } = useSession();
 
   const handleClassificationComplete = (selectedFile: File, result: any) => {
     setFile(selectedFile);
@@ -42,6 +46,11 @@ export default function WasteListingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "unauthenticated") {
+      setShowLoginWarning(true);
+      return;
+    }
+
     if (!wasteType || !weightKg || !pricePerKg) {
       toast({ title: "Form tidak lengkap", variant: "destructive" });
       return;
@@ -174,6 +183,21 @@ export default function WasteListingForm() {
           </Button>
         </form>
       </CardContent>
+
+      <Dialog open={showLoginWarning} onOpenChange={setShowLoginWarning}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Akses Ditolak</DialogTitle>
+            <DialogDescription>
+              Harus login dulu! Anda perlu memiliki akun dan masuk sebagai Rumah Tangga untuk menjual sampah.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4">
+            <Button variant="outline" onClick={() => setShowLoginWarning(false)}>Tutup</Button>
+            <Button onClick={() => router.push("/login")} className="bg-emerald-600 hover:bg-emerald-700 text-white">Login Sekarang</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

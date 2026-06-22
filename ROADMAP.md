@@ -267,17 +267,17 @@ AI   [TF.JS+LEAFLET  ][GEOAPI][CLASSIFIER+HAVERSINE][RUTE+REALTIME][E2E TEST  ][
 
 Gunakan checklist ini untuk progress tracking selama hackathon:
 
-- [ ] **FR-001** Auth & RBAC 3 role — registrasi, login, route protection
-- [ ] **FR-002.1** Rumah tangga bisa input & listing sampah (form + foto upload)
-- [ ] **FR-002.2** AI klasifikasi foto otomatis mengisi jenis sampah (TF.js MobileNet)
-- [ ] **FR-002.3** Status tracking listing RT (tersedia → diklaim → diambil → selesai)
-- [ ] **FR-003.1–3.2** Pengepul lihat marketplace terfilter & bisa klaim listing
-- [ ] **FR-003.3** Peta titik pengambilan (Leaflet.js + marker aktif)
-- [ ] **FR-003.6** Pengepul input bahan baku hasil pilahan → listing ke marketplace industri
-- [ ] **FR-004.2–4.4** Industri pesan → negosiasi (offer/counter/deal/cancel) → transaksi
-- [ ] **FR-005.1** Landing marketplace 3 lapis (sampah RT / bahan baku / bahan baku jadi)
-- [ ] **FR-005.2** Dashboard per role dengan statistik relevan
-- [ ] **Deploy public** URL dapat diakses juri dari luar jaringan lokal
+- [x] **FR-001** Auth & RBAC 3 role — registrasi, login, route protection
+- [x] **FR-002.1** Rumah tangga bisa input & listing sampah (form + foto upload)
+- [x] **FR-002.2** AI klasifikasi foto otomatis mengisi jenis sampah (TF.js MobileNet)
+- [x] **FR-002.3** Status tracking listing RT (tersedia → diklaim → diambil → selesai)
+- [x] **FR-003.1–3.2** Pengepul lihat marketplace terfilter & bisa klaim listing
+- [x] **FR-003.3** Peta titik pengambilan (Leaflet.js + marker aktif)
+- [x] **FR-003.6** Pengepul input bahan baku hasil pilahan → listing ke marketplace industri
+- [x] **FR-004.2–4.4** Industri pesan → negosiasi (offer/counter/deal/cancel) → transaksi
+- [x] **FR-005.1** Landing marketplace 3 lapis (sampah RT / bahan baku / bahan baku jadi)
+- [x] **FR-005.2** Dashboard per role dengan statistik relevan
+- [x] **Deploy public** URL dapat diakses juri dari luar jaringan lokal
 
 ---
 
