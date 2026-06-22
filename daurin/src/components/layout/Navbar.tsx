@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { LogOut, User, Menu, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,25 +12,83 @@ interface NavbarProps {
 
 export default function Navbar({ onMenuClick }: NavbarProps) {
   const pathname = usePathname();
-  // Bypass useSession for Pure Front-End Mock Mode
-  // const { data: session } = useSession();
   
-  // Create a mock session based on the current path
-  let mockSession = null;
-  if (pathname.startsWith("/rumah-tangga") || pathname.startsWith("/pengepul") || pathname.startsWith("/industri") || pathname.startsWith("/dashboard")) {
-    let mockRole = "RUMAH_TANGGA";
-    let mockName = "Budi (Warga)";
-    
-    if (pathname.startsWith("/pengepul")) {
-      mockRole = "PENGEPUL";
-      mockName = "Pengepul Berkah";
-    } else if (pathname.startsWith("/industri")) {
-      mockRole = "INDUSTRI";
-      mockName = "PT Daur Ulang";
+  const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<{ name: string; role: string } | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    const session = localStorage.getItem("mock_session");
+    if (session) {
+      try {
+        setUser(JSON.parse(session));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("mock_session");
+    window.location.href = "/login";
+  };
+
+  const getDisplayRole = (role: string) => {
+    switch (role) {
+      case "RUMAH_TANGGA": return "Warga";
+      case "PENGEPUL": return "Mitra Pengepul";
+      case "INDUSTRI": return "Mitra Industri";
+      default: return role;
+    }
+  };
+
+  const renderUserSection = () => {
+    if (!mounted) {
+      return <div className="h-10 w-32 bg-slate-100 animate-pulse rounded-md hidden md:block"></div>;
     }
 
-    mockSession = { user: { name: mockName, role: mockRole } };
-  }
+    if (user) {
+      return (
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex flex-col items-end">
+            <span className="text-sm font-medium leading-none text-daurin-text">
+              {user.name}
+            </span>
+            <span className="text-xs text-gray-500 mt-1">
+              {getDisplayRole(user.role)} <span className="opacity-70">({user.role})</span>
+            </span>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLogout}
+            className="hidden sm:flex border-gray-200 text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleLogout}
+            className="sm:hidden text-gray-500 hover:text-red-600"
+          >
+            <LogOut className="h-5 w-5" />
+            <span className="sr-only">Logout</span>
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <Link href="/login">
+        <Button className="bg-daurin-primary hover:bg-emerald-700 text-white">
+          <User className="mr-2 h-4 w-4" />
+          Login
+        </Button>
+      </Link>
+    );
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-white">
@@ -63,43 +120,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             <span className="sr-only">Notifications</span>
           </Button>
 
-          {mockSession ? (
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex flex-col items-end">
-                <span className="text-sm font-medium leading-none text-daurin-text">
-                  {mockSession.user?.name}
-                </span>
-                <span className="text-xs text-gray-500 mt-1">
-                  {(mockSession.user as any)?.role?.replace("_", " ")}
-                </span>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => { window.location.href = "/login" }}
-                className="hidden sm:flex border-gray-200 text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => { window.location.href = "/login" }}
-                className="sm:hidden text-gray-500 hover:text-red-600"
-              >
-                <LogOut className="h-5 w-5" />
-                <span className="sr-only">Logout</span>
-              </Button>
-            </div>
-          ) : (
-            <Link href="/login">
-              <Button className="bg-daurin-primary hover:bg-emerald-700 text-white">
-                <User className="mr-2 h-4 w-4" />
-                Login
-              </Button>
-            </Link>
-          )}
+          {renderUserSection()}
         </div>
       </div>
     </nav>

@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           { href: "/pengepul/dashboard", label: "Dashboard", icon: LayoutDashboard },
           { href: "/pengepul/peta", label: "Peta Jemput", icon: Map },
           { href: "/pengepul/bahan-baku/new", label: "Bahan Baku", icon: PackageSearch },
-          { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
+          { href: "/pengepul/marketplace", label: "Marketplace", icon: ShoppingCart },
         ];
       case "INDUSTRI":
         return [
