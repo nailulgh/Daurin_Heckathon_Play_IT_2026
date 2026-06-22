@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daurin | Industrial Material Marketplace</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#b64c62",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "status-claimed": "#f59e0b",
+                        "on-secondary-container": "#004666",
+                        "outline-variant": "#becabc",
+                        "primary-fixed-dim": "#79db8d",
+                        "on-surface-variant": "#3f493f",
+                        "on-tertiary-container": "#fff1f1",
+                        "secondary-container": "#39b8fd",
+                        "on-primary-container": "#d3ffd5",
+                        "status-available": "#22c55e",
+                        "industry-neutral": "#1e293b",
+                        "tertiary-fixed-dim": "#ffb2bd",
+                        "tertiary": "#97344a",
+                        "surface-container": "#e6eeff",
+                        "surface-tint": "#006d30",
+                        "outline": "#6f7a6e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "secondary-fixed": "#c9e6ff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#233144",
+                        "primary-container": "#15803d",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#dce9ff",
+                        "error": "#ba1a1a",
+                        "surface": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "status-negotiation": "#6366f1",
+                        "surface-variant": "#d5e3fc",
+                        "on-surface": "#0d1c2e",
+                        "primary-fixed": "#95f8a7",
+                        "emerald-wash": "#ecfdf5",
+                        "surface-dim": "#ccdbf3",
+                        "on-tertiary-fixed": "#400013",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary-fixed-variant": "#005323",
+                        "secondary": "#006591",
+                        "inverse-primary": "#79db8d",
+                        "on-tertiary-fixed-variant": "#81233b",
+                        "primary": "#00652c",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#00210a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#89ceff",
+                        "tertiary-fixed": "#ffd9dd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1280px",
+                        "gutter": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #0d1c2e;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #becabc;
+            border-radius: 4px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50 bg-surface dark:bg-on-background shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Daurin</span>
+<nav class="hidden md:flex gap-6 ml-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors px-2 py-1 rounded font-label-md text-label-md" href="#">Impact</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-emerald-wash dark:hover:bg-primary-container transition-colors px-2 py-1 rounded font-label-md text-label-md" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:block bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-transform active:scale-95">Switch Role</button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-on-surface-variant p-2 cursor-pointer hover:bg-surface-container rounded-full">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant p-2 cursor-pointer hover:bg-surface-container rounded-full">account_circle</span>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- Sidebar Filter - Left -->
+<aside class="h-full w-64 fixed left-0 top-16 hidden md:flex flex-col bg-surface-container-low dark:bg-industry-neutral border-r border-outline-variant p-stack-md gap-stack-sm overflow-y-auto">
+<div class="mb-4">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-sm">Categories</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-all">
+<input checked="" class="form-checkbox text-primary rounded border-outline-variant" type="checkbox"/>
+<span class="flex items-center gap-2 font-label-md text-label-md"><span class="material-symbols-outlined text-sm">recycling</span>Plastik</span>
+</label>
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-all">
+<input class="form-checkbox text-primary rounded border-outline-variant" type="checkbox"/>
+<span class="flex items-center gap-2 font-label-md text-label-md"><span class="material-symbols-outlined text-sm">precision_manufacturing</span>Metal</span>
+</label>
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-all">
+<input class="form-checkbox text-primary rounded border-outline-variant" type="checkbox"/>
+<span class="flex items-center gap-2 font-label-md text-label-md"><span class="material-symbols-outlined text-sm">description</span>Kertas</span>
+</label>
+</div>
+</div>
+<div class="mb-4">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-sm">Price Range (Ton)</h3>
+<input class="w-full h-2 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary" max="5000" min="0" type="range"/>
+<div class="flex justify-between mt-2 font-data-mono text-data-mono text-on-surface-variant">
+<span>$0</span>
+<span>$5k+</span>
+</div>
+</div>
+<div class="mb-4">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-sm">Minimum Volume</h3>
+<div class="relative">
+<input class="w-full bg-white border border-outline-variant rounded-lg p-2 font-label-md text-label-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="e.g. 5 Tons" type="number"/>
+</div>
+</div>
+<div class="mb-4">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-sm">Supplier Rating</h3>
+<div class="flex flex-col gap-1">
+<button class="text-left p-2 rounded-lg hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-status-claimed text-sm" style="font-variation-settings: 'FILL' 1;">star</span> 4.5+
+                    </button>
+<button class="text-left p-2 rounded-lg hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-status-claimed text-sm" style="font-variation-settings: 'FILL' 1;">star</span> 4.0+
+                    </button>
+</div>
+</div>
+<div class="mb-4">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-sm">Global Location</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<input class="w-full bg-white border border-outline-variant rounded-lg py-2 pl-9 pr-3 font-label-md text-label-md focus:ring-2 focus:ring-primary outline-none" placeholder="Search city..." type="text"/>
+</div>
+</div>
+<div class="mt-auto pt-stack-md border-t border-outline-variant">
+<button class="w-full bg-primary-container text-on-primary-container p-3 rounded-xl font-bold font-label-md text-label-md flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined">add</span> Post Waste
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 p-margin-mobile md:p-margin-desktop min-h-screen">
+<!-- Breadcrumbs & Dashboard Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-stack-lg gap-4">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Material Marketplace</h1>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Browse 1,284 industrial-grade recycled materials verified by AI.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+<!-- Search Bar -->
+<div class="relative flex-1 md:w-64 min-w-[200px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-white border border-outline-variant rounded-full py-2 pl-10 pr-4 font-label-md text-label-md focus:ring-2 focus:ring-primary outline-none shadow-sm" placeholder="Search materials..." type="text"/>
+</div>
+<!-- View Toggles -->
+<div class="flex bg-surface-container rounded-lg p-1 shadow-sm">
+<button class="p-1.5 rounded-md bg-white text-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button class="p-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+</div>
+<!-- Sort -->
+<select class="bg-white border border-outline-variant rounded-lg px-4 py-2 font-label-md text-label-md focus:ring-2 focus:ring-primary outline-none shadow-sm cursor-pointer">
+<option>Price: Low to High</option>
+<option>Volume: High to Low</option>
+<option>Newest Arrivals</option>
+<option>Quality Score</option>
+</select>
+</div>
+</div>
+<!-- Stats/Featured Section (Bento Lite) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-stack-lg">
+<div class="col-span-1 md:col-span-2 bg-emerald-wash border border-primary/20 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden h-32">
+
+<span class="text-primary font-label-md text-label-md uppercase tracking-widest z-10">AI-Verified Market Peak</span>
+<div class="flex items-end justify-between z-10">
+<span class="font-headline-md text-headline-md text-on-primary-fixed-variant">Polypropylene Demand ↑12%</span>
+<span class="material-symbols-outlined text-primary text-3xl">trending_up</span>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-4 flex flex-col justify-between h-32 shadow-sm">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Active Orders</span>
+<span class="font-headline-md text-headline-md">423 <span class="text-body-sm font-normal text-on-surface-variant">Logistics Live</span></span>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-4 flex flex-col justify-between h-32 shadow-sm">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Total Tonnage</span>
+<span class="font-headline-md text-headline-md">8.4k <span class="text-body-sm font-normal text-on-surface-variant">Tons Transacted</span></span>
+</div>
+</div>
+<!-- Material Listing Grid -->
+<div class="bento-grid">
+<!-- Card 1 -->
+<div class="group bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="High resolution professional studio photograph of clean crushed clear PET plastic flakes in a bulk industrial container. Soft bright lighting, professional product photography style with mint and white color tones to reflect sustainability and cleanliness. The background is a clean warehouse setting with a slight blur." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjhwOjR_9kvbqRf_e3YwAL7XAEu2yIsgLkKLLDo6w1y8jiRnp9K3AdT23LydxuClxKP7D0inu2MMBgrQMUZ6fDKczeDSx_S-NJFVO6CxYbAY_Ad2BCOZAWde5YoeTwWAqIExK1Nc1Vei4I7cLGH2fC-KwjCzOjfk6zE9X6Rh6GjjteHDcLjNOtz_kfbdJz82hLiLvGkQP0Stg316KSb4BeXnmADChjKIkc7pojuFIt2T34bZg-Qklb6AzzE-9D5fAbn6Q34eWqYrV3"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white px-3 py-1 rounded-full font-label-sm text-label-sm backdrop-blur-md">Featured</span>
+<span class="bg-white/90 text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 backdrop-blur-md">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span> 98% Purity
+                            </span>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Crushed PET (Clear)</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-primary text-lg">recycling</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Plastik / Grade A</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4 py-3 border-y border-outline-variant/30">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Volume</span>
+<span class="font-data-mono text-headline-sm">24.5 <span class="text-body-sm font-normal">Tons</span></span>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Price/Ton</span>
+<span class="font-data-mono text-headline-sm text-primary">$850</span>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<img class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A small professional corporate logo for a recycling company named GreenLoop Industries. The logo is minimalist with geometric shapes in dark forest green. Circular or hexagonal frame on a clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKcpD25PrZbnHtMFEexIjO6w5qwaFUoAVcQ3UGAzfGTqoJswyMSiHU2F5F2OYrA1dKMHJl3ehNZVTzciMbqNKnkD_G1Cg2XpCud2J8Q7KNKXq_AhKqj_H7yLn6L3qi-aLOD2q_dgyE2AnO3KCCs_nhC5YmTQkYWyaXdo4nInuoozwavFSC3gEe94bv9rS-sjNoi6xS-1hZoGLcianz02vFgmty5rCQ4f-3hx-RLt-WazuNHVeHCiSqeesq2ZG2yiybcU_KXpYVuXkA"/>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">GreenLoop Ind.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Rotterdam, NL
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<div class="flex text-status-claimed">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star_half</span>
+</div>
+<span class="text-xs text-on-surface-variant">48 Reviews</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-surface-container hover:bg-surface-variant text-on-surface-variant font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all active:scale-95">Quote</button>
+<button class="flex-1 bg-primary text-on-primary font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all active:scale-95 shadow-sm hover:shadow-md">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="Industrial bundles of compressed aluminum scrap metal, neatly stacked in a shipping yard. Bright daylight, blue sky reflection on the metal surfaces. Sharp focus on the textures of the metal. Corporate and industrial aesthetic with clean lines and slate gray tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT7w8kodXaqBeAjD6Ew4mXcC_jVSDBE7P2ij5PaXZJ1XWAEDl-l3qJdtgDxm_d0gr_pbJegLSstJrpa_jbScRlTIjYbopPM2n5mkIYRYtPdiQESvQIxFiiE8PB3LgExZOesysPPHmaAVz8nnJ-NYrlVrwRUVdcNDLvsOtCXPplZF8x3iiDkIAFFvggin3H_qNhnotklWv6LeB63GK7_9C2nqxa2lx_c18Nz5NNHl-z91WeNZcHLhJLwHi_7MMsK3cFG13YYocxjmqV"/>
+<div class="absolute top-3 left-3">
+<span class="bg-white/90 text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 backdrop-blur-md">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span> 92% Purity
+                            </span>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Aluminum Scrap 6061</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-secondary text-lg">precision_manufacturing</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Metal / Industrial</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4 py-3 border-y border-outline-variant/30">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Volume</span>
+<span class="font-data-mono text-headline-sm">115.0 <span class="text-body-sm font-normal">Tons</span></span>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Price/Ton</span>
+<span class="font-data-mono text-headline-sm text-primary">$1,240</span>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-black">MF</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">MetalFlow Corp.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Munich, DE
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<div class="flex text-status-claimed">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-xs text-on-surface-variant">152 Reviews</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-surface-container hover:bg-surface-variant text-on-surface-variant font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all">Quote</button>
+<button class="flex-1 bg-primary text-on-primary font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all shadow-sm">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="Huge stacks of recycled OCC old corrugated cardboard bales ready for paper mill processing. Clean industrial setting, warehouse lighting. The image emphasizes the scale and uniformity of the bales. Color palette is dominated by cardboard brown and industrial gray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBS-GmOovSRf7sGODogHCHiabJJYpBY22AuFxAhhciY4HTpdhNvFz3lgS16Gps7TEsw-me7D-Dn3XTPy4m_Zjip9F5j8Gk305T3cdEowH8WLAitqqRmOq2GXSbgZrHxCmftvMxLcgfB6AG-XkIBFjgqpEkgQmL1nRrWdVW0B5UNPey7Y0T1JTXaDHasFvZPAmq4J2NFxfPN0yzaYc9dUk4zl_UFx7O6gPIDNcGRZt2aXynGmGbZGyGKqTb3ypgCrHQLyBXvMukKDn0k"/>
+<div class="absolute top-3 left-3">
+<span class="bg-white/90 text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 backdrop-blur-md">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span> 95% Purity
+                            </span>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Baled OCC Cardboard</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-status-negotiation text-lg">description</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Kertas / Pulp Grade</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4 py-3 border-y border-outline-variant/30">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Volume</span>
+<span class="font-data-mono text-headline-sm">340.0 <span class="text-body-sm font-normal">Tons</span></span>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Price/Ton</span>
+<span class="font-data-mono text-headline-sm text-primary">$180</span>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-emerald-wash flex items-center justify-center text-primary font-black">RP</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">RenewPaper S.A.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Madrid, ES
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<div class="flex text-status-claimed">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<span class="text-xs text-on-surface-variant">31 Reviews</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-surface-container hover:bg-surface-variant text-on-surface-variant font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all">Quote</button>
+<button class="flex-1 bg-primary text-on-primary font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all shadow-sm">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Card 4 (Density Demo) -->
+<div class="group bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="Sorted blue and white HDPE plastic regrind flakes. Macro shot showing the texture and size uniformity of the particles. Clean, laboratory-like lighting environment to suggest high quality and processing precision. Blue and white dominant color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvKym_q-wbRgJXxK8n5bnjGbBnOuMLO64y0DNBWxRQCXWVRutkUX-6SYhmBnPYJ7mdkiHg6jKwkYgzukjumN-ZZ3TCWpEqVd041SUsWbFQ20XX_XwyPVbE8oRBlVWyh7rYF5qcHB6A1SVWSxHOzFGFilXp95Dw3XHyyrkf4grY3fuuwb7AsxOHuJFeGDr7dWlZdc_-t14dRz9AOB1g4Xz68XJ6RaRhy0_46fmYwYPKvU9CzeuEEM9oR9It9srcKf0nNREV2ndSAHfa"/>
+<div class="absolute top-3 left-3">
+<span class="bg-white/90 text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 backdrop-blur-md">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span> 99% Purity
+                            </span>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">HDPE Regrind Mix</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-primary text-lg">recycling</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Plastik / Post-Industrial</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4 py-3 border-y border-outline-variant/30">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Volume</span>
+<span class="font-data-mono text-headline-sm">18.0 <span class="text-body-sm font-normal">Tons</span></span>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase block">Price/Ton</span>
+<span class="font-data-mono text-headline-sm text-primary">$920</span>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-black">PV</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">PolyVantage</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Lyon, FR
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<div class="flex text-status-claimed">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-xs text-on-surface-variant">214 Reviews</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-surface-container hover:bg-surface-variant text-on-surface-variant font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all">Quote</button>
+<button class="flex-1 bg-primary text-on-primary font-bold py-2.5 rounded-lg font-label-md text-label-md transition-all shadow-sm">Buy Now</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-2 mt-stack-lg py-8">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors font-bold">2</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors font-bold">3</button>
+<span class="text-outline">...</span>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors font-bold">14</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] md:hidden rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm-mobile">Account</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and View Switching logic
+        document.querySelectorAll('.active\\:scale-95').forEach(button => {
+            button.addEventListener('mousedown', () => button.classList.add('scale-95'));
+            button.addEventListener('mouseup', () => button.classList.remove('scale-95'));
+        });
+
+        // Toggle Grid vs List (Visual only for this demo)
+        const viewButtons = document.querySelectorAll('.bg-surface-container button');
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewButtons.forEach(b => {
+                    b.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                btn.classList.remove('text-on-surface-variant');
+            });
+        });
+
+        // Add subtle hover tracking for bento elements
+        const cards = document.querySelectorAll('.bento-grid > div');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>
