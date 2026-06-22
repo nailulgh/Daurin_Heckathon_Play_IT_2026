@@ -217,8 +217,8 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 
 | Jam     | Task                                                                                                                                                                       | Ref                  | Prioritas |
 | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | --------- |
-| 20–21   | `npm run build` di Jagoan Hosting · fix build error (type, import, env var)                                                                                                | PRD §7.4             | 🔴 P0     |
-| 21–21.5 | Setup PM2: `pm2 start npm --name daurin -- start && pm2 save && pm2 startup`                                                                                               | PRD §7.4 Step 2      | 🔴 P0     |
+| 20–21   | ✅ `npm run build` di Jagoan Hosting · fix build error (type, import, env var)                                                                                                | PRD §7.4             | 🔴 P0     |
+| 21–21.5 | ✅ Setup PM2: `pm2 start ecosystem.config.js`                                                                                               | PRD §7.4 Step 2      | 🔴 P0     |
 | 21.5–22 | ✅ Install cloudflared · `cloudflared tunnel login` · `cloudflared tunnel create daurin` · buat `config.yml` dengan ingress ke `localhost:3000`                               | PRD §7.4 Step 3–5    | 🔴 P0     |
 | 22–22.5 | ✅ Cloudflare Dashboard: CNAME `greenshift.web.id` → `<tunnel-uuid>.cfargotunnel.com` · jalankan tunnel via PM2                                                               | PRD §7.4 Step 6–7    | 🔴 P0     |
 | 22.5–23 | ✅ Test `https://greenshift.web.id` dari device lain · verifikasi SSL aktif · test login demo account 3 role · **Jika tunnel bermasalah → fallback ngrok: `ngrok http 3000`** | PRD §7.4 backup plan | 🔴 P0     |
