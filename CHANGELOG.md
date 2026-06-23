@@ -1,5 +1,16 @@
+## [2026-06-23] — Dokumentasi README Komprehensif
+
+- ✅ **Documentation (README)**: Membuat ulang `README.md` secara menyeluruh dan profesional sebagai laporan dokumentasi resmi untuk kompetisi PLAY IT! 2026. Mencakup: Executive Summary, tabel perbandingan nilai diferensiasi, panduan Demo 5 menit lengkap beserta akun uji coba, deskripsi semua 11 fitur utama per FR, diagram arsitektur sistem ASCII, panduan *run* lokal step-by-step, dokumentasi 17 API endpoint, skema database + state machine visual, penjelasan teknis modul AI (MobileNetV2), algoritma rute (Nearest-Neighbor Haversine), tabel faktor CO₂, infra deployment, tabel dampak 6 SDG, dan daftar asumsi & batasan sistem.
+
+**Why it changed:**
+- Menyiapkan dokumentasi teknis yang lengkap, profesional, dan siap dinilai oleh juri PLAY IT! 2026 sesuai deliverable `PRD §L`.
+
+**Impact:**
+- Repository kini memiliki README berkualitas produksi yang dapat langsung dipahami oleh juri, mentor, atau kontributor baru tanpa perlu membaca dokumen teknis lainnya.
+
 ## [2026-06-23] — Perbaikan Performa & Validasi UI
 
+- ✅ **Performance Optimization (Zero Latency)**: Melakukan *refactor* besar pada halaman `/industri/dashboard` dari `Client Component` menjadi `Server Component`. Membuang siklus *fetch* API `/api/dashboard` yang lambat di sisi *client* dan menggantinya dengan eksekusi kueri Prisma secara paralel (`Promise.all`) langsung di level *server*. Ini secara total melenyapkan *loading spinner* ("Memuat metrik...") dan membuat halaman dasbor tampil seketika (0 detik *delay*).
 - ✅ **Feature (Industri Pesanan)**: Menambahkan halaman `/industri/pesanan` untuk role Industri. Halaman ini berfungsi sebagai dasbor pelacakan order/pesanan bahan baku yang telah dibuat. Menampilkan daftar pesanan dengan status badges (MENUNGGU, NEGOSIASI, DEAL, dll), total harga, dan tombol aksi ke halaman negosiasi detail. Menggunakan integrasi Prisma `Order` secara langsung sebagai Next.js Server Component.
 - ✅ **Feature (Realtime UX)**: Mengubah ikon lonceng (*Notification Bell*) statis di Navbar menjadi komponen React fungsional (`NotificationBell.tsx`) yang terhubung langsung dengan API `/api/notifications`. Lonceng kini menampilkan angka *unread* dan daftar riwayat notifikasi dalam *dropdown* elegan, lengkap dengan fitur "Tandai sudah dibaca".
 - ✅ **Bug Fix (Auth/Logout)**: Memperbaiki isu *redirect* otomatis ke *domain production* (`https://greenshift.web.id/login`) saat melakukan *logout* dari `localhost` dengan mematikan *callbackUrl* bawaan NextAuth dan menggunakan rute navigasi jendela asali (`window.location.href`).
