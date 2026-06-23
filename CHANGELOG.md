@@ -1,3 +1,9 @@
+## [2026-06-23] — Fitur Buka Negosiasi B2B (Industri)
+
+- ✅ **Simulation UI**: Menambahkan dialog Buka Negosiasi B2B pada `MarketplaceClient.tsx`. Industri kini dapat memasukkan volume spesifik dan catatan (offer awal) saat memesan bahan baku.
+- ✅ **Backend Sync**: Menyesuaikan `POST /api/orders` agar ketika `buyerNote` disertakan, server otomatis membuat record `Negotiation` tipe `OFFER` dengan harga awal dan memindahkan status pesanan langsung ke `NEGOSIASI`.
+- ✅ **UX Workflow**: User otomatis di-redirect ke halaman thread negosiasi (`/industri/pesanan/[id]`) setelah berhasil membuka negosiasi dari Marketplace.
+
 ## [2026-06-23] — Dokumentasi README Komprehensif
 
 - ✅ **Documentation (README)**: Membuat ulang `README.md` secara menyeluruh dan profesional sebagai laporan dokumentasi resmi untuk kompetisi PLAY IT! 2026. Mencakup: Executive Summary, tabel perbandingan nilai diferensiasi, panduan Demo 5 menit lengkap beserta akun uji coba, deskripsi semua 11 fitur utama per FR, diagram arsitektur sistem ASCII, panduan *run* lokal step-by-step, dokumentasi 17 API endpoint, skema database + state machine visual, penjelasan teknis modul AI (MobileNetV2), algoritma rute (Nearest-Neighbor Haversine), tabel faktor CO₂, infra deployment, tabel dampak 6 SDG, dan daftar asumsi & batasan sistem.
@@ -109,11 +115,6 @@
 
 **Impact:**
 - Modul autentikasi telah lengkap. Lanjut siap mengerjakan Listing Sampah (CRUD).
-
-## [2026-06-22] — FASE 3: Dashboard API, Impact & Seed Data
-- Mengimplementasikan `GET /api/dashboard` yang terintegrasi secara riil dengan Prisma Aggregates (`_count`, `_sum`) untuk 3 role berbeda (RT, Pengepul, Industri).
-- Membuat public endpoint `GET /api/dashboard/impact` untuk menghitung pengurangan karbon (CO2 Offset), total transaksi (dari `WasteListing` dan `Order`), total berat, dan total nilai ekonomi untuk *landing page*.
-- Memperbarui skrip `prisma/seed.ts` dan menjalankannya untuk membuat data simulasi yang realistis (3 role, >5 listing sampah, klaim dan transaksi B2B di wilayah Malang Raya).
 
 ## [2026-06-22] — Frontend-Backend Integration (Phase 2)
 - Diintegrasikan `/pengepul/marketplace` ke `POST /api/listings/[id]/claim`

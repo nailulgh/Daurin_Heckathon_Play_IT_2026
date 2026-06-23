@@ -39,9 +39,21 @@ export async function POST(req: Request) {
           buyerId: (session.user as any).id,
           materialId: parsed.data.materialId,
           volumeKg: parsed.data.volumeKg,
-          status: "MENUNGGU",
+          status: parsed.data.buyerNote ? "NEGOSIASI" : "MENUNGGU",
         }
       });
+
+      if (parsed.data.buyerNote) {
+        await tx.negotiation.create({
+          data: {
+            orderId: order.id,
+            actorId: (session.user as any).id,
+            type: "OFFER",
+            amount: material.pricePerKg, // Tawarkan dengan harga awal
+            message: parsed.data.buyerNote,
+          }
+        });
+      }
 
       await tx.materialListing.update({
         where: { id: parsed.data.materialId },

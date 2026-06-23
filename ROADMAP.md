@@ -167,7 +167,7 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 | Jam     | Task                                                                                                                                                                   | FR Ref   | Prioritas |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | --------- |
 | 12–13   | Halaman `/industri/marketplace` · grid bahan baku dengan filter: material_type, rentang harga, sorting by jarak/harga/terbaru                                          | FR-004.1 | 🔴 P0     |
-| 13–14.5 | Halaman `/industri/order/new/:materialId` · form: volume dibutuhkan, catatan · submit → buat ORDER & mulai negosiasi                                                   | FR-004.2 | 🔴 P0     |
+| 13–14.5 | ✅ Halaman `/industri/order/new/:materialId` (via Dialog simulasi) · form: volume dibutuhkan, catatan · submit → buat ORDER & mulai negosiasi                                                   | FR-004.2 | 🔴 P0     |
 | 14.5–16 | Halaman `/industri/negosiasi/:orderId` · tampilkan thread negosiasi (mirip chat bubble) · tombol: Offer, Counter-Offer, Deal, Cancel · tampilkan status order realtime | FR-004.3 | 🔴 P0     |
 
 #### Dev 3 — Data/AI/Integration
