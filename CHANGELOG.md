@@ -1,5 +1,6 @@
 ## [2026-06-23] — Perbaikan Performa & Validasi UI
 
+- ✅ **Feature (Industri Pesanan)**: Menambahkan halaman `/industri/pesanan` untuk role Industri. Halaman ini berfungsi sebagai dasbor pelacakan order/pesanan bahan baku yang telah dibuat. Menampilkan daftar pesanan dengan status badges (MENUNGGU, NEGOSIASI, DEAL, dll), total harga, dan tombol aksi ke halaman negosiasi detail. Menggunakan integrasi Prisma `Order` secara langsung sebagai Next.js Server Component.
 - ✅ **Feature (Realtime UX)**: Mengubah ikon lonceng (*Notification Bell*) statis di Navbar menjadi komponen React fungsional (`NotificationBell.tsx`) yang terhubung langsung dengan API `/api/notifications`. Lonceng kini menampilkan angka *unread* dan daftar riwayat notifikasi dalam *dropdown* elegan, lengkap dengan fitur "Tandai sudah dibaca".
 - ✅ **Bug Fix (Auth/Logout)**: Memperbaiki isu *redirect* otomatis ke *domain production* (`https://greenshift.web.id/login`) saat melakukan *logout* dari `localhost` dengan mematikan *callbackUrl* bawaan NextAuth dan menggunakan rute navigasi jendela asali (`window.location.href`).
 - ✅ **Bug Fix (TypeScript)**: Menginstal deklarasi *type* yang hilang (`@types/json5`, `@types/long`, `@types/offscreencanvas`, `@types/prop-types`, `@types/seedrandom`) untuk menyelesaikan *error implicit type library* pada konfigurasi `tsconfig.json`.

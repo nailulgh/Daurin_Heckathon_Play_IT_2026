@@ -197,7 +197,10 @@ Tim Mie Ayam Solo · PLAY IT! 2026 · Hackathon Web Application
 | Jam       | Task                                                                                                                                                                    | FR Ref                | Prioritas |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------- |
 | 16–17.5   | Halaman `/` (landing page publik) · 3 tab: Sampah RT, Bahan Baku Pengepul, Bahan Baku Jadi · card grid dengan filter + sort                                             | FR-005.1              | 🔴 P0     |
-| 17.5–18.5 | Dashboard per role: `/rt/dashboard`, `/pengepul/dashboard`, `/industri/dashboard` · statistik ringkas (card angka) + list aktivitas terbaru                             | FR-005.2              | 🔴 P0     |
+| 17.5–18.5 | Dashboard per role: 
+  - [x] Pengepul Peta & Rute: `app/pengepul/peta/page.tsx`
+  - [x] Industri Dashboard: `app/industri/pesanan/page.tsx` (Daftar pesanan/negosiasi)
+  - [x] Industri Transaksi: `app/industri/transaksi/page.tsx` | FR-005.2              | 🔴 P0     |
 | 18.5–19   | Komponen `<ImpactCard />` di dashboard global · tampilkan total CO2 offset (kg), total nilai ekonomi (Rp), total transaksi · gunakan Recharts / Chart.js jika ada waktu | FR-005.3              | 🟡 P1     |
 | 19–20     | **Mobile responsiveness pass** · test semua halaman di viewport 375px · fix breakpoint Tailwind · pastikan form, tabel, dan peta bisa digunakan di mobile               | PRD §K non-fungsional | 🔴 P0     |
 
